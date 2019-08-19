@@ -1,29 +1,48 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <app-navigation></app-navigation>
+    <v-content transition="slide-x-transition">
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import AppNavigation from '@/components/AppNavigation'
+export default {
+  name: 'App',
+  components: {
+    AppNavigation
+  },
+  data() {
+    return {
+      authenticated: false,
+      mockAccount: {
+        account: 'EM102',
+        username: 'JCK',
+        password: '123'
+      }
+    }
+  },
+  mounted() {
+    if (!this.authenticated) {
+      this.$router.replace({ path: 'login' })
+    }
+  },
+  methods: {
+    setAuthenticated(status) {
+      this.authenticated = status
+    },
+    logout() {
+      this.authenticated = false
     }
   }
+}
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto+Condensed&display=swap');
+#app {
+  font-family: 'Lato', sans-serif;
 }
 </style>
