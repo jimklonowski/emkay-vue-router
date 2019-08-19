@@ -51,6 +51,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn text to="/login-help">Forgot Password</v-btn>
             <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">Login</v-btn>
           </v-card-actions>
         </v-form>
@@ -87,7 +88,7 @@ export default {
       if (!this.$refs.form.validate()) {
         return false
       }
-      this.$store.dispatch(LOGIN, { account, username, password }).then(() => this.$router.push({ name: 'welcome' }))
+      this.$store.dispatch(LOGIN, { account, username, password }).then(() => this.$router.push({ name: 'home' }))
       //.then(() => this.$router.push({ name: 'welcome' }))
     }
   },

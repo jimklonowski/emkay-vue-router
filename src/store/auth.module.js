@@ -1,7 +1,7 @@
 import ApiService from '../services/api.service'
 import JwtService from '../services/jwt.service'
 
-import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH, UPDATE_USER } from './actions.type'
+import { LOGIN, LOGOUT, LOGIN_HELP, REGISTER, CHECK_AUTH, UPDATE_USER } from './actions.type'
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type'
 
 /**
@@ -48,9 +48,9 @@ const actions = {
   [LOGOUT](context) {
     context.commit(PURGE_AUTH)
   },
-  [REGISTER](context, credentials) {
+  [LOGIN_HELP](context, credentials) {
     return new Promise((resolve, reject) => {
-      ApiService.post('users', { user: credentials })
+      ApiService.post('users/login-help', { user: credentials })
         .then(({ data }) => {
           context.commit(SET_AUTH, data.user)
           resolve(data)
@@ -61,6 +61,19 @@ const actions = {
         })
     })
   },
+  // [REGISTER](context, credentials) {
+  //   return new Promise((resolve, reject) => {
+  //     ApiService.post('users', { user: credentials })
+  //       .then(({ data }) => {
+  //         context.commit(SET_AUTH, data.user)
+  //         resolve(data)
+  //       })
+  //       .catch(({ response }) => {
+  //         context.commit(SET_ERROR, response.data.errors)
+  //         reject(response)
+  //       })
+  //   })
+  // },
   [CHECK_AUTH](context) {
     if (JwtService.getToken()) {
       ApiService.setHeader()

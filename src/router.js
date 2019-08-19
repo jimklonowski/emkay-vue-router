@@ -11,7 +11,8 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/home',
+      alias: '/',
       name: 'home',
       component: () => import('@/views/Home.vue'),
       meta: {
@@ -28,18 +29,50 @@ const router = new Router({
       }
     },
     {
-      path: '/register',
-      name: 'register',
-      component: () => import('@/views/Register.vue'),
+      path: '/login-help',
+      name: 'login-help',
+      component: () => import('@/views/LoginHelp.vue'),
       meta: {
         requiresAuth: false,
         onlyWhenNotLoggedIn: true
       }
     },
     {
-      path: '/welcome',
-      name: 'welcome',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Welcome.vue'),
+      path: '/fleet-dashboard',
+      name: 'fleet-dashboard',
+      component: () => import('@/views/FleetDashboard.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/vehicle-dashboard',
+      name: 'vehicle-dashboard',
+      component: () => import('@/views/VehicleDashboard.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/reporting',
+      name: 'reporting',
+      component: () => import('@/views/Reporting.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/ordering',
+      name: 'ordering',
+      component: () => import('@/views/Ordering.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: () => import('@/views/Account.vue'),
       meta: {
         requiresAuth: true
       }
@@ -63,8 +96,8 @@ router.beforeEach((to, from, next) => {
     // path requires no user auth
     if (to.matched.some(record => record.meta.onlyWhenNotLoggedIn)) {
       if (store.getters.isAuthenticated) {
-        console.log(`[ROUTER]: User is authenticated AND wants to access LOGIN/REGISTER page ---> /welcome`)
-        next('/welcome')
+        console.log(`[ROUTER]: User is authenticated AND wants to access LOGIN/REGISTER page ---> /home`)
+        next('/home')
       } else {
         console.log(`[ROUTER]: User is NOT authenticated and wants to access LOGIN/REGISTER page ---> allow it`)
         next()

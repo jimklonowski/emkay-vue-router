@@ -41,8 +41,8 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lato|Roboto+Condensed&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Lato|Roboto+Condensed&display=swap');
 #app {
   font-family: 'Lato', sans-serif;
-}
+} */
 </style>

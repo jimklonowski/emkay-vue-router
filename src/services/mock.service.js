@@ -15,6 +15,12 @@ const MockService = {
       .onPost('/users/login', { user: { account: 'EM102', username: 'admin', password: 'admin' } })
       .reply(200, { user: { account: 'EM102', username: 'admin', isAdmin: true, token: 'ADMIN12345' } })
 
+    // EM102,jklonowski@emkay.com: return user
+    mock
+      .onPost('/users/login-help', { user: { account: 'EM102', email: 'jklonowski@emkay.com' } })
+      .reply(200, { user: { account: 'EM102', username: 'JCK', password: '123', isAdmin: false, token: 'JCK12345' } })
+
+    // EM102,bad,bad: LoginFailure
     mock
       .onPost('/users/login', { user: { account: 'EM102', username: 'bad', password: 'bad' } })
       .reply(500, { user: { isAdmin: false }, errors: ['Invalid Credentials!'], success: false })
