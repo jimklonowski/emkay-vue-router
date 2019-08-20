@@ -20,7 +20,7 @@
         </div>
       </template>
     </v-navigation-drawer>
-    <v-app-bar app dark clipped-left color="blue-grey darken-3">
+    <v-app-bar app dark clipped-left>
       <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -59,7 +59,7 @@ export default {
         {
           text: 'Vehicle Dashboard',
           icon: 'table_chart',
-          to: '/vehicle-dashboard'
+          to: '/vehicle'
         },
         {
           text: 'Reporting',

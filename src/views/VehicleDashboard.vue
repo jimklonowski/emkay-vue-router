@@ -1,14 +1,19 @@
 <template>
-  <h1 class="display-4">{{ title }}</h1>
+  <div>
+    <vehicle-navigation />
+    <v-container fluid>
+      <h1>{{ $route.params.vehicle }}</h1>
+      <router-view />
+    </v-container>
+  </div>
 </template>
 
 <script>
+import VehicleNavigation from '@/components/VehicleDashboard/VehicleNavigation'
 export default {
   name: 'VehicleDashboard',
-  data() {
-    return {
-      title: 'Vehicle Dashboard'
-    }
+  components: {
+    VehicleNavigation
   }
 }
 </script>

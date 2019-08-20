@@ -46,12 +46,42 @@ const router = new Router({
       }
     },
     {
-      path: '/vehicle-dashboard',
+      path: '/vehicle',
+      name: 'vehicle-search',
+      component: () => import('@/views/VehicleSearch.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/vehicle/:vehicle',
       name: 'vehicle-dashboard',
       component: () => import('@/views/VehicleDashboard.vue'),
       meta: {
         requiresAuth: true
-      }
+      },
+      children: [
+        {
+          path: '/vehicle/:vehicle/dashboard',
+          name: 'dashboard',
+          component: () => import('@/views/VehicleDashboard/Dashboard.vue')
+        },
+        {
+          path: '/vehicle/:vehicle/accident',
+          name: 'accident',
+          component: () => import('@/views/VehicleDashboard/Accident.vue')
+        },
+        {
+          path: '/vehicle/:vehicle/maintenance',
+          name: 'maintenance',
+          component: () => import('@/views/VehicleDashboard/Maintenance.vue')
+        },
+        {
+          path: '/vehicle/:vehicle/fuel',
+          name: 'fuel',
+          component: () => import('@/views/VehicleDashboard/Fuel.vue')
+        }
+      ]
     },
     {
       path: '/reporting',
@@ -75,7 +105,19 @@ const router = new Router({
       component: () => import('@/views/Account.vue'),
       meta: {
         requiresAuth: true
-      }
+      },
+      children: [
+        {
+          path: '/account/contact-information',
+          name: 'contact-information',
+          component: () => import('@/components/Account/Contact.vue')
+        },
+        {
+          path: '/account/change-password',
+          name: 'change-password',
+          component: () => import('@/components/Account/Password.vue')
+        }
+      ]
     }
   ]
 })
