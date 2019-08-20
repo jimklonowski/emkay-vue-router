@@ -2,7 +2,7 @@
   <div>
     <vehicle-navigation />
     <v-container fluid>
-      <h1>{{ $route.params.vehicle }}</h1>
+      <header class="display-3 pa-5">Vehicle Dashboard for Vehicle # {{ $route.params.vehicle }}</header>
       <router-view />
     </v-container>
   </div>

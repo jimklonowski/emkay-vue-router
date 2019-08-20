@@ -13,17 +13,17 @@
         </v-list-item>
         <v-divider></v-divider>
       </v-list>
-
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn @click="logout" tile block elevation="0" color="blue-grey darken-3 white--text">Log Off</v-btn>
+          <v-btn @click="logout" tile block elevation="0" color="primary darken-1 white--text">Log Off</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
-    <v-app-bar app dark clipped-left>
+
+    <v-app-bar app dark clipped-left color="blue-grey darken-3 white--text">
       <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down">{{ title }}</v-toolbar-title>
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-layout v-if="authed" align-center style="max-width:650px;">
         <v-text-field :append-icon-cb="() => {}" append-icon="search" placeholder="Search..." single-line hide-details color="white"></v-text-field>

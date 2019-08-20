@@ -1,7 +1,7 @@
 <template>
   <v-card full-width>
-    <v-navigation-drawer width="100%" dark floating permanent>
-      <v-list dense round>
+    <v-navigation-drawer width="100%" nav dark floating permanent>
+      <v-list dense round style="list-style:none;">
         <v-list-item v-for="item in items" :key="item.text" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>

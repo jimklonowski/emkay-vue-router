@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
 
-import { ID_TOKEN_KEY } from './services/jwt.service'
+//import { ID_TOKEN_KEY } from './services/jwt.service'
+import { LOGOUT } from '@/store/actions.type'
 
 Vue.use(Router)
 
@@ -138,8 +139,9 @@ router.beforeEach((to, from, next) => {
     // path requires no user auth
     if (to.matched.some(record => record.meta.onlyWhenNotLoggedIn)) {
       if (store.getters.isAuthenticated) {
-        console.log(`[ROUTER]: User is authenticated AND wants to access LOGIN/REGISTER page ---> /home`)
-        next('/home')
+        console.log(`[ROUTER]: User is authenticated AND wants to access LOGIN/REGISTER page ---> Logging out then /login`)
+        store.dispatch(LOGOUT).then(() => next('/login'))
+        //next('/home')
       } else {
         console.log(`[ROUTER]: User is NOT authenticated and wants to access LOGIN/REGISTER page ---> allow it`)
         next()
