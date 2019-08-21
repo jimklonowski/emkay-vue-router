@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid fill-height class="login">
     <v-layout row wrap align-center justify-center>
       <v-card elevation="12" width="600px" :loading="loading">
         <v-form
@@ -17,6 +17,8 @@
                 <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
               </ul>
             </v-alert>
+
+            <v-alert border="left" colored-border type="info" elevation="2">EM102 JCK 123</v-alert>
 
             <v-text-field
               label="Account"
@@ -100,4 +102,15 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.login {
+  /* background: url(~@/assets/loginbg.jpg); */
+  background: url(~@/assets/servicebg.jpg);
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+</style>

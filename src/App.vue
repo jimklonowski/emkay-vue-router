@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto+Condensed&display=swap');
 #app {
   /* font-family: 'Lato', sans-serif; */
@@ -57,5 +57,15 @@ export default {
 
 tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+input:-webkit-autofill {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    transition-delay: 9999s;
+    transition-property: background-color, color;
+  }
 }
 </style>

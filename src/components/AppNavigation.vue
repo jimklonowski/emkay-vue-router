@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       title: 'EMKAY',
-      drawer: false,
+      drawer: true,
       items: [
         {
           text: 'Home',

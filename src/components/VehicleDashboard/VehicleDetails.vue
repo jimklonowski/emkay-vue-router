@@ -41,7 +41,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined tile color="primary"> <v-icon left>edit</v-icon>Edit Vehicle Details </v-btn>
+        <v-btn outlined tile color="primary"> <v-icon left>edit</v-icon>&nbsp;Edit Vehicle Details </v-btn>
       </v-card-actions>
     </v-card>
   </v-layout>

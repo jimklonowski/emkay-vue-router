@@ -8,6 +8,7 @@ import { LOGOUT } from '@/store/actions.type'
 Vue.use(Router)
 
 const router = new Router({
+  //mode: 'hash',
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -68,19 +69,19 @@ const router = new Router({
           component: () => import('@/views/VehicleDashboard/Dashboard.vue')
         },
         {
-          path: '/vehicle/:vehicle/accident',
-          name: 'accident',
-          component: () => import('@/views/VehicleDashboard/Accident.vue')
+          path: '/vehicle/:vehicle/documents',
+          name: 'documents',
+          component: () => import('@/views/VehicleDashboard/Documents.vue')
         },
         {
-          path: '/vehicle/:vehicle/maintenance',
-          name: 'maintenance',
-          component: () => import('@/views/VehicleDashboard/Maintenance.vue')
+          path: '/vehicle/:vehicle/saferoads',
+          name: 'saferoads',
+          component: () => import('@/views/VehicleDashboard/SafeRoads.vue')
         },
         {
-          path: '/vehicle/:vehicle/fuel',
-          name: 'fuel',
-          component: () => import('@/views/VehicleDashboard/Fuel.vue')
+          path: '/vehicle/:vehicle/transport-storage',
+          name: 'transport-storage',
+          component: () => import('@/views/VehicleDashboard/TransportStorage.vue')
         }
       ]
     },

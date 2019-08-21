@@ -2,13 +2,13 @@
   <div v-scroll="onScroll" class="mb-12 pt-5" v-on="$listeners">
     <slot name="top" />
     <ul class="toc my-5">
-      <!-- <li class="grey--text text--darken-3 pl-4 mb-2 body-1">Contents</li> -->
+      <li class="grey--text text--darken-3 pl-4 mb-2 body-1">Contents</li>
       <li v-for="(item, index) in toc" :key="index" class="mb-2" style="list-style:none;">
         <a
           :href="item.target"
           :class="{ 'primary--text': activeIndex === index, 'grey--text': activeIndex !== index }"
           :style="{ borderColor: activeIndex === index ? 'inherit' : null }"
-          class="d-block body-2"
+          class="body-2"
           @click.stop.prevent="$vuetify.goTo(`#${item.id}`, options)"
           v-text="item.text"
         />
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+// taken from https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/components/core/Toc.vue
 import goTo from 'vuetify/lib/services/goto'
 import { clearTimeout, setTimeout } from 'timers'
 

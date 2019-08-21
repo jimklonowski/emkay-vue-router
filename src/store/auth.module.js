@@ -61,19 +61,19 @@ const actions = {
         })
     })
   },
-  // [REGISTER](context, credentials) {
-  //   return new Promise((resolve, reject) => {
-  //     ApiService.post('users', { user: credentials })
-  //       .then(({ data }) => {
-  //         context.commit(SET_AUTH, data.user)
-  //         resolve(data)
-  //       })
-  //       .catch(({ response }) => {
-  //         context.commit(SET_ERROR, response.data.errors)
-  //         reject(response)
-  //       })
-  //   })
-  // },
+  [REGISTER](context, credentials) {
+    return new Promise((resolve, reject) => {
+      ApiService.post('users', { user: credentials })
+        .then(({ data }) => {
+          context.commit(SET_AUTH, data.user)
+          resolve(data)
+        })
+        .catch(({ response }) => {
+          context.commit(SET_ERROR, response.data.errors)
+          reject(response)
+        })
+    })
+  },
   [CHECK_AUTH](context) {
     if (JwtService.getToken()) {
       ApiService.setHeader()

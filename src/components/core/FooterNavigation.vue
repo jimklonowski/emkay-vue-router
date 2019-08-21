@@ -1,5 +1,5 @@
 <template>
-  <v-footer padless>
+  <v-footer app padless inset absolute>
     <v-card width="100%" flat tile class="text-center">
       <v-card-text class="blue-grey darken-2 white--text">
         <div>We create a client experience that is simple, better, and different.</div>

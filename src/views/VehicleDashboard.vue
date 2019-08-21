@@ -2,7 +2,8 @@
   <div>
     <vehicle-navigation />
     <v-container fluid>
-      <header class="display-3 pa-5">Vehicle Dashboard for Vehicle # {{ $route.params.vehicle }}</header>
+      <header class="display-1 px-3">Vehicle Dashboard for Vehicle # {{ $route.params.vehicle }}</header>
+      <!-- <v-subheader>Extra Menu Options Here?</v-subheader> -->
       <router-view />
     </v-container>
   </div>

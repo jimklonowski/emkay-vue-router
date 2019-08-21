@@ -16,6 +16,7 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           class="elevation-0"
+          dense
         >
           <template v-slot:item.in_network="{ item }">
             <v-icon :color="getColor(item.in_network)">{{ item.value ? 'check_circle' : 'remove_circle' }}</v-icon>
@@ -107,7 +108,7 @@ export default {
   },
   methods: {
     getColor(type) {
-      console.log(type)
+      //console.log(type)
       return type ? 'success' : 'error'
     }
   }
