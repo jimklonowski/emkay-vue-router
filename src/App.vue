@@ -9,8 +9,8 @@
 </template>
 
 <script>
+import AppNavigation from '@/components/core/AppNavigation'
 import FooterNavigation from '@/components/core/FooterNavigation'
-import AppNavigation from '@/components/AppNavigation'
 export default {
   name: 'App',
   components: {
