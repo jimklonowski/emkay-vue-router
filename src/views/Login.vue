@@ -12,11 +12,7 @@
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert v-if="errors" type="error">
-              <ul>
-                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-              </ul>
-            </v-alert>
+            <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
 
             <v-alert border="left" colored-border type="info" elevation="2">EM102 JCK 123</v-alert>
 
@@ -87,10 +83,22 @@ export default {
   },
   methods: {
     onSubmit(account, username, password) {
+      this.loading = true
       if (!this.$refs.form.validate()) {
+        this.loading = false
         return false
       }
-      this.$store.dispatch(LOGIN, { account, username, password }).then(() => this.$router.push({ name: 'home' }))
+
+      this.$store
+        .dispatch(LOGIN, { account, username, password })
+        .then(() => {
+          this.loading = false
+          this.$router.push({ name: 'home' })
+        })
+        .catch(err => {
+          this.errorMessage = err
+          this.loading = false
+        })
       //.then(() => this.$router.push({ name: 'welcome' }))
     }
   },

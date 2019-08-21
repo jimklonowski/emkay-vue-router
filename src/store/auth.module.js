@@ -33,18 +33,24 @@ const getters = {
  * Actions
  */
 const actions = {
-  [LOGIN](context, credentials) {
-    return new Promise(resolve => {
-      ApiService.post('users/login', { user: credentials })
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data.user)
-          resolve(data)
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors)
-        })
-    })
+  async [LOGIN](context, credentials) {
+    let response = await ApiService.post('users/login', { user: credentials })
+    if (response) {
+      context.commit(SET_AUTH, response.data.user)
+    } else context.commit(SET_ERROR, response.data.errors)
   },
+  // [LOGIN](context, credentials) {
+  //   return new Promise(resolve => {
+  //     ApiService.post('users/login', { user: credentials })
+  //       .then(({ data }) => {
+  //         context.commit(SET_AUTH, data.user)
+  //         resolve(data)
+  //       })
+  //       .catch(({ response }) => {
+  //         context.commit(SET_ERROR, response.data.errors)
+  //       })
+  //   })
+  // },
   [LOGOUT](context) {
     context.commit(PURGE_AUTH)
   },

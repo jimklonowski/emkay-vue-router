@@ -1,7 +1,8 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-let mock = new MockAdapter(axios)
+// delay all requests by 2sec
+let mock = new MockAdapter(axios, { delayResponse: 2000 })
 
 const MockService = {
   init() {
