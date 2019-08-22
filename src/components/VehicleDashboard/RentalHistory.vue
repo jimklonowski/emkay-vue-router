@@ -16,7 +16,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           class="elevation-0"
-          dense
         ></v-data-table>
       </v-card-text>
       <!-- <v-divider></v-divider>

@@ -1,31 +1,50 @@
 <template>
-  <section>
+  <v-layout column>
     <v-card>
-      <v-card-title class="blue-grey darken-1 white--text">
-        <header class="text-uppercase">
-          <span class="font-weight-bold">{{ title1 }}</span>
-          <span class="font-weight-thin">{{ title2 }}</span>
-        </header>
-        <v-subheader dark>{{ vehNum }}</v-subheader>
+      <v-card-title class="font-weight-thin pa-3" style="height:64px;">
+        <header>{{ title }}</header>
+        <v-subheader>{{ vehNum }}</v-subheader>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="row no-gutters">
-        <v-list class="flex row" style="user-select:text;">
-          <v-list-item v-for="item in driver" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
-            <v-list-item-content>
-              <v-list-item-subtitle class="font-weight-regular blue-grey--text text--lighten-3">{{ item.name }}</v-list-item-subtitle>
-              <v-list-item-title class="blue-grey--text text--darken-2 font-weight-normal">{{ item.value }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-flex xs12 md4>
+          <v-list dense>
+            <v-list-item v-for="item in firstColumn" :key="item.key" class="details-row">
+              <v-list-item-content class="details-label">
+                <strong>{{ item.name }}</strong>
+              </v-list-item-content>
+              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
+        <v-flex xs12 md4>
+          <v-list dense>
+            <v-list-item v-for="item in secondColumn" :key="item.key" class="details-row">
+              <v-list-item-content class="details-label">
+                <strong>{{ item.name }}</strong>
+              </v-list-item-content>
+              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
+        <v-flex xs12 md4>
+          <v-list dense>
+            <v-list-item v-for="item in thirdColumn" :key="item.key" class="details-row">
+              <v-list-item-content class="details-label">
+                <strong>{{ item.name }}</strong>
+              </v-list-item-content>
+              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn dark tile outlined color="primary" class="ma-2"> <v-icon dark>edit</v-icon>&nbsp;Change Driver Info </v-btn>
+        <v-btn outlined tile color="primary"> <v-icon left>edit</v-icon>&nbsp;Edit Driver Details </v-btn>
       </v-card-actions>
     </v-card>
-  </section>
+  </v-layout>
 </template>
 
 <script>
@@ -36,8 +55,7 @@ export default {
   },
   data() {
     return {
-      title1: 'Driver',
-      title2: 'Details',
+      title: 'Driver Details',
       driver: [
         {
           index: 0,
@@ -55,13 +73,13 @@ export default {
           index: 2,
           key: 'address_1',
           name: 'Address 1',
-          value: 'Emkay Inc'
+          value: '805 W Thorndale Ave'
         },
         {
           index: 3,
           key: 'address_2',
           name: 'Address 2',
-          value: '805 w Thorndale Ave'
+          value: ''
         },
         {
           index: 4,
@@ -79,19 +97,19 @@ export default {
           index: 6,
           key: 'phone',
           name: 'Phone',
-          value: '630-123-4567'
+          value: ''
         },
         {
           index: 7,
           key: 'cell',
           name: 'Cell',
-          value: '630-987-6543'
+          value: ''
         },
         {
           index: 8,
           key: 'fax',
           name: 'Fax',
-          value: '773-630-7081'
+          value: ''
         },
         {
           index: 9,
@@ -103,37 +121,37 @@ export default {
           index: 10,
           key: 'employee_id',
           name: 'Employee ID',
-          value: '112233'
+          value: ''
         },
         {
           index: 11,
           key: 'driver_misc_1',
           name: 'Driver Misc 1',
-          value: 'custom'
+          value: ''
         },
         {
           index: 12,
           key: 'driver_misc_2',
           name: 'Driver Misc 2',
-          value: 'labels'
+          value: ''
         },
         {
           index: 13,
           key: 'driver_misc_3',
           name: 'Driver Misc 3',
-          value: 'for'
+          value: ''
         },
         {
           index: 14,
           key: 'driver_misc_4',
           name: 'Driver Misc 4',
-          value: 'drivers'
+          value: ''
         },
         {
           index: 15,
           key: 'selector_level',
           name: 'Selector Level',
-          value: 'something'
+          value: ''
         }
       ]
     }
@@ -151,3 +169,5 @@ export default {
   }
 }
 </script>
+
+<style></style>

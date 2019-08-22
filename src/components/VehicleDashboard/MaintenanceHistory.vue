@@ -1,10 +1,13 @@
 <template>
-  <v-layout column>
+  <section>
     <v-card>
-      <v-card-title class="font-weight-thin pa-3">
-        {{ title }}
+      <v-card-title class="blue-grey darken-1 white--text">
+        <header class="text-uppercase">
+          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-thin">{{ title2 }}</span>
+        </header>
         <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-0">
@@ -16,7 +19,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           class="elevation-0"
-          dense
         >
           <template v-slot:item.in_network="{ item }">
             <v-icon :color="getColor(item.in_network)">{{ item.value ? 'check_circle' : 'remove_circle' }}</v-icon>
@@ -24,7 +26,7 @@
         </v-data-table>
       </v-card-text>
     </v-card>
-  </v-layout>
+  </section>
 </template>
 
 <script>
@@ -32,7 +34,8 @@ export default {
   name: 'MaintenanceHistory',
   data() {
     return {
-      title: 'Maintenance History',
+      title1: 'Maintenance',
+      title2: 'History',
       search: '',
       headers: [
         {

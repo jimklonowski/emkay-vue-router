@@ -75,7 +75,7 @@ export default {
         password: ''
       },
       rules: {
-        //account: [v => !!v || 'Account is required'],
+        account: [v => !!v || 'Account is required'],
         username: [v => !!v || 'Username is required'],
         password: [v => !!v || 'Password is required']
       }
@@ -92,13 +92,29 @@ export default {
       this.$store
         .dispatch(LOGIN, { account, username, password })
         .then(() => {
-          this.loading = false
+          console.log('Login success, routing to /home')
           this.$router.push({ name: 'home' })
         })
-        .catch(err => {
-          this.errorMessage = err
+        .catch(e => {
+          console.log('Login failure')
+          this.errorMessage = e.message //(e.response.data || {}).errors[0] || e.message
+        })
+        .finally(() => {
           this.loading = false
         })
+
+      // this.$store
+      //   .dispatch(LOGIN, { account, username, password })
+      //   .then(r => {
+      //     debugger
+      //     console.log(r)
+      //     this.loading = false
+      //     //this.$router.push({ name: 'home' })
+      //   })
+      //   .catch(err => {
+      //     this.errorMessage = err
+      //     this.loading = false
+      //   })
       //.then(() => this.$router.push({ name: 'welcome' }))
     }
   },

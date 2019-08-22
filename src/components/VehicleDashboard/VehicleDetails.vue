@@ -1,50 +1,32 @@
 <template>
-  <v-layout column>
+  <section>
     <v-card>
-      <v-card-title class="font-weight-thin pa-3" style="height:64px;">
-        <header>{{ title }}</header>
-        <v-subheader>{{ vehNum }}</v-subheader>
+      <v-card-title class="blue-grey darken-1 white--text">
+        <header class="text-uppercase">
+          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-thin">{{ title2 }}</span>
+        </header>
+
+        <v-subheader dark>{{ vehNum }}</v-subheader>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="row no-gutters">
-        <v-flex xs12 md4>
-          <v-list dense>
-            <v-list-item v-for="item in firstColumn" :key="item.key" class="details-row">
-              <v-list-item-content class="details-label">
-                <strong>{{ item.name }}</strong>
-              </v-list-item-content>
-              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-flex>
-        <v-flex xs12 md4>
-          <v-list dense>
-            <v-list-item v-for="item in secondColumn" :key="item.key" class="details-row">
-              <v-list-item-content class="details-label">
-                <strong>{{ item.name }}</strong>
-              </v-list-item-content>
-              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-flex>
-        <v-flex xs12 md4>
-          <v-list dense>
-            <v-list-item v-for="item in thirdColumn" :key="item.key" class="details-row">
-              <v-list-item-content class="details-label">
-                <strong>{{ item.name }}</strong>
-              </v-list-item-content>
-              <v-list-item-content class="details-value">{{ item.value }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-flex>
+        <v-list class="flex row">
+          <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
+            <v-list-item-content>
+              <v-list-item-subtitle class="font-weight-regular blue-grey--text text--lighten-3">{{ item.name }}</v-list-item-subtitle>
+              <v-list-item-title class="blue-grey--text text--darken-2 font-weight-normal">{{ item.value }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined tile color="primary"> <v-icon left>edit</v-icon>&nbsp;Edit Vehicle Details </v-btn>
+        <v-btn dark tile outlined color="primary" class="ma-2"> <v-icon dark>edit</v-icon>&nbsp;Change Vehicle Information </v-btn>
       </v-card-actions>
     </v-card>
-  </v-layout>
+  </section>
 </template>
 
 <script>
@@ -55,7 +37,8 @@ export default {
   },
   data() {
     return {
-      title: 'Vehicle Details',
+      title1: 'Vehicle',
+      title2: 'Details',
       vehicleNumber: '',
       vehicle: [
         {

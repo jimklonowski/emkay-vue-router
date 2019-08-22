@@ -81,6 +81,7 @@ export default {
   padding: 0 !important;
   text-align: left;
   width: 100%;
+  white-space: nowrap;
   li {
     list-style: none;
     a {

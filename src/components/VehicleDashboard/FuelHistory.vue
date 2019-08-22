@@ -1,11 +1,13 @@
 <template>
-  <v-layout column>
+  <section>
     <v-card>
-      <v-card-title class="font-weight-thin pa-3">
-        <!-- <v-btn text :to="goto">{{ title }}</v-btn> -->
-        {{ title }}
+      <v-card-title class="blue-grey darken-1 white--text">
+        <header class="text-uppercase">
+          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-thin">{{ title2 }}</span>
+        </header>
         <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-0">
@@ -17,7 +19,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           class="elevation-0"
-          dense
         >
           <template v-slot:item.type="{ item }">
             <v-chip x-small style="white-space:nowrap;" :color="getColor(item.type)">{{ item.type }}</v-chip>
@@ -30,7 +31,7 @@
         <v-btn outlined tile color="primary"> <v-icon>credit_card</v-icon>&nbsp;Manage Fuel Cards </v-btn>
       </v-card-actions>
     </v-card>
-  </v-layout>
+  </section>
 </template>
 
 <script>
@@ -39,7 +40,8 @@ export default {
   data() {
     return {
       search: '',
-      title: 'Fuel History',
+      title1: 'Fuel',
+      title2: 'History',
       goto: { name: 'fuel' },
       headers: [
         {

@@ -1,10 +1,13 @@
 <template>
-  <v-layout column>
+  <section>
     <v-card>
-      <v-card-title class="font-weight-thin pa-3">
-        {{ title }}
+      <v-card-title class="blue-grey darken-1 white--text">
+        <header class="text-uppercase">
+          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-thin">{{ title2 }}</span>
+        </header>
         <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-0">
@@ -25,7 +28,7 @@
         <v-btn outlined tile color="error"> <v-icon left>drive_eta</v-icon>&nbsp;Report Accident </v-btn>
       </v-card-actions>
     </v-card>
-  </v-layout>
+  </section>
 </template>
 
 <script>
@@ -33,7 +36,8 @@ export default {
   name: 'AccidentHistory',
   data() {
     return {
-      title: 'Accident History',
+      title1: 'Accident',
+      title2: 'History',
       search: '',
       headers: [
         {
