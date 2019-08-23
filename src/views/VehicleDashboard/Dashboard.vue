@@ -11,15 +11,7 @@
       ></component>
     </v-flex>
     <v-flex hidden-sm-and-down md3 lg2 xl1>
-      <v-navigation-drawer
-        height="auto"
-        width="auto"
-        color="transparent"
-        style="position:sticky;top:36px;"
-        right
-        floating
-        permanent
-      >
+      <v-navigation-drawer height="auto" width="auto" color="transparent" style="position:sticky;top:36px;" right floating permanent>
         <table-of-contents :tocItems="sections" />
       </v-navigation-drawer>
     </v-flex>

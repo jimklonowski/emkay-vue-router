@@ -26,6 +26,9 @@ const MockService = {
       .onPost('/users/login', { user: { account: 'EM102', username: 'bad', password: 'bad' } })
       .reply(500, { user: { isAdmin: false }, errors: ['Invalid Credentials!'], success: false })
 
+    mock.onPost('/test/error').reply(400, { success: false })
+    mock.onPost('/test/ok').reply(200, { success: true })
+    mock.onPost('/test/unauthorized').reply(401, { success: false })
     //mock.onGet('/user/').reply(200, { user: { account: 'EM102', username: 'JCK', token: '1234567890' } })
   }
 }

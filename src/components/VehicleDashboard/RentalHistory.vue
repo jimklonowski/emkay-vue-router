@@ -1,10 +1,21 @@
 <template>
   <v-layout column>
     <v-card>
-      <v-card-title class="font-weight-thin pa-3">
-        {{ title }}
+      <v-card-title class="blue-grey darken-1 white--text">
+        <header class="text-uppercase">
+          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-thin">{{ title2 }}</span>
+        </header>
         <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        <v-text-field
+          class="font-weight-regular"
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+          dark
+        ></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-0">
@@ -31,7 +42,8 @@ export default {
   name: 'RentalHistory',
   data() {
     return {
-      title: 'Rental History',
+      title1: 'Rental',
+      title2: 'History',
       search: '',
       headers: [
         {
