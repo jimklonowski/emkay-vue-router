@@ -1,15 +1,15 @@
 <template>
   <section>
     <v-card>
-      <v-card-title class="blue-grey darken-1 white--text">
+      <v-card-title :class="headerClass">
         <header class="text-uppercase">
           <span class="font-weight-black">{{ title1 }}</span>
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
-        <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
+        <v-spacer />
+        <v-text-field v-model="search" class="font-weight-regular" append-icon="search" label="Search" single-line hide-details dark />
       </v-card-title>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-text class="pa-0">
         <v-data-table
           :search="search"
@@ -21,13 +21,15 @@
           class="elevation-0"
         >
           <template v-slot:item.type="{ item }">
-            <v-chip x-small style="white-space:nowrap;" :color="getColor(item.type)">{{ item.type }}</v-chip>
+            <v-chip x-small style="white-space:nowrap;" :color="getColor(item.type)">
+              {{ item.type }}
+            </v-chip>
           </template>
         </v-data-table>
       </v-card-text>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn outlined tile color="primary"> <v-icon>credit_card</v-icon>&nbsp;Manage Fuel Cards </v-btn>
       </v-card-actions>
     </v-card>
@@ -43,6 +45,7 @@ export default {
       title1: 'Fuel',
       title2: 'History',
       goto: { name: 'fuel' },
+      headerClass: 'blue-grey darken-1 white--text',
       headers: [
         {
           text: 'Date',

@@ -1,10 +1,12 @@
 <template>
   <v-app>
-    <app-navigation></app-navigation>
-    <v-content transition="slide-x-transition">
-      <router-view />
+    <app-navigation />
+    <v-content>
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </v-content>
-    <footer-navigation v-if="authed"></footer-navigation>
+    <footer-navigation v-if="authed" />
   </v-app>
 </template>
 
@@ -17,11 +19,6 @@ export default {
     AppNavigation,
     FooterNavigation
   },
-  computed: {
-    authed() {
-      return this.$store.getters.isAuthenticated
-    }
-  },
   data() {
     return {
       authenticated: false,
@@ -30,6 +27,11 @@ export default {
         username: 'JCK',
         password: '123'
       }
+    }
+  },
+  computed: {
+    authed() {
+      return this.$store.getters.isAuthenticated
     }
   },
   mounted() {
@@ -53,6 +55,15 @@ export default {
 #app {
   /* font-family: 'Lato', sans-serif; */
   font-family: 'Roboto', sans-serif;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 
 tbody tr:nth-of-type(odd) {

@@ -1,86 +1,74 @@
 <template>
   <section>
-    <v-card :loading="loading">
-      <v-form ref="form" @submit.prevent="onSubmit">
-        <v-card-title class="blue-grey darken-1 white--text">
+    <v-form ref="form" @submit.prevent="onSubmit">
+      <v-card :loading="loading">
+        <v-card-title :class="headerClass">
           <header class="text-uppercase">
             <span class="font-weight-black">{{ title1 }}</span>
             <span class="font-weight-thin">{{ title2 }}</span>
           </header>
 
-          <v-subheader dark>{{ vehNum }}</v-subheader>
+          <v-subheader dark>
+            {{ vehNum }}
+          </v-subheader>
         </v-card-title>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-text class="row no-gutters">
           <v-list class="flex row">
-            <v-list-item
-              v-for="item in vehicle"
-              :key="item.index"
-              class="col-6 py-0"
-              style="user-select:text !important;"
-            >
+            <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
                 <v-list-item-content v-if="item.editable && isEditing" :key="isEditing">
                   <v-text-field
                     filled
                     shaped
-                    class="blue-grey--text text--darken-2 font-weight-normal"
+                    :class="inputClass"
                     :name="item.key"
                     :label="item.name"
                     :v-model="item"
                     :value="item.value"
                     :rules="editorRules.required"
-                  >{{ item.value }}</v-text-field>
+                  >
+                    {{ item.value }}
+                  </v-text-field>
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing">
-                  <v-list-item-subtitle
-                    class="font-weight-regular blue-grey--text text--lighten-3"
-                  >{{ item.name }}</v-list-item-subtitle>
-                  <v-list-item-title
-                    class="blue-grey--text text--darken-2 font-weight-normal"
-                  >{{ item.value }}</v-list-item-title>
+                  <v-list-item-subtitle :class="labelClass">
+                    {{ item.name }}
+                  </v-list-item-subtitle>
+                  <v-list-item-title :class="fieldClass">
+                    {{ item.value }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </transition>
             </v-list-item>
           </v-list>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-actions>
-          <v-alert
-            v-if="isEditing && errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-          >{{ errorMessage }}</v-alert>
-          <v-spacer></v-spacer>
+          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">
+            {{ errorMessage }}
+          </v-alert>
+          <v-spacer />
           <v-btn
             v-if="isEditing"
             type="button"
+            color="error"
+            text
             @click.prevent="
               isEditing = !isEditing
               errorMessage = null
             "
-            color="error"
-            text
-          >Cancel</v-btn>
-          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary" class="ma-2">
-            <v-icon dark>save</v-icon>&nbsp;Save
-          </v-btn>
-          <v-btn
-            v-else
-            @click.prevent="isEditing = !isEditing"
-            dark
-            tile
-            outlined
-            color="primary"
-            class="ma-2"
           >
-            <v-icon dark>edit</v-icon>&nbsp;Change Vehicle Information
+            Cancel
+          </v-btn>
+          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary" class="ma-2"> <v-icon dark>save</v-icon>&nbsp;Save </v-btn>
+          <v-btn v-else dark tile outlined color="primary" class="ma-2" @click.prevent="isEditing = !isEditing">
+            <v-icon dark>edit</v-icon>
+            &nbsp;Change Vehicle Information
           </v-btn>
         </v-card-actions>
-      </v-form>
-    </v-card>
+      </v-card>
+    </v-form>
   </section>
 </template>
 
@@ -88,11 +76,18 @@
 export default {
   name: 'VehicleDetails',
   props: {
-    vehNum: String
+    vehNum: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
       errorMessage: null,
+      labelClass: 'font-weight-regular blue-grey--text text--lighten-3',
+      fieldClass: 'font-weight-normal blue-grey--text text--darken-2',
+      headerClass: 'blue-grey darken-1 white--text',
+      inputClass: 'blue-grey--text text--darken-2 font-weight-normal',
       isEditing: false,
       loading: false,
       title1: 'Vehicle',
@@ -237,8 +232,8 @@ export default {
 
       this.$http
         .post(url)
-        .then(result => {
-          console.log(`Successful result: ${result}`)
+        .then(() => {
+          //console.log(`Successful result: ${result}`)
           this.errorMessage = null
         })
         .catch(err => {

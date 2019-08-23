@@ -1,11 +1,15 @@
 <template>
   <v-container>
     <v-layout column>
-      <header class="font-weight-light display-2 py-5">Vehicle Dashboard</header>
-      <v-alert border="left" colored-border type="info" elevation="2">Enter any vehicle number, not real data</v-alert>
+      <header class="font-weight-light display-2 py-5">
+        Vehicle Dashboard
+      </header>
+      <v-alert border="left" colored-border type="info" elevation="2">
+        Enter any vehicle number, not real data
+      </v-alert>
       <v-form ref="form" @submit.prevent="search">
         <v-flex xs12 md6>
-          <v-text-field name="vehicle" v-model="vehicle" label="Vehicle Number" :counter="6" required filled shaped outlined></v-text-field>
+          <v-text-field v-model="vehicle" name="vehicle" label="Vehicle Number" :counter="6" required filled shaped outlined />
         </v-flex>
       </v-form>
     </v-layout>
@@ -23,7 +27,10 @@ export default {
   methods: {
     search() {
       if (this.vehicle) {
-        this.$router.push({ name: 'dashboard', params: { vehicle: this.vehicle } })
+        this.$router.push({
+          name: 'dashboard',
+          params: { vehicle: this.vehicle }
+        })
       }
     }
   }

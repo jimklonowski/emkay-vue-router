@@ -9,13 +9,13 @@ import VehicleSearch from '@/components/VehicleDashboard/VehicleSearch'
 
 export default {
   name: 'VehicleDashboard',
+  components: {
+    VehicleSearch
+  },
   data() {
     return {
       title: 'Vehicle Dashboard'
     }
-  },
-  components: {
-    VehicleSearch
   }
 }
 </script>

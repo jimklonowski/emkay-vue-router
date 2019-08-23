@@ -12,45 +12,53 @@
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
+            <v-alert v-if="errorMessage" type="error">
+              {{ errorMessage }}
+            </v-alert>
 
-            <v-alert border="left" colored-border type="info" elevation="2">EM102 JCK 123</v-alert>
+            <v-alert border="left" colored-border type="info" elevation="2">
+              EM102 JCK 123
+            </v-alert>
 
             <v-text-field
+              v-model="credentials.account"
               label="Account"
               name="account"
-              v-model="credentials.account"
               append-icon="account_balance"
               type="text"
               :rules="rules.account"
               autocomplete="organization"
               required
-            ></v-text-field>
+            />
             <v-text-field
+              v-model="credentials.username"
               label="Username"
               name="username"
-              v-model="credentials.username"
               append-icon="person"
               type="text"
               :rules="rules.username"
               autocomplete="username"
               required
-            ></v-text-field>
+            />
             <v-text-field
+              v-model="credentials.password"
               label="Password"
               name="password"
-              v-model="credentials.password"
               append-icon="lock"
               type="password"
               :rules="rules.password"
               autocomplete="current-password"
               required
-            ></v-text-field>
+            />
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text to="/login-help">Forgot Password</v-btn>
-            <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">Login</v-btn>
+            <v-spacer />
+            <v-btn text to="/login-help">
+              Forgot Password
+            </v-btn>
+            <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">
+              Login
+            </v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -81,6 +89,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      errors: state => state.auth.errors
+    })
+  },
   methods: {
     onSubmit(account, username, password) {
       this.loading = true
@@ -102,26 +115,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-
-      // this.$store
-      //   .dispatch(LOGIN, { account, username, password })
-      //   .then(r => {
-      //     debugger
-      //     console.log(r)
-      //     this.loading = false
-      //     //this.$router.push({ name: 'home' })
-      //   })
-      //   .catch(err => {
-      //     this.errorMessage = err
-      //     this.loading = false
-      //   })
-      //.then(() => this.$router.push({ name: 'welcome' }))
     }
-  },
-  computed: {
-    ...mapState({
-      errors: state => state.auth.errors
-    })
   }
 }
 </script>

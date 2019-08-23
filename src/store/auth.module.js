@@ -46,7 +46,9 @@ const actions = {
     context.commit(PURGE_AUTH)
   },
   async [LOGIN_HELP](context, credentials) {
-    const response = await ApiService.post('users/login-help', { user: credentials })
+    const response = await ApiService.post('users/login-help', {
+      user: credentials
+    })
     if (response) {
       context.commit(SET_AUTH, response.data.user)
     } else {
@@ -54,7 +56,9 @@ const actions = {
     }
   },
   async [REGISTER](context, credentials) {
-    const response = await ApiService.post('users/register', { user: credentials })
+    const response = await ApiService.post('users/register', {
+      user: credentials
+    })
     if (response) {
       context.commit(SET_AUTH, response.data.user)
     } else {

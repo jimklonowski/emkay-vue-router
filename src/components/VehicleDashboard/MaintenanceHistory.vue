@@ -1,15 +1,15 @@
 <template>
   <section>
     <v-card>
-      <v-card-title class="blue-grey darken-1 white--text">
+      <v-card-title :class="headerClass">
         <header class="text-uppercase">
           <span class="font-weight-bold">{{ title1 }}</span>
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
-        <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
+        <v-spacer />
+        <v-text-field v-model="search" class="font-weight-regular" append-icon="search" label="Search" single-line hide-details dark />
       </v-card-title>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
@@ -21,7 +21,9 @@
           class="elevation-0"
         >
           <template v-slot:item.in_network="{ item }">
-            <v-icon :color="getColor(item.in_network)">{{ item.value ? 'check_circle' : 'remove_circle' }}</v-icon>
+            <v-icon :color="getColor(item.in_network)">
+              {{ item.value ? 'check_circle' : 'remove_circle' }}
+            </v-icon>
           </template>
         </v-data-table>
       </v-card-text>
@@ -36,6 +38,7 @@ export default {
     return {
       title1: 'Maintenance',
       title2: 'History',
+      headerClass: 'blue-grey darken-1 white--text',
       search: '',
       headers: [
         {

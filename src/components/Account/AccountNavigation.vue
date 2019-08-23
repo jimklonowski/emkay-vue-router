@@ -8,7 +8,9 @@
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>
-              <router-link :to="item.to" tag="li">{{ item.text }}</router-link>
+              <router-link :to="item.to" tag="li">
+                {{ item.text }}
+              </router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -30,11 +32,27 @@ export default {
   data() {
     return {
       items: [
-        { text: 'Change Contact Information', icon: 'contact_mail', to: { name: 'contact-information' } },
-        { text: 'Change Password', icon: 'security', to: { name: 'change-password' } },
+        {
+          text: 'Change Contact Information',
+          icon: 'contact_mail',
+          to: { name: 'contact-information' }
+        },
+        {
+          text: 'Change Password',
+          icon: 'security',
+          to: { name: 'change-password' }
+        },
         { text: 'Update Labels', icon: 'label', to: { name: 'labels' } },
-        { text: 'Change Default Language', icon: 'language', to: { name: 'language' } },
-        { text: 'Manage Website Logins', icon: 'supervisor_account', to: { name: 'logins' } }
+        {
+          text: 'Change Default Language',
+          icon: 'language',
+          to: { name: 'language' }
+        },
+        {
+          text: 'Manage Website Logins',
+          icon: 'supervisor_account',
+          to: { name: 'logins' }
+        }
       ]
     }
   }

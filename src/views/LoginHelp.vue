@@ -3,32 +3,36 @@
     <v-layout row wrap align-center justify-center>
       <v-card elevation="12" width="600px" :loading="loading">
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onSubmit(credentials.account, credentials.email)">
-          <v-toolbar color="primary" dense dark flat>{{ title }}</v-toolbar>
+          <v-toolbar color="primary" dense dark flat>
+            {{ title }}
+          </v-toolbar>
           <v-card-text>
             <v-text-field
+              v-model="credentials.account"
               label="Account"
               name="account"
-              v-model="credentials.account"
               append-icon="account_balance"
               type="text"
               autocomplete="organization"
               :rules="rules.account"
               required
-            ></v-text-field>
+            />
             <v-text-field
+              v-model="credentials.email"
               label="Email"
               name="email"
-              v-model="credentials.email"
               append-icon="email"
               type="email"
               autocomplete="email"
               :rules="rules.email"
               required
-            ></v-text-field>
+            />
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn type="submit" :disabled="!valid">Submit</v-btn>
+            <v-spacer />
+            <v-btn type="submit" :disabled="!valid">
+              Submit
+            </v-btn>
           </v-card-actions>
         </v-form>
       </v-card>

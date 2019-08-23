@@ -1,7 +1,9 @@
 <template>
   <v-toolbar dense>
     <v-tabs light>
-      <v-tab v-for="item in items" :key="item.text" :to="item.to">{{ item.text }}</v-tab>
+      <v-tab v-for="item in items" :key="item.text" :to="item.to">
+        {{ item.text }}
+      </v-tab>
     </v-tabs>
   </v-toolbar>
 </template>

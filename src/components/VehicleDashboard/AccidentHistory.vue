@@ -1,15 +1,15 @@
 <template>
   <section>
     <v-card>
-      <v-card-title class="blue-grey darken-1 white--text">
+      <v-card-title :class="headerClass">
         <header class="text-uppercase">
           <span class="font-weight-bold">{{ title1 }}</span>
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
-        <v-spacer></v-spacer>
-        <v-text-field class="font-weight-regular" v-model="search" append-icon="search" label="Search" single-line hide-details dark></v-text-field>
+        <v-spacer />
+        <v-text-field v-model="search" class="font-weight-regular" append-icon="search" label="Search" single-line hide-details dark />
       </v-card-title>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
@@ -20,12 +20,12 @@
           :sort-desc="[true]"
           class="elevation-0"
           dense
-        ></v-data-table>
+        />
       </v-card-text>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn outlined tile color="error"> <v-icon left>drive_eta</v-icon>&nbsp;Report Accident </v-btn>
+        <v-spacer />
+        <v-btn outlined tile color="error"> <v-icon left> drive_eta </v-icon>&nbsp;Report Accident </v-btn>
       </v-card-actions>
     </v-card>
   </section>
@@ -39,6 +39,7 @@ export default {
       title1: 'Accident',
       title2: 'History',
       search: '',
+      headerClass: 'blue-grey darken-1 white--text',
       headers: [
         {
           text: 'Loss Date',

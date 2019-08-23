@@ -2,10 +2,10 @@
   <v-layout wrap>
     <v-flex xs12>
       <v-toolbar dark>
-        <v-btn @click="goBack" icon>
+        <v-btn icon @click="goBack">
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <v-divider inset vertical></v-divider>&nbsp; Account Management
+        <v-divider inset vertical />&nbsp; Account Management
       </v-toolbar>
     </v-flex>
     <v-flex xs12 md4 lg4 xl3 pa-10>
@@ -24,13 +24,13 @@ import AccountNavigation from '@/components/Account/AccountNavigation'
 
 export default {
   name: 'Account',
+  components: {
+    AccountNavigation
+  },
   data() {
     return {
       title: 'Account Management'
     }
-  },
-  components: {
-    AccountNavigation
   },
   methods: {
     goBack() {
