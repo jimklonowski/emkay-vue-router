@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title :class="headerClass">
         <header class="text-uppercase">
-          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-black">{{ title1 }}</span>
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
         <v-spacer />
@@ -25,15 +25,20 @@
       <v-divider />
       <v-card-actions>
         <v-spacer />
-        <v-btn outlined tile color="error"> <v-icon left> drive_eta </v-icon>&nbsp;Report Accident </v-btn>
+        <report-accident></report-accident>
       </v-card-actions>
     </v-card>
   </section>
 </template>
 
 <script>
+import ReportAccident from '@/components/VehicleDashboard/Forms/ReportAccident'
+
 export default {
   name: 'AccidentHistory',
+  components: {
+    ReportAccident
+  },
   data() {
     return {
       title1: 'Accident',

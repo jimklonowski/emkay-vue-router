@@ -17,10 +17,9 @@
           <v-list class="flex row">
             <v-list-item v-for="item in driver" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
-                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing">
+                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing" class="pa-0">
                   <v-text-field
-                    filled
-                    shaped
+                    height="24"
                     :class="inputClass"
                     :name="item.key"
                     :label="item.name"
@@ -31,7 +30,7 @@
                     {{ item.value }}
                   </v-text-field>
                 </v-list-item-content>
-                <v-list-item-content v-else :key="isEditing">
+                <v-list-item-content v-else :key="isEditing" class="py-3">
                   <v-list-item-subtitle :class="labelClass">
                     {{ item.name }}
                   </v-list-item-subtitle>
@@ -65,6 +64,7 @@
             <v-icon dark> edit </v-icon>&nbsp;Change Vehicle Information
           </v-btn>
         </v-card-actions>
+        <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>
       </v-card>
     </v-form>
   </section>
@@ -85,10 +85,10 @@ export default {
         required: [v => !!v || 'Field is required']
       },
       errorMessage: null,
-      labelClass: 'font-weight-regular blue-grey--text text--lighten-3',
-      fieldClass: 'font-weight-normal blue-grey--text text--darken-2',
+      labelClass: 'details-label',
+      fieldClass: 'blue-grey--text text--darken-2',
       headerClass: 'blue-grey darken-1 white--text',
-      inputClass: 'blue-grey--text text--darken-2 font-weight-normal',
+      inputClass: 'blue-grey--text text--darken-2',
       isEditing: false,
       loading: false,
       title1: 'Driver',
@@ -235,3 +235,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.details-label {
+  height: 16px;
+  line-height: 16px;
+  font-size: 12px;
+  font-weight: 400;
+}
+</style>

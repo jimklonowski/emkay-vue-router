@@ -17,10 +17,9 @@
           <v-list class="flex row">
             <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
-                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing">
+                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing" class="pa-0">
                   <v-text-field
-                    filled
-                    shaped
+                    height="24"
                     :class="inputClass"
                     :name="item.key"
                     :label="item.name"
@@ -31,11 +30,11 @@
                     {{ item.value }}
                   </v-text-field>
                 </v-list-item-content>
-                <v-list-item-content v-else :key="isEditing">
+                <v-list-item-content v-else :key="isEditing" class="py-3">
                   <v-list-item-subtitle :class="labelClass">
                     {{ item.name }}
                   </v-list-item-subtitle>
-                  <v-list-item-title :class="fieldClass">
+                  <v-list-item-title :class="textClass">
                     {{ item.value }}
                   </v-list-item-title>
                 </v-list-item-content>
@@ -67,6 +66,7 @@
             &nbsp;Change Vehicle Information
           </v-btn>
         </v-card-actions>
+        <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>
       </v-card>
     </v-form>
   </section>
@@ -84,10 +84,10 @@ export default {
   data() {
     return {
       errorMessage: null,
-      labelClass: 'font-weight-regular blue-grey--text text--lighten-3',
-      fieldClass: 'font-weight-normal blue-grey--text text--darken-2',
+      labelClass: 'details-label',
+      textClass: 'blue-grey--text text--darken-2',
       headerClass: 'blue-grey darken-1 white--text',
-      inputClass: 'blue-grey--text text--darken-2 font-weight-normal',
+      inputClass: 'blue-grey--text text--darken-2',
       isEditing: false,
       loading: false,
       title1: 'Vehicle',
@@ -107,7 +107,7 @@ export default {
           index: 1,
           key: 'billing_sort',
           name: 'Billing Sort',
-          value: '',
+          value: '1234567890-WOW',
           editable: false
         },
         {
@@ -220,6 +220,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.errorMessage = null
       this.loading = true
 
       // updateVehicle endpoint
@@ -247,6 +248,12 @@ export default {
 }
 </script>
 <style>
+.details-label {
+  height: 16px;
+  line-height: 16px;
+  font-size: 12px;
+  font-weight: 400;
+}
 .rotate-enter {
   transform: perspective(500px) rotate3d(0, 1, 0, 90deg);
 }

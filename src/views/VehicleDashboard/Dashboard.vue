@@ -49,13 +49,13 @@ export default {
         {
           text: 'Vehicle Details',
           id: 'vd1',
-          class: 'pa-5 col-md-6',
+          class: 'pa-5 col-lg-6',
           component: VehicleDetails
         },
         {
           text: 'Driver Details',
           id: 'vd2',
-          class: 'pa-5 col-md-6',
+          class: 'pa-5 col-lg-6',
           component: DriverDetails
         },
         {

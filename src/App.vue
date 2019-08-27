@@ -66,7 +66,7 @@ export default {
   opacity: 0;
 }
 
-tbody tr:nth-of-type(odd) {
+.v-data-table tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 

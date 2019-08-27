@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title :class="headerClass">
         <header class="text-uppercase">
-          <span class="font-weight-bold">{{ title1 }}</span>
+          <span class="font-weight-black">{{ title1 }}</span>
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
         <v-spacer />
