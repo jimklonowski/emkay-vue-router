@@ -1,7 +1,7 @@
 <template>
-  <h1 class="display-4">
-    {{ title }}
-  </h1>
+  <v-container fill-height fluid pa-0>
+    <iframe v-if="iframe.loaded" :src="iframe.src" :style="iframe.style" :height="iframe.style.height" :width="iframe.style.width"></iframe>
+  </v-container>
 </template>
 
 <script>
@@ -9,8 +9,30 @@ export default {
   name: 'FleetDashboard',
   data() {
     return {
-      title: 'Fleet Dashboard'
+      title: 'Fleet Dashboard',
+      iframe: {
+        loaded: false,
+        src: 'https://dash.emkay.com/FleetDashboardDev/Authorize?customer=EM102&username=JCK',
+        style: null,
+        wrapperStyle: null
+      }
     }
+  },
+  mounted() {
+    this.iframe.style = {
+      position: 'absolute',
+      border: 'none',
+      width: '100%',
+      height: '100%'
+    }
+
+    this.iframe.wrapperStyle = {
+      overflow: 'hidden',
+      height: '100%',
+      width: '100%'
+    }
+
+    this.iframe.loaded = true
   }
 }
 </script>

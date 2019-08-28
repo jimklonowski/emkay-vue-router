@@ -1,16 +1,23 @@
 <template>
   <v-container fluid fill-height style="max-height:100vh;" class="home">
-    <v-layout column justify-center align-center pa-5>
-      <h1 class="display-4">
-        {{ title }}
-      </h1>
-      <v-subheader class="display-1">
-        {{ subtitle }}
-      </v-subheader>
-      <v-alert type="warning">
-        {{ loginDetails }}
-      </v-alert>
-    </v-layout>
+    <!-- <v-layout column justify-center align-center pa-5> -->
+    <v-row>
+      <v-col cols="12">
+        <h1 class="display-4">
+          {{ title }}
+        </h1>
+      </v-col>
+      <v-col cols="12">
+        <v-subheader class="display-1">
+          {{ subtitle }}
+        </v-subheader>
+      </v-col>
+      <v-col md="5">
+        <v-alert type="warning">
+          {{ loginDetails }}
+        </v-alert>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

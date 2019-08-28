@@ -8,9 +8,12 @@
           lazy-validation
           @submit.prevent="onSubmit(credentials.account, credentials.username, credentials.password)"
         >
-          <v-toolbar color="primary" dense dark flat>
-            <v-toolbar-title>Login</v-toolbar-title>
-          </v-toolbar>
+          <v-card-title class="blue-grey darken-1 white--text">
+            <header class="text-uppercase">
+              <span class="font-weight-black">{{ title }}</span>
+            </header>
+          </v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <v-alert v-if="errorMessage" type="error">
               {{ errorMessage }}
@@ -53,7 +56,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text to="/login-help">
+            <v-btn text to="/login-help" tabindex="-1">
               Forgot Password
             </v-btn>
             <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">
@@ -76,6 +79,7 @@ export default {
     return {
       errorMessage: '',
       loading: false,
+      title: 'Login',
       valid: false,
       credentials: {
         account: '',

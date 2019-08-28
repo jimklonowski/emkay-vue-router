@@ -1,21 +1,23 @@
 <template>
-  <v-layout row>
-    <v-flex row no-gutters sm12 md9 lg10 xl11>
-      <component
-        :is="section.component"
-        v-for="section in sections"
-        :id="section.id"
-        :key="section.id"
-        :veh-num="$route.params.vehicle"
-        :class="section.class"
-      />
-    </v-flex>
-    <v-flex hidden-sm-and-down md3 lg2 xl1>
+  <v-row>
+    <v-col sm="12" md="9" lg="10" xl="11">
+      <v-row>
+        <component
+          :is="section.component"
+          v-for="section in sections"
+          :id="section.id"
+          :key="section.id"
+          :veh-num="$route.params.vehicle"
+          :class="section.class"
+        />
+      </v-row>
+    </v-col>
+    <v-col sm="false" md="3" lg="2" xl="1">
       <v-navigation-drawer height="auto" width="auto" color="transparent" style="position:sticky;top:36px;" right floating permanent>
         <table-of-contents :toc-items="sections" />
       </v-navigation-drawer>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

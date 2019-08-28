@@ -19,6 +19,7 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           class="elevation-0"
+          dense
         >
           <template v-slot:item.type="{ item }">
             <v-chip x-small style="white-space:nowrap;" :color="getColor(item.type)">

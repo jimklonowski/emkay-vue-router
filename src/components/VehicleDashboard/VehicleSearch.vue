@@ -1,18 +1,26 @@
 <template>
   <v-container>
-    <v-layout column>
-      <header class="font-weight-light display-2 py-5">
-        Vehicle Dashboard
-      </header>
-      <v-alert border="left" colored-border type="info" elevation="2">
-        Enter any vehicle number, not real data
-      </v-alert>
-      <v-form ref="form" @submit.prevent="search">
-        <v-flex xs12 md6>
+    <v-row>
+      <v-col xs="12">
+        <header class="font-weight-light display-2 py-5 mr-auto">
+          Vehicle Dashboard
+        </header>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col md="6">
+        <v-alert border="left" colored-border type="info" elevation="2" dense>
+          Enter any vehicle number, this is not real data
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col md="6">
+        <v-form ref="form" @submit.prevent="search">
           <v-text-field v-model="vehicle" name="vehicle" label="Vehicle Number" :counter="6" required filled shaped outlined />
-        </v-flex>
-      </v-form>
-    </v-layout>
+        </v-form>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

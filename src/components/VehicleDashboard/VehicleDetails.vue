@@ -17,7 +17,7 @@
           <v-list class="flex row">
             <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
-                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing" class="pa-0">
+                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing" class="py-0">
                   <v-text-field
                     height="24"
                     :class="inputClass"
@@ -30,7 +30,7 @@
                     {{ item.value }}
                   </v-text-field>
                 </v-list-item-content>
-                <v-list-item-content v-else :key="isEditing" class="py-3">
+                <v-list-item-content v-else :key="isEditing" class="py-1">
                   <v-list-item-subtitle :class="labelClass">
                     {{ item.name }}
                   </v-list-item-subtitle>
