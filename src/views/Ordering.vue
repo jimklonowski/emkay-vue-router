@@ -1,7 +1,11 @@
 <template>
-  <h1 class="display-4">
-    {{ title }}
-  </h1>
+  <v-container fluid>
+    <v-row>
+      <v-col xs="12">
+        <header class="font-weight-thin display-2 pa-3">{{ title }}</header>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

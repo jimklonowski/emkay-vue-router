@@ -2,8 +2,11 @@
   <div>
     <vehicle-navigation />
     <v-container fluid>
-      <header class="display-1 pa-3">Vehicle Dashboard for Vehicle # {{ $route.params.vehicle }}</header>
-      <!-- <v-subheader>Extra Menu Options Here?</v-subheader> -->
+      <v-row>
+        <v-col cols="12">
+          <header class="font-weight-thin display-2 pa-3">Vehicle Dashboard for Vehicle # {{ $route.params.vehicle }}</header>
+        </v-col>
+      </v-row>
       <router-view />
     </v-container>
   </div>

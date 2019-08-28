@@ -1,14 +1,14 @@
 <template>
   <v-container fluid fill-height style="max-height:100vh;" class="home">
     <!-- <v-layout column justify-center align-center pa-5> -->
-    <v-row>
+    <v-row dense>
       <v-col cols="12">
-        <h1 class="display-4">
+        <header class="display-4 font-weight-black">
           {{ title }}
-        </h1>
+        </header>
       </v-col>
       <v-col cols="12">
-        <v-subheader class="display-1">
+        <v-subheader class="display-1 font-italic font-weight-thin">
           {{ subtitle }}
         </v-subheader>
       </v-col>

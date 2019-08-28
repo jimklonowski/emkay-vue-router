@@ -189,6 +189,22 @@
                   <v-textarea v-model="steps[2].description.value" outlined :label="steps[2].description.label" class="col-12"></v-textarea>
                   <v-textarea v-model="steps[2].damages.value" outlined :label="steps[2].damages.label" class="col-12"></v-textarea>
                 </v-row>
+                <v-row>
+                  <v-file-input
+                    v-model="steps[2].files.value"
+                    :label="steps[2].files.label"
+                    class="col-12"
+                    multiple
+                    outlined
+                    :show-size="1000"
+                    prepend-icon="camera_alt"
+                    accept="image/*"
+                  >
+                    <template v-slot:selection="{ text }">
+                      <v-chip small label color="primary">{{ text }}</v-chip>
+                    </template>
+                  </v-file-input>
+                </v-row>
               </v-container>
             </v-form>
           </v-stepper-content>
@@ -412,6 +428,10 @@ export default {
           citations: {
             label: 'Violations/Citations Issued',
             value: ''
+          },
+          files: {
+            label: 'Accident Photos',
+            value: []
           }
         },
         {

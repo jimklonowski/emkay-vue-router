@@ -10,8 +10,10 @@
         >
           <v-card-title class="blue-grey darken-1 white--text">
             <header class="text-uppercase">
-              <span class="font-weight-black">{{ title }}</span>
+              <span class="font-weight-black">{{ title1 }}</span>
+              <span class="font-weight-thin">{{ title2 }}</span>
             </header>
+            <v-subheader dark>{{ subtitle }}</v-subheader>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
@@ -19,7 +21,7 @@
               {{ errorMessage }}
             </v-alert>
 
-            <v-alert border="left" colored-border type="info" elevation="2">
+            <v-alert border="left" type="info" color="primary lighten-2" dense>
               EM102 JCK 123
             </v-alert>
 
@@ -79,7 +81,9 @@ export default {
     return {
       errorMessage: '',
       loading: false,
-      title: 'Login',
+      title1: 'Login',
+      title2: 'Client',
+      subtitle: '',
       valid: false,
       credentials: {
         account: '',

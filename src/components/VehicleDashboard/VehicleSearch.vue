@@ -35,6 +35,8 @@ export default {
   methods: {
     search() {
       if (this.vehicle) {
+        // check to make sure we're allowed to drill into this vehicle#
+        // ...
         this.$router.push({
           name: 'dashboard',
           params: { vehicle: this.vehicle }

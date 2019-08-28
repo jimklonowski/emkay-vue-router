@@ -12,7 +12,7 @@
         />
       </v-row>
     </v-col>
-    <v-col sm="false" md="3" lg="2" xl="1">
+    <v-col class="hidden-sm-and-down" md="3" lg="2" xl="1">
       <v-navigation-drawer height="auto" width="auto" color="transparent" style="position:sticky;top:36px;" right floating permanent>
         <table-of-contents :toc-items="sections" />
       </v-navigation-drawer>

@@ -5,16 +5,8 @@ module.exports = {
   env: {
     node: true
   },
-  extends: [
-    'prettier', 
-    'plugin:vue/recommended', 
-    'plugin:prettier/recommended', 
-    'eslint:recommended'
-  ],
-  plugins: [
-    'vue', 
-    'prettier'
-  ],
+  extends: ['prettier', 'plugin:vue/recommended', 'plugin:prettier/recommended', 'eslint:recommended'],
+  plugins: ['vue', 'prettier'],
   rules: {
     'vue/html-self-closing': 'off',
     'vue/max-attributes-per-line': 'off',
