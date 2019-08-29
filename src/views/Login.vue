@@ -1,6 +1,6 @@
 <template>
   <v-container fluid fill-height class="login">
-    <v-layout row wrap align-center justify-center>
+    <v-row justify="center" align="center">
       <v-card elevation="12" width="600px" :loading="loading">
         <v-form
           ref="form"
@@ -59,7 +59,7 @@
           </v-card-actions>
         </v-form>
       </v-card>
-    </v-layout>
+    </v-row>
   </v-container>
 </template>
 
