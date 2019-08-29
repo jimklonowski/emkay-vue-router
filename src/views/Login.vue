@@ -17,13 +17,9 @@
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
-            <v-alert v-if="errorMessage" type="error">
-              {{ errorMessage }}
-            </v-alert>
+            <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
 
-            <v-alert border="left" type="info" color="primary lighten-2" dense>
-              EM102 JCK 123
-            </v-alert>
+            <v-alert border="left" type="info" color="primary lighten-2" dense>EM102 JCK 123</v-alert>
 
             <v-text-field
               v-model="credentials.account"
@@ -58,12 +54,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text to="/login-help" tabindex="-1">
-              Forgot Password
-            </v-btn>
-            <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">
-              Login
-            </v-btn>
+            <v-btn text to="/login-help" tabindex="-1">Forgot Password</v-btn>
+            <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">Login</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -128,9 +120,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .login {
   /* background: url(~@/assets/loginbg.jpg); */
+  background-color: $emkay-purple;
   background: url(~@/assets/servicebg.jpg);
   background-position-x: 50%;
   background-position-y: 50%;
