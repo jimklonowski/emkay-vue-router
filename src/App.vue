@@ -21,12 +21,7 @@ export default {
   },
   data() {
     return {
-      authenticated: false,
-      mockAccount: {
-        account: 'EM102',
-        username: 'JCK',
-        password: '123'
-      }
+      authenticated: false
     }
   },
   computed: {

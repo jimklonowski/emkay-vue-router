@@ -29,17 +29,17 @@
 export default {
   name: 'Reporting',
   data: () => ({
-    title: 'Reporting',
-    reports: [
-      { text: 'Annual Expense', to: { name: 'annual-expense' } },
-      { text: 'Replacement Analysis', to: { name: 'replacement-analysis' } },
-      { text: 'Order Status', to: { name: 'order-status' } },
-      { text: 'Inventory', to: { name: 'inventory' } },
-      { text: 'Maintenance Detail', to: { name: 'maintenance-detail' } },
-      { text: 'Claim Status', to: { name: 'claim-status' } },
-      { text: 'MPG Report', to: { name: 'mpg-report' } },
-      { text: 'Personal Mileage', to: { name: 'personal-mileage' } }
-    ]
+    title: 'Reporting'
+    // reports: [
+    //   { text: 'Annual Expense', to: { name: 'annual-expense' } },
+    //   { text: 'Replacement Analysis', to: { name: 'replacement-analysis' } },
+    //   { text: 'Order Status', to: { name: 'order-status' } },
+    //   { text: 'Inventory', to: { name: 'inventory' } },
+    //   { text: 'Maintenance Detail', to: { name: 'maintenance-detail' } },
+    //   { text: 'Claim Status', to: { name: 'claim-status' } },
+    //   { text: 'MPG Report', to: { name: 'mpg-report' } },
+    //   { text: 'Personal Mileage', to: { name: 'personal-mileage' } }
+    // ]
   })
 }
 </script>
