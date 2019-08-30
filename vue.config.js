@@ -1,11 +1,9 @@
 // https://vuetifyjs.com/en/customization/sass-variables
 module.exports = {
-  publicPath: '/vue/',
+  // for production, use a different web root
+  publicPath: process.env.NODE_ENV === 'production' ? '../apps/VueTest' : '/vue/',
   css: {
     loaderOptions: {
-      // sass: {
-      //   data: `@import "~@/styles/main.sass"`
-      // },
       sass: {
         data: `@import "~@/styles/main.scss"`
       }

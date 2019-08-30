@@ -2,6 +2,11 @@
   <v-row>
     <v-col sm="12" md="9" lg="10" xl="11">
       <v-row>
+        <v-col sm="12">
+          <CriticalAlerts />
+        </v-col>
+      </v-row>
+      <v-row>
         <component
           :is="section.component"
           v-for="section in sections"
@@ -31,6 +36,8 @@ import LicensingHistory from '@/components/VehicleDashboard/LicensingHistory'
 import AccidentHistory from '@/components/VehicleDashboard/AccidentHistory'
 import RentalHistory from '@/components/VehicleDashboard/RentalHistory'
 
+import CriticalAlerts from '@/components/VehicleDashboard/CriticalAlerts'
+
 export default {
   name: 'Dashboard',
   components: {
@@ -42,7 +49,8 @@ export default {
     BillingHistory,
     LicensingHistory,
     AccidentHistory,
-    RentalHistory
+    RentalHistory,
+    CriticalAlerts
   },
   data() {
     return {

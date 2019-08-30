@@ -64,6 +64,9 @@ const MockService = {
     mock.onPost('/test/ok').reply(200, { success: true })
     mock.onPost('/test/unauthorized').reply(401, { success: false })
     //mock.onGet('/user/').reply(200, { user: { account: 'EM102', username: 'JCK', token: '1234567890' } })
+
+    // Pass through all get requests to server
+    mock.onGet().passThrough()
   }
 }
 
