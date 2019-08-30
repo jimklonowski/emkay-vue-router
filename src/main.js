@@ -13,7 +13,6 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 ApiService.init()
-ApiService.setHeader()
 
 // Ensure we checked auth before each page load
 //router.beforeEach((to, from, next) => Promise.all([store.dispatch(CHECK_AUTH)]).then(next))

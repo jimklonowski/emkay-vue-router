@@ -12,13 +12,15 @@ export default {
       title: 'Fleet Dashboard',
       iframe: {
         loaded: false,
-        src: 'https://dash.emkay.com/FleetDashboardDev/Authorize?customer=EM102&username=JCK',
+        src: '',
         style: null,
         wrapperStyle: null
       }
     }
   },
   mounted() {
+    this.iframe.src = process.env.VUE_APP_FLEET_DASH_URL
+
     this.iframe.style = {
       position: 'absolute',
       border: 'none',
