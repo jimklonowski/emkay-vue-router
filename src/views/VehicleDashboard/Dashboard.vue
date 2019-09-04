@@ -2,11 +2,6 @@
   <v-row>
     <v-col sm="12" md="9" lg="10" xl="11">
       <v-row>
-        <v-col sm="12">
-          <CriticalAlerts />
-        </v-col>
-      </v-row>
-      <v-row>
         <component
           :is="section.component"
           v-for="section in sections"
@@ -18,7 +13,7 @@
       </v-row>
     </v-col>
     <v-col class="hidden-sm-and-down" md="3" lg="2" xl="1">
-      <v-navigation-drawer height="auto" width="auto" color="transparent" style="position:sticky;top:36px;" right floating permanent>
+      <v-navigation-drawer height="auto" width="auto" color="transparent" style="position:sticky;top:100px;" right floating permanent>
         <table-of-contents :toc-items="sections" />
       </v-navigation-drawer>
     </v-col>
@@ -36,8 +31,6 @@ import LicensingHistory from '@/components/VehicleDashboard/LicensingHistory'
 import AccidentHistory from '@/components/VehicleDashboard/AccidentHistory'
 import RentalHistory from '@/components/VehicleDashboard/RentalHistory'
 
-import CriticalAlerts from '@/components/VehicleDashboard/CriticalAlerts'
-
 export default {
   name: 'Dashboard',
   components: {
@@ -49,8 +42,7 @@ export default {
     BillingHistory,
     LicensingHistory,
     AccidentHistory,
-    RentalHistory,
-    CriticalAlerts
+    RentalHistory
   },
   data() {
     return {
