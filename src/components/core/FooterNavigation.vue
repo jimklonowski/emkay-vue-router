@@ -14,10 +14,17 @@
               <div class="justify-center overline mb-2">{{ bucket.title }}</div>
               <ul class="justify-center pl-0" style="list-style:none;">
                 <li v-for="item in bucket.items" :key="item.text">
-                  <router-link
-                    :to="item.to"
+                  <a
+                    v-if="item.target"
+                    class="caption font-weight-light"
+                    style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
                     :href="item.href"
                     :target="item.target"
+                    >{{ item.text }}</a
+                  >
+                  <router-link
+                    v-else
+                    :to="item.to"
                     class="caption font-weight-light"
                     style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
                     >{{ item.text }}</router-link
