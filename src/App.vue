@@ -52,6 +52,10 @@ export default {
   font-family: 'Roboto', sans-serif;
 }
 
+.content-wrap {
+  min-height: calc(100vh - 96px - 40px);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s;

@@ -37,7 +37,6 @@
             <v-list-item-title>{{ item.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-divider />
         <!-- <v-list-item @click="logout">
           <v-list-item-action>
             <v-icon>domain_disabled</v-icon>
@@ -50,8 +49,8 @@
       </v-list>
 
       <template v-slot:append>
+        <v-divider></v-divider>
         <v-list dense>
-          <v-divider></v-divider>
           <v-list-item link @click="logout">
             <v-list-item-action>
               <v-icon>domain_disabled</v-icon>

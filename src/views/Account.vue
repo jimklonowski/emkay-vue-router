@@ -1,22 +1,24 @@
 <template>
-  <v-layout wrap>
-    <v-flex xs12>
+  <v-container fluid class="content-wrap pt-0">
+    <v-row>
       <v-toolbar dark>
         <v-btn icon @click="goBack">
           <v-icon>chevron_left</v-icon>
         </v-btn>
         <v-divider inset vertical />&nbsp; Account Management
       </v-toolbar>
-    </v-flex>
-    <v-flex xs12 md4 lg4 xl3 pa-10>
-      <account-navigation />
-    </v-flex>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="4" lg="4" xl="3" pa-10>
+        <account-navigation />
+      </v-col>
 
-    <v-flex xs12 md8 lg8 xl9 pa-10>
-      <!-- <header class="display-3">{{ title }}</header> -->
-      <router-view />
-    </v-flex>
-  </v-layout>
+      <v-col cols="12" md="8" lg="8" xl="9" pa-10>
+        <!-- <header class="display-3">{{ title }}</header> -->
+        <router-view />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

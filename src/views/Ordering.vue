@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="content-wrap">
     <v-row>
       <v-col xs="12">
         <header class="font-weight-thin display-2 pa-3">{{ title }}</header>
@@ -18,5 +18,4 @@ export default {
   }
 }
 </script>
-
 <style></style>
