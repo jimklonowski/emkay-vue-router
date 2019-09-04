@@ -13,12 +13,20 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/public',
+      name: 'public',
+      component: () => import('@/views/Public.vue'),
+      meta: {
+        guest: true
+      }
+    },
+    {
       path: '/home',
-      alias: '/',
       name: 'home',
+      alias: '/',
       component: () => import('@/views/Home.vue'),
       meta: {
-        requiresAuth: true
+        guest: false
       }
     },
     {
@@ -26,8 +34,8 @@ const router = new Router({
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
-        requiresAuth: false,
-        onlyWhenNotLoggedIn: true
+        guest: true,
+        onlyWhenLoggedOut: true
       }
     },
     {
@@ -35,33 +43,24 @@ const router = new Router({
       name: 'login-help',
       component: () => import('@/views/LoginHelp.vue'),
       meta: {
-        requiresAuth: false,
-        onlyWhenNotLoggedIn: true
+        guest: true,
+        onlyWhenLoggedOut: true
       }
     },
     {
       path: '/fleet-dashboard',
       name: 'fleet-dashboard',
-      component: () => import('@/views/FleetDashboard.vue'),
-      meta: {
-        requiresAuth: true
-      }
+      component: () => import('@/views/FleetDashboard.vue')
     },
     {
       path: '/vehicle',
       name: 'vehicle-search',
-      component: () => import('@/views/VehicleSearch.vue'),
-      meta: {
-        requiresAuth: true
-      }
+      component: () => import('@/views/VehicleSearch.vue')
     },
     {
       path: '/vehicle/:vehicle',
       name: 'vehicle-dashboard',
       component: () => import('@/views/VehicleDashboard.vue'),
-      meta: {
-        requiresAuth: true
-      },
       children: [
         {
           path: '/vehicle/:vehicle/dashboard',
@@ -89,9 +88,6 @@ const router = new Router({
       path: '/reporting',
       name: 'reporting',
       component: () => import('@/views/Reporting.vue'),
-      meta: {
-        requiresAuth: true
-      },
       children: [
         { path: '/reporting/annual-expense', name: 'annual-expense', component: () => import('@/views/Reporting/AnnualExpense.vue') },
         {
@@ -104,18 +100,12 @@ const router = new Router({
     {
       path: '/ordering',
       name: 'ordering',
-      component: () => import('@/views/Ordering.vue'),
-      meta: {
-        requiresAuth: true
-      }
+      component: () => import('@/views/Ordering.vue')
     },
     {
       path: '/account',
       name: 'account',
       component: () => import('@/views/Account.vue'),
-      meta: {
-        requiresAuth: true
-      },
       children: [
         {
           path: '/account/contact-information',
@@ -133,31 +123,25 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Yes this route requires authentication. See if user is authenticated
-    if (store.getters.isAuthenticated) {
-      // User is authenticated, we allow access
-      console.log(`[ROUTER]: User is authenticated`)
-      next()
-    } else {
-      console.log(`[ROUTER]: User is NOT authenticated, but trying to access AUTH route ---> /login`)
-      // User is not authenticated and accessing a restricted page.  Redirect to login
-      next('/login')
-    }
-  } else {
-    // path requires no user auth
-    if (to.matched.some(record => record.meta.onlyWhenNotLoggedIn)) {
+  if (to.matched.some(record => record.meta.guest)) {
+    if (to.matched.some(record => record.meta.onlyWhenLoggedOut)) {
       if (store.getters.isAuthenticated) {
-        console.log(`[ROUTER]: User is authenticated AND wants to access LOGIN/REGISTER page ---> Logging out then /login`)
-        store.dispatch(LOGOUT).then(() => next('/login'))
-        //next('/home')
+        next({ path: '/' })
       } else {
-        console.log(`[ROUTER]: User is NOT authenticated and wants to access LOGIN/REGISTER page ---> allow it`)
         next()
       }
+    } else {
+      next()
     }
-    console.log(`[ROUTER]: Auth not required, passing along route`)
-    next()
+  } else {
+    // this is an authenticated route, check auth status before proceeding
+    if (store.getters.isAuthenticated) {
+      // user is authenticated, pass route through
+      next()
+    } else {
+      // user is not authenticated and trying to access auth route -> send to login
+      store.dispatch(LOGOUT).then(() => next('/login'))
+    }
   }
 })
 

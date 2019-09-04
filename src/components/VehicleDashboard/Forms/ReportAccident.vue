@@ -1,7 +1,10 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000" persistent>
     <template v-slot:activator="{ on }">
-      <v-btn outlined tile color="error" v-on="on" @click.prevent=""> <v-icon left> drive_eta </v-icon>&nbsp;{{ title1 }} {{ title2 }} </v-btn>
+      <v-btn outlined tile color="error" v-on="on" @click.prevent>
+        <v-icon left>drive_eta</v-icon>
+        &nbsp;{{ title1 }} {{ title2 }}
+      </v-btn>
     </template>
 
     <v-card :loading="loading">
@@ -11,7 +14,9 @@
           <span class="font-weight-thin">{{ title2 }}</span>
         </header>
         <v-spacer></v-spacer>
-        <v-btn large icon tile dark @click.prevent="dialog = false"><v-icon>close</v-icon></v-btn>
+        <v-btn large icon tile dark @click.prevent="dialog = false">
+          <v-icon>close</v-icon>
+        </v-btn>
       </v-card-title>
 
       <v-stepper v-model="currentStep" class="elevation-0">
@@ -272,9 +277,7 @@
       <v-divider></v-divider>
       <v-progress-linear slot="progress" absolute bottom color="primary" :height="5" indeterminate></v-progress-linear>
       <v-card-actions>
-        <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
-          {{ errorMessage }}
-        </v-alert>
+        <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
         <v-spacer></v-spacer>
         <v-btn v-if="currentStep > 1" text color="secondary" @click.prevent="currentStep--">Back</v-btn>
         <v-btn v-if="currentStep < steps.length" color="primary" @click.prevent="nextStep">Next</v-btn>
@@ -474,7 +477,7 @@ export default {
     onSubmit() {
       this.errorMessage = null
       this.loading = true
-      const url = '/test/error'
+      const url = '/reportAccident'
 
       if (!this.$refs[`formStepSummary`].validate()) {
         //validate the last step
