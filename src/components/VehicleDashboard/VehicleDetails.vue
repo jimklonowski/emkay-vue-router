@@ -50,7 +50,7 @@
             </v-list-item>
           </v-list>
         </v-card-text>
-        <v-divider />
+        <!-- <v-divider /> -->
         <v-card-actions class="pa-4">
           <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
           <v-spacer />
