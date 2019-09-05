@@ -29,7 +29,7 @@
         </v-data-table>
       </v-card-text>
       <v-divider />
-      <v-card-actions>
+      <v-card-actions class="pa-4">
         <v-spacer />
         <v-btn outlined tile color="primary"> <v-icon>credit_card</v-icon>&nbsp;Manage Fuel Cards </v-btn>
       </v-card-actions>

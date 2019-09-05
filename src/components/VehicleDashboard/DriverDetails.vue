@@ -43,7 +43,7 @@
           </v-list>
         </v-card-text>
         <v-divider />
-        <v-card-actions>
+        <v-card-actions class="pa-4">
           <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">
             {{ errorMessage }}
           </v-alert>
@@ -59,9 +59,9 @@
           >
             Cancel
           </v-btn>
-          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary" class="ma-2"> <v-icon dark> save </v-icon>&nbsp;Save </v-btn>
-          <v-btn v-else color="primary" dark tile outlined class="ma-2" @click.prevent="isEditing = !isEditing">
-            <v-icon dark> edit </v-icon>&nbsp;Change Vehicle Information
+          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary"> <v-icon dark> save </v-icon>&nbsp;Save </v-btn>
+          <v-btn v-else color="primary" dark tile outlined @click.prevent="isEditing = !isEditing">
+            <v-icon dark> edit </v-icon>&nbsp;Change Driver Information
           </v-btn>
         </v-card-actions>
         <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>

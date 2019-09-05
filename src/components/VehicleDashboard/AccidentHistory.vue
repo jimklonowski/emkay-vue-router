@@ -23,7 +23,7 @@
         />
       </v-card-text>
       <v-divider />
-      <v-card-actions>
+      <v-card-actions class="pa-4">
         <v-spacer />
         <report-accident></report-accident>
       </v-card-actions>

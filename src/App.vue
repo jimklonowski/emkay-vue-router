@@ -40,7 +40,7 @@ export default {
 }
 
 .content-wrap {
-  min-height: calc(100vh - 128px);
+  min-height: calc(100vh - 96px);
 }
 
 .fade-enter-active,

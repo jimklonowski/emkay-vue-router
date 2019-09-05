@@ -24,9 +24,9 @@
     </v-app-bar>
 
     <v-navigation-drawer v-if="authed" v-model="drawer" app fixed light clipped>
-      <v-list dense>
+      <v-list dense nav>
         <v-subheader>NAVIGATION</v-subheader>
-        <v-list-item v-for="item in items" :key="item.text" :to="item.to">
+        <v-list-item v-for="item in items" :key="item.text" :to="item.to" active-class="primary--text">
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -38,7 +38,7 @@
 
       <template v-slot:append>
         <v-divider></v-divider>
-        <v-list dense>
+        <v-list dense nav>
           <v-list-item link @click="logout">
             <v-list-item-action>
               <v-icon>domain_disabled</v-icon>
@@ -83,14 +83,14 @@ export default {
           to: '/vehicle'
         },
         {
-          text: 'Reporting',
-          icon: 'show_chart',
-          to: '/reporting'
-        },
-        {
           text: 'Ordering',
           icon: 'pages',
           to: '/ordering'
+        },
+        {
+          text: 'Reporting',
+          icon: 'show_chart',
+          to: '/reporting'
         },
         {
           text: 'Account Management',

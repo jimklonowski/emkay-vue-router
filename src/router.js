@@ -120,8 +120,15 @@ const router = new Router({
       ]
     }
   ],
+  // Scroll to the top of each route on routing.
+  // Since there's a 300ms page transition on every route in App.vue, scrollTop AFTER this transition occurs (looks better)
   scrollBehavior() {
-    return { x: 0, y: 0 }
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ x: 0, y: 0 })
+      }, 300)
+    })
+    //return { x: 0, y: 0 }
   }
 })
 

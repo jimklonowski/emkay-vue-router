@@ -8,12 +8,25 @@
             <span class="font-weight-thin">{{ title2 }}</span>
           </header>
 
-          <v-subheader dark>
-            {{ vehNum }}
-          </v-subheader>
+          <v-subheader dark>{{ vehNum }}</v-subheader>
+          <v-spacer></v-spacer>
         </v-card-title>
         <v-divider />
         <v-card-text class="row no-gutters">
+          <v-speed-dial v-model="fab" absolute right direction="bottom" transition="slide-x-reverse-transition">
+            <template v-slot:activator>
+              <v-btn v-model="fab" color="primary" dark fab>
+                <v-icon v-if="fab">close</v-icon>
+                <v-icon v-else>settings</v-icon>
+              </v-btn>
+            </template>
+            <v-btn fab dark small color="success" @click.prevent="isEditing = !isEditing">
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="secondary">
+              <v-icon>help_outline</v-icon>
+            </v-btn>
+          </v-speed-dial>
           <v-list class="flex row">
             <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
@@ -26,27 +39,20 @@
                     :v-model="item"
                     :value="item.value"
                     :rules="editorRules.required"
+                    >{{ item.value }}</v-text-field
                   >
-                    {{ item.value }}
-                  </v-text-field>
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing" class="py-1">
-                  <v-list-item-subtitle :class="labelClass">
-                    {{ item.name }}
-                  </v-list-item-subtitle>
-                  <v-list-item-title :class="textClass">
-                    {{ item.value }}
-                  </v-list-item-title>
+                  <v-list-item-subtitle :class="labelClass">{{ item.name }}</v-list-item-subtitle>
+                  <v-list-item-title :class="textClass">{{ item.value }}</v-list-item-title>
                 </v-list-item-content>
               </transition>
             </v-list-item>
           </v-list>
         </v-card-text>
         <v-divider />
-        <v-card-actions>
-          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">
-            {{ errorMessage }}
-          </v-alert>
+        <v-card-actions class="pa-4">
+          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
           <v-spacer />
           <v-btn
             v-if="isEditing"
@@ -57,14 +63,12 @@
               isEditing = !isEditing
               errorMessage = null
             "
+            >Cancel</v-btn
           >
-            Cancel
-          </v-btn>
-          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary" class="ma-2"> <v-icon dark>save</v-icon>&nbsp;Save </v-btn>
-          <v-btn v-else dark tile outlined color="primary" class="ma-2" @click.prevent="isEditing = !isEditing">
-            <v-icon dark>edit</v-icon>
-            &nbsp;Change Vehicle Information
-          </v-btn>
+          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary"> <v-icon dark>save</v-icon>&nbsp;Save </v-btn>
+          <!-- <v-btn v-else dark tile outlined color="primary" @click.prevent="isEditing = !isEditing">
+            <v-icon dark>edit</v-icon>&nbsp;Change Vehicle Information
+          </v-btn>-->
         </v-card-actions>
         <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>
       </v-card>
@@ -83,6 +87,7 @@ export default {
   },
   data() {
     return {
+      fab: false,
       errorMessage: null,
       labelClass: 'details-label',
       textClass: 'blue-grey--text text--darken-2',
