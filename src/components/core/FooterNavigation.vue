@@ -1,42 +1,40 @@
 <template>
-  <span>
-    <v-footer padless dark>
-      <v-card width="100%" flat tile class="blue-grey white--text text-center">
-        <!-- <v-card-text>
+  <v-footer padless dark>
+    <v-card width="100%" flat tile class="blue-grey white--text text-center">
+      <!-- <v-card-text>
         <div>We create a client experience that is simple, better, and different.</div>
-        </v-card-text>-->
-        <v-divider></v-divider>
-        <v-card-text class="py-2 blue-grey darken-1"> {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc. </v-card-text>
-        <v-divider></v-divider>
-        <v-card-text class="py-2 blue-grey darken-3">
-          <v-row justify="center">
-            <v-col v-for="bucket in buckets" :key="bucket.title" cols="12" sm="4" lg="2">
-              <div class="justify-center overline mb-2">{{ bucket.title }}</div>
-              <ul class="justify-center pl-0" style="list-style:none;">
-                <li v-for="item in bucket.items" :key="item.text">
-                  <a
-                    v-if="item.target"
-                    class="caption font-weight-light"
-                    style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
-                    :href="item.href"
-                    :target="item.target"
-                    >{{ item.text }}</a
-                  >
-                  <router-link
-                    v-else
-                    :to="item.to"
-                    class="caption font-weight-light"
-                    style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
-                    >{{ item.text }}</router-link
-                  >
-                </li>
-              </ul>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-footer>
-  </span>
+      </v-card-text>-->
+      <v-divider></v-divider>
+      <v-card-text class="py-2 blue-grey darken-1"> {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc. </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text class="py-2 blue-grey darken-3">
+        <v-row justify="center">
+          <v-col v-for="bucket in buckets" :key="bucket.title" cols="12" sm="4" lg="2">
+            <div class="justify-center overline mb-2">{{ bucket.title }}</div>
+            <ul class="justify-center pl-0" style="list-style:none;">
+              <li v-for="item in bucket.items" :key="item.text">
+                <a
+                  v-if="item.target"
+                  class="caption font-weight-light"
+                  style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
+                  :href="item.href"
+                  :target="item.target"
+                  >{{ item.text }}</a
+                >
+                <router-link
+                  v-else
+                  :to="item.to"
+                  class="caption font-weight-light"
+                  style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
+                  >{{ item.text }}</router-link
+                >
+              </li>
+            </ul>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-footer>
 </template>
 
 <script>

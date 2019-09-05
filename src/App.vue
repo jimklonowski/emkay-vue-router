@@ -3,10 +3,10 @@
     <app-navigation />
     <v-content>
       <transition name="fade" mode="out-in">
-        <router-view />
+        <router-view class="content-wrap" />
       </transition>
+      <footer-navigation v-if="authed" />
     </v-content>
-    <footer-navigation v-if="authed" />
   </v-app>
 </template>
 
@@ -20,28 +20,15 @@ export default {
     FooterNavigation
   },
   data() {
-    return {
-      authenticated: false
-    }
+    return {}
   },
   computed: {
     authed() {
       return this.$store.getters.isAuthenticated
     }
   },
-  mounted() {
-    if (!this.authenticated) {
-      this.$router.replace({ path: 'login' })
-    }
-  },
-  methods: {
-    setAuthenticated(status) {
-      this.authenticated = status
-    },
-    logout() {
-      this.authenticated = false
-    }
-  }
+  mounted() {},
+  methods: {}
 }
 </script>
 
@@ -53,7 +40,7 @@ export default {
 }
 
 .content-wrap {
-  min-height: calc(100vh - 96px - 40px);
+  min-height: calc(100vh - 128px);
 }
 
 .fade-enter-active,

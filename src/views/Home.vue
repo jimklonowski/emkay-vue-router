@@ -1,6 +1,5 @@
 <template>
   <v-container fluid fill-height class="home">
-    <!-- <v-layout column justify-center align-center pa-5> -->
     <v-row dense>
       <v-col cols="12">
         <header class="display-4 font-weight-black">{{ title }}</header>
@@ -39,8 +38,8 @@ export default {
 .home {
   background: url(~@/assets/whitebg.jpg);
   background-size: cover;
-  min-height: calc(100vh - 96px - 40px);
-  width: 100%;
-  height: 100%;
+  /* min-height: calc(100vh - 96px - 40px); */
+  /* width: 100%;
+  height: 100%; */
 }
 </style>
