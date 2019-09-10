@@ -10,23 +10,50 @@
 
           <v-subheader dark>{{ vehNum }}</v-subheader>
           <v-spacer></v-spacer>
-        </v-card-title>
-        <v-divider />
-        <v-card-text class="row no-gutters">
-          <v-speed-dial v-model="fab" absolute right direction="bottom" transition="slide-x-reverse-transition">
+          <v-speed-dial v-model="fab" absolute right direction="bottom" transition="slide-x-reverse-transition" style="top:40px;">
             <template v-slot:activator>
-              <v-btn v-model="fab" color="primary" dark fab>
+              <v-btn v-model="fab" color="blue-grey lighten-1 white--text" dark fab>
                 <v-icon v-if="fab">close</v-icon>
                 <v-icon v-else>settings</v-icon>
               </v-btn>
             </template>
-            <v-btn fab dark small color="success" @click.prevent="isEditing = !isEditing">
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn fab dark small color="secondary">
-              <v-icon>help_outline</v-icon>
-            </v-btn>
+            <v-tooltip v-if="!isEditing" left>
+              <template v-slot:activator="{ on }">
+                <v-btn fab dark small color="primary lighten-2" @click.prevent="isEditing = !isEditing" v-on="on">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+              </template>
+              <span>Edit Vehicle Details</span>
+            </v-tooltip>
+            <v-tooltip v-else left>
+              <template v-slot:activator="{ on }">
+                <v-btn fab dark small color="success darken-1" v-on="on" @click.prevent="onSubmit">
+                  <v-icon>save</v-icon>
+                </v-btn>
+              </template>
+              <span>Save Vehicle Details</span>
+            </v-tooltip>
+            <v-tooltip v-if="isEditing" left>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  fab
+                  dark
+                  small
+                  color="error"
+                  @click.prevent="
+                    isEditing = !isEditing
+                    errorMessage = null
+                  "
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </template>
+              <span>Discard Changes</span>
+            </v-tooltip>
           </v-speed-dial>
+        </v-card-title>
+        <v-divider />
+        <v-card-text class="row no-gutters">
           <v-list class="flex row">
             <v-list-item v-for="item in vehicle" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
               <transition name="rotate" mode="out-in">
@@ -85,143 +112,144 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      fab: false,
-      errorMessage: null,
-      labelClass: 'details-label',
-      textClass: 'blue-grey--text text--darken-2',
-      headerClass: 'blue-grey darken-1 white--text',
-      inputClass: 'blue-grey--text text--darken-2',
-      isEditing: false,
-      loading: false,
-      title1: 'Vehicle',
-      title2: 'Details',
-      editorRules: {
-        required: [v => !!v || 'Field is required']
+  data: () => ({
+    fab: false,
+    errorMessage: null,
+    labelClass: 'details-label',
+    textClass: 'blue-grey--text text--darken-2',
+    headerClass: '',
+    inputClass: 'blue-grey--text text--darken-2',
+    isEditing: false,
+    loading: false,
+    title1: 'Vehicle',
+    title2: 'Details',
+    editorRules: {
+      required: [v => !!v || 'Field is required']
+    },
+    vehicle: [
+      {
+        index: 0,
+        key: 'account',
+        name: 'Account',
+        value: 'EM102',
+        editable: false
       },
-      vehicle: [
-        {
-          index: 0,
-          key: 'account',
-          name: 'Account',
-          value: 'EM102',
-          editable: false
-        },
-        {
-          index: 1,
-          key: 'billing_sort',
-          name: 'Billing Sort',
-          value: '1234567890-WOW',
-          editable: false
-        },
-        {
-          index: 2,
-          key: 'vin',
-          name: 'VIN',
-          value: '987654321QWERTY',
-          editable: false
-        },
-        {
-          index: 3,
-          key: 'vehicle_number',
-          name: 'Vehicle Number',
-          value: '123456',
-          editable: false
-        },
-        {
-          index: 4,
-          key: 'center',
-          name: 'Center',
-          value: '001',
-          editable: false
-        },
-        {
-          index: 5,
-          key: 'center_description',
-          name: 'Center Description',
-          value: 'Executive',
-          editable: false
-        },
-        {
-          index: 6,
-          key: 'client_vehicle_number',
-          name: 'Client Vehicle Number',
-          value: '987654',
-          editable: false
-        },
-        {
-          index: 7,
-          key: 'vehicle_year',
-          name: 'Year',
-          value: '2019',
-          editable: false
-        },
-        {
-          index: 8,
-          key: 'vehicle_make',
-          name: 'Make',
-          value: 'DODGE',
-          editable: false
-        },
-        {
-          index: 9,
-          key: 'vehicle_model',
-          name: 'Model',
-          value: 'DURANGO',
-          editable: false
-        },
-        {
-          index: 10,
-          key: 'vehicle_classification',
-          name: 'Category',
-          value: 'Sport Utility - Medium',
-          editable: false
-        },
-        {
-          index: 11,
-          key: 'vehicle_status',
-          name: 'Status',
-          value: 'ON BILLING',
-          editable: false
-        },
-        {
-          index: 12,
-          key: 'customer_use_1',
-          name: 'Client Use 1',
-          value: 'asdf',
-          editable: true
-        },
-        {
-          index: 13,
-          key: 'customer_use_2',
-          name: 'Client Use 2',
-          value: 'qwer',
-          editable: true
-        },
-        {
-          index: 14,
-          key: 'customer_use_3',
-          name: 'Client Use 3',
-          value: '1234',
-          editable: true
-        },
-        {
-          index: 15,
-          key: 'customer_use_4',
-          name: 'Client Use 4',
-          value: 'jklo',
-          editable: true
-        },
-        {
-          index: 16,
-          key: 'customer_use_5',
-          name: 'Client Use 5',
-          value: 'test',
-          editable: true
-        }
-      ]
-    }
+      {
+        index: 1,
+        key: 'billing_sort',
+        name: 'Billing Sort',
+        value: '1234567890-WOW',
+        editable: false
+      },
+      {
+        index: 2,
+        key: 'vin',
+        name: 'VIN',
+        value: '987654321QWERTY',
+        editable: false
+      },
+      {
+        index: 3,
+        key: 'vehicle_number',
+        name: 'Vehicle Number',
+        value: '123456',
+        editable: false
+      },
+      {
+        index: 4,
+        key: 'center',
+        name: 'Center',
+        value: '001',
+        editable: false
+      },
+      {
+        index: 5,
+        key: 'center_description',
+        name: 'Center Description',
+        value: 'Executive',
+        editable: false
+      },
+      {
+        index: 6,
+        key: 'client_vehicle_number',
+        name: 'Client Vehicle Number',
+        value: '987654',
+        editable: false
+      },
+      {
+        index: 7,
+        key: 'vehicle_year',
+        name: 'Year',
+        value: '2019',
+        editable: false
+      },
+      {
+        index: 8,
+        key: 'vehicle_make',
+        name: 'Make',
+        value: 'DODGE',
+        editable: false
+      },
+      {
+        index: 9,
+        key: 'vehicle_model',
+        name: 'Model',
+        value: 'DURANGO',
+        editable: false
+      },
+      {
+        index: 10,
+        key: 'vehicle_classification',
+        name: 'Category',
+        value: 'Sport Utility - Medium',
+        editable: false
+      },
+      {
+        index: 11,
+        key: 'vehicle_status',
+        name: 'Status',
+        value: 'ON BILLING',
+        editable: false
+      },
+      {
+        index: 12,
+        key: 'customer_use_1',
+        name: 'Client Use 1',
+        value: 'asdf',
+        editable: true
+      },
+      {
+        index: 13,
+        key: 'customer_use_2',
+        name: 'Client Use 2',
+        value: 'qwer',
+        editable: true
+      },
+      {
+        index: 14,
+        key: 'customer_use_3',
+        name: 'Client Use 3',
+        value: '1234',
+        editable: true
+      },
+      {
+        index: 15,
+        key: 'customer_use_4',
+        name: 'Client Use 4',
+        value: 'jklo',
+        editable: true
+      },
+      {
+        index: 16,
+        key: 'customer_use_5',
+        name: 'Client Use 5',
+        value: 'test',
+        editable: true
+      }
+    ]
+  }),
+  created() {
+    this.headerClass = this.$config.COMPONENT_HEADER_CLASS
   },
   methods: {
     onSubmit() {

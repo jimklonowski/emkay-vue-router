@@ -9,6 +9,10 @@ import '@babel/polyfill'
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+import vueConfig from 'vue-config'
+import config from './settings/config'
+Vue.use(vueConfig, config)
+
 //import { CHECK_AUTH } from './store/actions.type'
 import ApiService from './services/api.service'
 ApiService.init()

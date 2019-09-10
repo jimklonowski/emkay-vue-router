@@ -5,9 +5,9 @@
         <div>We create a client experience that is simple, better, and different.</div>
       </v-card-text>-->
       <v-divider></v-divider>
-      <v-card-text class="py-2 blue-grey darken-1"> {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc. </v-card-text>
+      <v-card-text :class="this.$config.COMPONENT_HEADER_CLASS"> {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc. </v-card-text>
       <v-divider></v-divider>
-      <v-card-text class="py-2 blue-grey darken-3">
+      <v-card-text :class="this.$config.FOOTER_CLASS">
         <v-row justify="center">
           <v-col v-for="bucket in buckets" :key="bucket.title" cols="12" sm="4" lg="2">
             <div class="justify-center overline mb-2">{{ bucket.title }}</div>

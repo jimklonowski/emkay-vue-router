@@ -8,9 +8,7 @@
             <span class="font-weight-thin">{{ title2 }}</span>
           </header>
 
-          <v-subheader dark>
-            {{ vehNum }}
-          </v-subheader>
+          <v-subheader dark>{{ vehNum }}</v-subheader>
         </v-card-title>
         <v-divider />
         <v-card-text class="row no-gutters">
@@ -26,17 +24,12 @@
                     :v-model="item"
                     :value="item.value"
                     :rules="editorRules.required"
+                    >{{ item.value }}</v-text-field
                   >
-                    {{ item.value }}
-                  </v-text-field>
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing" class="py-1">
-                  <v-list-item-subtitle :class="labelClass">
-                    {{ item.name }}
-                  </v-list-item-subtitle>
-                  <v-list-item-title :class="fieldClass">
-                    {{ item.value }}
-                  </v-list-item-title>
+                  <v-list-item-subtitle :class="labelClass">{{ item.name }}</v-list-item-subtitle>
+                  <v-list-item-title :class="fieldClass">{{ item.value }}</v-list-item-title>
                 </v-list-item-content>
               </transition>
             </v-list-item>
@@ -44,9 +37,7 @@
         </v-card-text>
         <v-divider />
         <v-card-actions class="pa-4">
-          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">
-            {{ errorMessage }}
-          </v-alert>
+          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
           <v-spacer />
           <v-btn
             v-if="isEditing"
@@ -56,12 +47,11 @@
               isEditing = !isEditing
               errorMessage = null
             "
+            >Cancel</v-btn
           >
-            Cancel
-          </v-btn>
-          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary"> <v-icon dark> save </v-icon>&nbsp;Save </v-btn>
+          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary"> <v-icon dark>save</v-icon>&nbsp;Save </v-btn>
           <v-btn v-else color="primary" dark tile outlined @click.prevent="isEditing = !isEditing">
-            <v-icon dark> edit </v-icon>&nbsp;Change Driver Information
+            <v-icon dark>edit</v-icon>&nbsp;Change Driver Information
           </v-btn>
         </v-card-actions>
         <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>
@@ -79,135 +69,136 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      editorRules: {
-        required: [v => !!v || 'Field is required']
+  data: () => ({
+    editorRules: {
+      required: [v => !!v || 'Field is required']
+    },
+    errorMessage: null,
+    labelClass: 'details-label',
+    fieldClass: 'blue-grey--text text--darken-2',
+    headerClass: '',
+    inputClass: 'blue-grey--text text--darken-2',
+    isEditing: false,
+    loading: false,
+    title1: 'Driver',
+    title2: 'Details',
+    driver: [
+      {
+        index: 0,
+        key: 'last_name',
+        name: 'Last Name',
+        value: 'Klonowski',
+        editable: true
       },
-      errorMessage: null,
-      labelClass: 'details-label',
-      fieldClass: 'blue-grey--text text--darken-2',
-      headerClass: 'blue-grey darken-1 white--text',
-      inputClass: 'blue-grey--text text--darken-2',
-      isEditing: false,
-      loading: false,
-      title1: 'Driver',
-      title2: 'Details',
-      driver: [
-        {
-          index: 0,
-          key: 'last_name',
-          name: 'Last Name',
-          value: 'Klonowski',
-          editable: true
-        },
-        {
-          index: 1,
-          key: 'first_name',
-          name: 'First Name',
-          value: 'James',
-          editable: true
-        },
-        {
-          index: 2,
-          key: 'address_1',
-          name: 'Address 1',
-          value: 'Emkay Inc',
-          editable: true
-        },
-        {
-          index: 3,
-          key: 'address_2',
-          name: 'Address 2',
-          value: '805 w Thorndale Ave',
-          editable: true
-        },
-        {
-          index: 4,
-          key: 'city_state_zip',
-          name: 'City/State/ZIP',
-          value: 'Itasca, IL 60189',
-          editable: true
-        },
-        {
-          index: 5,
-          key: 'county',
-          name: 'County',
-          value: 'DuPage',
-          editable: true
-        },
-        {
-          index: 6,
-          key: 'phone',
-          name: 'Phone',
-          value: '630-123-4567',
-          editable: true
-        },
-        {
-          index: 7,
-          key: 'cell',
-          name: 'Cell',
-          value: '630-987-6543',
-          editable: true
-        },
-        {
-          index: 8,
-          key: 'fax',
-          name: 'Fax',
-          value: '773-630-7081',
-          editable: true
-        },
-        {
-          index: 9,
-          key: 'email',
-          name: 'Email',
-          value: 'jklonowski@emkay.com',
-          editable: true
-        },
-        {
-          index: 10,
-          key: 'employee_id',
-          name: 'Employee ID',
-          value: '112233',
-          editable: false
-        },
-        {
-          index: 11,
-          key: 'driver_misc_1',
-          name: 'Driver Misc 1',
-          value: 'custom',
-          editable: true
-        },
-        {
-          index: 12,
-          key: 'driver_misc_2',
-          name: 'Driver Misc 2',
-          value: 'labels',
-          editable: true
-        },
-        {
-          index: 13,
-          key: 'driver_misc_3',
-          name: 'Driver Misc 3',
-          value: 'for',
-          editable: true
-        },
-        {
-          index: 14,
-          key: 'driver_misc_4',
-          name: 'Driver Misc 4',
-          value: 'drivers',
-          editable: true
-        },
-        {
-          index: 15,
-          key: 'selector_level',
-          name: 'Selector Level',
-          value: 'something',
-          editable: true
-        }
-      ]
-    }
+      {
+        index: 1,
+        key: 'first_name',
+        name: 'First Name',
+        value: 'James',
+        editable: true
+      },
+      {
+        index: 2,
+        key: 'address_1',
+        name: 'Address 1',
+        value: 'Emkay Inc',
+        editable: true
+      },
+      {
+        index: 3,
+        key: 'address_2',
+        name: 'Address 2',
+        value: '805 w Thorndale Ave',
+        editable: true
+      },
+      {
+        index: 4,
+        key: 'city_state_zip',
+        name: 'City/State/ZIP',
+        value: 'Itasca, IL 60189',
+        editable: true
+      },
+      {
+        index: 5,
+        key: 'county',
+        name: 'County',
+        value: 'DuPage',
+        editable: true
+      },
+      {
+        index: 6,
+        key: 'phone',
+        name: 'Phone',
+        value: '630-123-4567',
+        editable: true
+      },
+      {
+        index: 7,
+        key: 'cell',
+        name: 'Cell',
+        value: '630-987-6543',
+        editable: true
+      },
+      {
+        index: 8,
+        key: 'fax',
+        name: 'Fax',
+        value: '773-630-7081',
+        editable: true
+      },
+      {
+        index: 9,
+        key: 'email',
+        name: 'Email',
+        value: 'jklonowski@emkay.com',
+        editable: true
+      },
+      {
+        index: 10,
+        key: 'employee_id',
+        name: 'Employee ID',
+        value: '112233',
+        editable: false
+      },
+      {
+        index: 11,
+        key: 'driver_misc_1',
+        name: 'Driver Misc 1',
+        value: 'custom',
+        editable: true
+      },
+      {
+        index: 12,
+        key: 'driver_misc_2',
+        name: 'Driver Misc 2',
+        value: 'labels',
+        editable: true
+      },
+      {
+        index: 13,
+        key: 'driver_misc_3',
+        name: 'Driver Misc 3',
+        value: 'for',
+        editable: true
+      },
+      {
+        index: 14,
+        key: 'driver_misc_4',
+        name: 'Driver Misc 4',
+        value: 'drivers',
+        editable: true
+      },
+      {
+        index: 15,
+        key: 'selector_level',
+        name: 'Selector Level',
+        value: 'something',
+        editable: true
+      }
+    ]
+  }),
+  created() {
+    this.headerClass = this.$config.COMPONENT_HEADER_CLASS
   },
   methods: {
     onSubmit() {

@@ -1,8 +1,10 @@
 <template>
   <nav>
-    <v-system-bar v-if="authed" color="blue-grey darken-4" app window dark>
-      <v-icon>mail</v-icon>
-      <span v-if="messageCount > 0" style="font-family:'Roboto Condensed',sans-serif;">{{ messageCount }} unread messages</span>
+    <v-system-bar v-if="authed" :class="this.$config.SYSTEM_BAR_CLASS" app dark height="36">
+      <v-btn small text tile color="rgba(255,255,255,0.7)" :to="{ name: 'messaging' }">
+        <v-icon>mail</v-icon>
+        <span v-if="messageCount > 0" style="font-family:'Roboto Condensed',sans-serif;">{{ messageCount }} unread messages</span>
+      </v-btn>
       <div class="flex-grow-1"></div>
       <v-tooltip left>
         <template v-slot:activator="{ on }">
@@ -11,8 +13,8 @@
         <span v-text="formatFullDate(now)"></span>
       </v-tooltip>
     </v-system-bar>
-    <v-divider v-if="authed" dark style="width:100%;position:fixed;top:32px;z-index:6;"></v-divider>
-    <v-app-bar color="blue-grey darken-2" app dark clipped-left>
+    <v-divider v-if="authed" dark style="width:100%;position:fixed;top:36px;z-index:6;"></v-divider>
+    <v-app-bar :class="this.$config.APP_BAR_CLASS" app dark clipped-left>
       <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer" />
       <v-spacer class="hidden-md-and-up" />
       <v-toolbar-title class="hidden-sm-and-down">{{ title }}</v-toolbar-title>

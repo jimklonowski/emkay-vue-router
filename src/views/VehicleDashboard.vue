@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vehicle-navigation />
+    <vehicle-navigation :vehicle="$route.params.vehicle" />
     <v-container fluid>
       <v-row>
         <v-col cols="12">

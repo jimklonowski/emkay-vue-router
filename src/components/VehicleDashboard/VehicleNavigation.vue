@@ -1,7 +1,7 @@
 <template>
   <v-toolbar dense>
     <v-tabs light>
-      <v-tab v-for="item in items" :key="item.text" :to="item.to">
+      <v-tab v-for="item in items" :key="item.text" :to="item.to" :vehicle="vehicle">
         {{ item.text }}
       </v-tab>
     </v-tabs>
@@ -11,6 +11,12 @@
 <script>
 export default {
   name: 'VehicleNavigation',
+  props: {
+    vehicle: {
+      type: String,
+      default: ''
+    }
+  },
   data: () => ({
     items: [
       //{ text: 'General', to: '/vehicle-dashboard/general' },

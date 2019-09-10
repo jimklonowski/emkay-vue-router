@@ -103,6 +103,11 @@ const router = new Router({
       component: () => import('@/views/Ordering.vue')
     },
     {
+      path: '/messaging',
+      name: 'messaging',
+      component: () => import('@/views/Messaging.vue')
+    },
+    {
       path: '/account',
       name: 'account',
       component: () => import('@/views/Account.vue'),
@@ -147,9 +152,12 @@ router.beforeEach((to, from, next) => {
     // this is an authenticated route, check auth status before proceeding
     if (store.getters.isAuthenticated) {
       // user is authenticated, pass route through
+      console.log(`IsAuthed -> ${to.path}`)
+      console.log(store)
       next()
     } else {
       // user is not authenticated and trying to access auth route -> send to login
+      console.log(`Not authed -> ${to.path}`)
       store.dispatch(LOGOUT).then(() => next('/login'))
     }
   }
