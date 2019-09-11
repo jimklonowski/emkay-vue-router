@@ -36,7 +36,9 @@ const actions = {
     context.commit(PURGE_AUTH)
   },
   async [REFRESH_TOKEN](context) {
-    let response = await ApiService.post('/auth/token/refresh', { token: JwtService.getRefreshToken() })
+    let response = await ApiService.post('/auth/token/refresh', {
+      token: JwtService.getRefreshToken()
+    })
     if (response) {
       context.commit(SET_AUTH, response.data.user)
     } else {

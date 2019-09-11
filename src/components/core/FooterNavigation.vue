@@ -1,16 +1,23 @@
 <template>
   <v-footer padless dark>
     <v-card width="100%" flat tile class="blue-grey white--text text-center">
-      <!-- <v-card-text>
-        <div>We create a client experience that is simple, better, and different.</div>
-      </v-card-text>-->
-      <v-divider></v-divider>
-      <v-card-text :class="this.$config.COMPONENT_HEADER_CLASS"> {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc. </v-card-text>
-      <v-divider></v-divider>
+      <v-divider />
+      <v-card-text :class="this.$config.COMPONENT_HEADER_CLASS">
+        {{ new Date().getFullYear() }} - <strong>EMKAY</strong>, Inc.
+      </v-card-text>
+      <v-divider />
       <v-card-text :class="this.$config.FOOTER_CLASS">
         <v-row justify="center">
-          <v-col v-for="bucket in buckets" :key="bucket.title" cols="12" sm="4" lg="2">
-            <div class="justify-center overline mb-2">{{ bucket.title }}</div>
+          <v-col
+            v-for="bucket in buckets"
+            :key="bucket.title"
+            cols="12"
+            sm="4"
+            lg="2"
+          >
+            <div class="justify-center overline mb-2">
+              {{ bucket.title }}
+            </div>
             <ul class="justify-center pl-0" style="list-style:none;">
               <li v-for="item in bucket.items" :key="item.text">
                 <a
@@ -19,15 +26,17 @@
                   style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
                   :href="item.href"
                   :target="item.target"
-                  >{{ item.text }}</a
                 >
+                  {{ item.text }}
+                </a>
                 <router-link
                   v-else
                   :to="item.to"
                   class="caption font-weight-light"
                   style="text-decoration:none;color:rgba(255,255,255,0.35) !important;"
-                  >{{ item.text }}</router-link
                 >
+                  {{ item.text }}
+                </router-link>
               </li>
             </ul>
           </v-col>
@@ -61,11 +70,36 @@ export default {
       {
         title: 'About',
         items: [
-          { text: 'About', to: {}, href: '//emkay.com/about', target: '_blank' },
-          { text: 'Leasing', to: {}, href: '//emkay.com/leasing/trac', target: '_blank' },
-          { text: 'Services', to: {}, href: '//emkay.com/services/maintenance', target: '_blank' },
-          { text: 'Technology', to: {}, href: '//emkay.com/technology/client-website', target: '_blank' },
-          { text: 'Solutions', to: {}, href: '//emkay.com/strategic-solutions', target: '_blank' }
+          {
+            text: 'About',
+            to: {},
+            href: '//emkay.com/about',
+            target: '_blank'
+          },
+          {
+            text: 'Leasing',
+            to: {},
+            href: '//emkay.com/leasing/trac',
+            target: '_blank'
+          },
+          {
+            text: 'Services',
+            to: {},
+            href: '//emkay.com/services/maintenance',
+            target: '_blank'
+          },
+          {
+            text: 'Technology',
+            to: {},
+            href: '//emkay.com/technology/client-website',
+            target: '_blank'
+          },
+          {
+            text: 'Solutions',
+            to: {},
+            href: '//emkay.com/strategic-solutions',
+            target: '_blank'
+          }
         ]
       }
     ]

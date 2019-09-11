@@ -17,13 +17,6 @@
       </v-list>
     </v-navigation-drawer>
   </v-card>
-  <!-- <v-toolbar dense light>
-    <v-toolbar-title>Account Management</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-xs-only">
-      <v-btn text v-for="item in items" :key="item.text" :to="item.to">{{ item.text }}</v-btn>
-    </v-toolbar-items>
-  </v-toolbar>-->
 </template>
 
 <script>

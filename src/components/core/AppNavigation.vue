@@ -1,34 +1,71 @@
 <template>
   <nav>
-    <v-system-bar v-if="authed" :class="this.$config.SYSTEM_BAR_CLASS" app dark height="36">
-      <v-btn small text tile color="rgba(255,255,255,0.7)" :to="{ name: 'messaging' }">
+    <v-system-bar
+      v-if="authed"
+      :class="this.$config.SYSTEM_BAR_CLASS"
+      app
+      dark
+      height="36"
+    >
+      <v-btn
+        small
+        text
+        tile
+        color="rgba(255,255,255,0.7)"
+        :to="{ name: 'messaging' }"
+      >
         <v-icon>mail</v-icon>
-        <span v-if="messageCount > 0" style="font-family:'Roboto Condensed',sans-serif;">{{ messageCount }} unread messages</span>
+        <span
+          v-if="messageCount > 0"
+          style="font-family:'Roboto Condensed',sans-serif;"
+        >
+          {{ messageCount }} unread messages
+        </span>
       </v-btn>
-      <div class="flex-grow-1"></div>
+      <div class="flex-grow-1" />
       <v-tooltip left>
         <template v-slot:activator="{ on }">
-          <span v-on="on" v-text="formatTime(now)"></span>
+          <span v-on="on" v-text="formatTime(now)" />
         </template>
-        <span v-text="formatFullDate(now)"></span>
+        <span v-text="formatFullDate(now)" />
       </v-tooltip>
     </v-system-bar>
-    <v-divider v-if="authed" dark style="width:100%;position:fixed;top:36px;z-index:6;"></v-divider>
+    <v-divider
+      v-if="authed"
+      dark
+      style="width:100%;position:fixed;top:36px;z-index:6;"
+    />
     <v-app-bar :class="this.$config.APP_BAR_CLASS" app dark clipped-left>
       <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer" />
       <v-spacer class="hidden-md-and-up" />
-      <v-toolbar-title class="hidden-sm-and-down">{{ title }}</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down">
+        {{ title }}
+      </v-toolbar-title>
       <v-spacer class="hidden-sm-and-down" />
       <v-layout v-if="authed" align-center style="max-width:650px;">
-        <v-text-field :append-icon-cb="() => {}" append-icon="search" placeholder="Search..." single-line hide-details color="white" />
+        <v-text-field
+          :append-icon-cb="() => {}"
+          append-icon="search"
+          placeholder="Search..."
+          single-line
+          hide-details
+          color="white"
+        />
       </v-layout>
-      <v-btn v-if="!authed" text class="hidden-sm-and-down" to="/login">SIGN IN</v-btn>
+      <v-btn v-if="!authed" text class="hidden-sm-and-down" to="/login">
+        SIGN IN
+      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-if="authed" v-model="drawer" app fixed light clipped>
       <v-list dense nav>
         <v-subheader>NAVIGATION</v-subheader>
-        <v-list-item v-for="item in items" :key="item.text" :to="item.to" active-class="primary--text">
+        <v-list-item
+          v-for="item in items"
+          :key="item.text"
+          :to="item.to"
+          active-class="primary--text"
+        >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -39,7 +76,7 @@
       </v-list>
 
       <template v-slot:append>
-        <v-divider></v-divider>
+        <v-divider />
         <v-list dense nav>
           <v-list-item link @click="logout">
             <v-list-item-action>

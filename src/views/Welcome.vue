@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-layout row wrap justify-center>
-      <header class="display-2 xs12">Welcome, {{ currentUser.username }}!</header>
+      <header class="display-2 xs12">
+        Welcome, {{ currentUser.username }}!
+      </header>
       <v-subheader>isAdmin: {{ currentUser.isAdmin }}</v-subheader>
     </v-layout>
   </v-container>

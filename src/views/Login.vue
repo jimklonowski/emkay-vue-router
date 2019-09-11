@@ -6,20 +6,36 @@
           ref="form"
           v-model="valid"
           lazy-validation
-          @submit.prevent="onSubmit(credentials.account, credentials.username, credentials.password)"
+          @submit.prevent="
+            onSubmit(
+              credentials.account,
+              credentials.username,
+              credentials.password
+            )
+          "
         >
           <v-card-title class="blue-grey darken-1 white--text">
             <header class="text-uppercase">
-              <span class="font-weight-black">{{ title1 }}</span>
-              <span class="font-weight-thin">{{ title2 }}</span>
+              <span class="font-weight-black">
+                {{ title1 }}
+              </span>
+              <span class="font-weight-thin">
+                {{ title2 }}
+              </span>
             </header>
-            <v-subheader dark>{{ subtitle }}</v-subheader>
+            <v-subheader dark>
+              {{ subtitle }}
+            </v-subheader>
           </v-card-title>
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-text>
-            <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
+            <v-alert v-if="errorMessage" type="error">
+              {{ errorMessage }}
+            </v-alert>
 
-            <v-alert border="left" type="info" color="primary lighten-2" dense>EM102 JCK 123</v-alert>
+            <v-alert border="left" type="info" color="primary lighten-2" dense>
+              EM102 JCK 123
+            </v-alert>
 
             <v-text-field
               v-model="credentials.account"
@@ -54,8 +70,17 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text to="/login-help" tabindex="-1">Forgot Password</v-btn>
-            <v-btn type="submit" :disabled="!valid" color="primary" class="mr-4">Login</v-btn>
+            <v-btn text to="/login-help" tabindex="-1">
+              Forgot Password
+            </v-btn>
+            <v-btn
+              type="submit"
+              :disabled="!valid"
+              color="primary"
+              class="mr-4"
+            >
+              Login
+            </v-btn>
           </v-card-actions>
         </v-form>
       </v-card>

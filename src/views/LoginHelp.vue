@@ -2,7 +2,12 @@
   <v-container fluid fill-height>
     <v-layout row wrap align-center justify-center>
       <v-card elevation="12" width="600px" :loading="loading">
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onSubmit(credentials.account, credentials.email)">
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="onSubmit(credentials.account, credentials.email)"
+        >
           <v-toolbar color="primary" dense dark flat>
             {{ title }}
           </v-toolbar>
@@ -65,7 +70,9 @@ export default {
       if (!this.$refs.form.validate()) {
         return false
       }
-      this.$store.dispatch(LOGIN_HELP, { account, email }).then(() => this.$router.push({ name: 'home' }))
+      this.$store
+        .dispatch(LOGIN_HELP, { account, email })
+        .then(() => this.$router.push({ name: 'home' }))
     }
   }
 }

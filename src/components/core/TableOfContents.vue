@@ -5,7 +5,12 @@
       <li class="grey--text text--darken-3 pl-4 mb-2 body-1">
         Contents
       </li>
-      <li v-for="(item, index) in toc" :key="index" class="mb-2" style="list-style:none;">
+      <li
+        v-for="(item, index) in toc"
+        :key="index"
+        class="mb-2"
+        style="list-style:none;"
+      >
         <a
           :href="item.target"
           :class="{
@@ -59,7 +64,8 @@ export default {
   methods: {
     goTo,
     onScroll() {
-      this.currentOffset = window.pageYOffset || document.documentElement.offsetTop
+      this.currentOffset =
+        window.pageYOffset || document.documentElement.offsetTop
       clearTimeout(this.timeout)
       this.timeout = setTimeout(this.findActiveIndex, 50)
     },

@@ -4,10 +4,10 @@
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
           <span class="font-weight-black">
-            {{ title1 }}
+            {{ title }}
           </span>
           <span class="font-weight-thin">
-            {{ title2 }}
+            {{ subtitle }}
           </span>
         </header>
         <v-subheader dark>
@@ -39,12 +39,32 @@
           dense
         />
       </v-card-text>
+      <v-divider />
+      <v-card-actions class="pa-4">
+        <v-spacer />
+      </v-card-actions>
     </v-card>
   </section>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'TollHistory',
+  props: {
+    vehNum: {
+      type: String,
+      default: ''
+    }
+  },
+  data: () => ({
+    search: '',
+    title: 'Toll',
+    subtitle: 'History',
+    loading: true,
+    headers: [],
+    items: []
+  })
+}
 </script>
 
 <style></style>

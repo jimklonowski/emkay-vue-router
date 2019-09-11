@@ -2,13 +2,19 @@
   <v-container fluid fill-height class="home">
     <v-row dense>
       <v-col cols="12">
-        <header class="display-4 font-weight-black">{{ title }}</header>
+        <header class="display-4 font-weight-black">
+          {{ title }}
+        </header>
       </v-col>
       <v-col cols="12">
-        <v-subheader class="display-1 font-italic font-weight-thin">{{ subtitle }}</v-subheader>
+        <v-subheader class="display-1 font-italic font-weight-thin">
+          {{ subtitle }}
+        </v-subheader>
       </v-col>
       <v-col md="5">
-        <v-alert type="warning">{{ loginDetails }}</v-alert>
+        <v-alert type="warning">
+          {{ loginDetails }}
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>

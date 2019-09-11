@@ -23,7 +23,11 @@ const store = new Vuex.Store({
     createPersistedState({
       storage: {
         getItem: key => Cookies.get(key),
-        setItem: (key, value) => Cookies.set(key, value, { expires: COOKIE_TIME, secure: SECURE_COOKIE }),
+        setItem: (key, value) =>
+          Cookies.set(key, value, {
+            expires: COOKIE_TIME,
+            secure: SECURE_COOKIE
+          }),
         removeItem: key => Cookies.remove(key)
       }
     })

@@ -4,14 +4,32 @@
       <v-form ref="form" @submit.prevent="submitForm">
         <v-card flat class="ma-2" style="background-color:transparent;">
           <v-card-text>
-            <v-text-field ref="fname" v-model="fname" type="text" :rules="[() => !!fname || 'This field is required']" label="First Name" required />
-            <v-text-field ref="lname" v-model="lname" type="text" :rules="[() => !!lname || 'This field is required']" label="Last Name" required />
-            <v-text-field ref="phone" v-model="phone" type="phone" :rules="[() => !!phone || 'This field is required']" label="Phone" required />
+            <v-text-field
+              ref="fname"
+              v-model="fname"
+              type="text"
+              :rules="[() => !!fname || 'This field is required']"
+              label="First Name"
+              required
+            />
+            <v-text-field
+              v-model="lname"
+              type="text"
+              :rules="[() => !!lname || 'This field is required']"
+              label="Last Name"
+              required
+            />
+            <v-text-field
+              ref="phone"
+              v-model="phone"
+              type="phone"
+              :rules="[() => !!phone || 'This field is required']"
+              label="Phone"
+              required
+            />
           </v-card-text>
           <v-card-actions>
-            <v-btn type="submit">
-              Submit
-            </v-btn>
+            <v-btn type="submit">Submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>

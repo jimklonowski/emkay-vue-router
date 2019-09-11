@@ -1,5 +1,7 @@
 <template>
-  <v-alert type="info">ALERT</v-alert>
+  <v-alert type="info">
+    ALERT
+  </v-alert>
 </template>
 
 <script>

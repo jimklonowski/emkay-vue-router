@@ -3,13 +3,15 @@ module.exports = {
   // for production, use a different web root
   //publicPath: process.env.NODE_ENV === 'production' ? '../apps/VueTest' : '/vue/',
   publicPath: '/vue/',
+
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "~@/styles/main.scss"`
+        data: '@import "~@/styles/main.scss"'
       }
     }
   },
+
   chainWebpack: config => {
     // eslint-disable-next-line prettier/prettier
     ["vue-modules", "vue", "normal-modules", "normal"].forEach(match => {
@@ -17,7 +19,11 @@ module.exports = {
         .rule('scss')
         .oneOf(match)
         .use('sass-loader')
-        .tap(opt => Object.assign(opt, { data: `@import '~@/styles/main.scss';` }))
+        .tap(opt =>
+          Object.assign(opt, { data: `@import '~@/styles/main.scss';` })
+        )
     })
-  }
+  },
+
+  productionSourceMap: false
 }

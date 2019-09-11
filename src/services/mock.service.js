@@ -8,7 +8,9 @@ const MockService = {
   init() {
     mock
       //mock login, sets tokens
-      .onPost('/auth/login', { user: { account: 'EM102', username: 'JCK', password: '123' } })
+      .onPost('/auth/login', {
+        user: { account: 'EM102', username: 'JCK', password: '123' }
+      })
       .reply(200, {
         user: {
           account: 'EM102',

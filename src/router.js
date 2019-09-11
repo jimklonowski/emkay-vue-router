@@ -73,6 +73,11 @@ const router = new Router({
           component: () => import('@/views/VehicleDashboard/Documents.vue')
         },
         {
+          path: '/vehicle/:vehicle/inspections',
+          name: 'inspections',
+          component: () => import('@/views/VehicleDashboard/Inspections.vue')
+        },
+        {
           path: '/vehicle/:vehicle/saferoads',
           name: 'saferoads',
           component: () => import('@/views/VehicleDashboard/SafeRoads.vue')
@@ -80,7 +85,8 @@ const router = new Router({
         {
           path: '/vehicle/:vehicle/transport-storage',
           name: 'transport-storage',
-          component: () => import('@/views/VehicleDashboard/TransportStorage.vue')
+          component: () =>
+            import('@/views/VehicleDashboard/TransportStorage.vue')
         }
       ]
     },
@@ -89,7 +95,11 @@ const router = new Router({
       name: 'reporting',
       component: () => import('@/views/Reporting.vue'),
       children: [
-        { path: '/reporting/annual-expense', name: 'annual-expense', component: () => import('@/views/Reporting/AnnualExpense.vue') },
+        {
+          path: '/reporting/annual-expense',
+          name: 'annual-expense',
+          component: () => import('@/views/Reporting/AnnualExpense.vue')
+        },
         {
           path: '/reporting/replacement-analysis',
           name: 'replacement-analysis',

@@ -6,6 +6,8 @@ import axios from 'axios'
 import vuetify from '@/plugins/vuetify'
 import '@babel/polyfill'
 
+import kendoComponents from './plugins/kendo'
+
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
@@ -24,5 +26,8 @@ new Vue({
   router,
   store,
   vuetify,
+  components: {
+    kendoComponents
+  },
   render: h => h(App)
 }).$mount('#app')

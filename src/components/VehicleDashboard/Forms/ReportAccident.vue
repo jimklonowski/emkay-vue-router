@@ -2,7 +2,9 @@
   <v-dialog v-model="dialog" max-width="1000" persistent>
     <template v-slot:activator="{ on }">
       <v-btn outlined tile color="error" v-on="on" @click.prevent>
-        <v-icon left>drive_eta</v-icon>
+        <v-icon left>
+          drive_eta
+        </v-icon>
         &nbsp;{{ title1 }} {{ title2 }}
       </v-btn>
     </template>
@@ -10,10 +12,14 @@
     <v-card :loading="loading">
       <v-card-title class="blue-grey white--text">
         <header class="text-uppercase">
-          <span class="font-weight-black">{{ title1 }}</span>
-          <span class="font-weight-thin">{{ title2 }}</span>
+          <span class="font-weight-black">
+            {{ title1 }}
+          </span>
+          <span class="font-weight-thin">
+            {{ title2 }}
+          </span>
         </header>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn large icon tile dark @click.prevent="dialog = false">
           <v-icon>close</v-icon>
         </v-btn>
@@ -22,10 +28,18 @@
       <v-stepper v-model="currentStep" class="elevation-0">
         <v-stepper-header>
           <template v-for="formStep in steps">
-            <v-stepper-step :key="formStep.title" :complete="currentStep > formStep.step" :editable="false" :step="formStep.step">{{
-              formStep.title
-            }}</v-stepper-step>
-            <v-divider v-if="formStep.step < steps.length" :key="formStep.step"></v-divider>
+            <v-stepper-step
+              :key="formStep.title"
+              :complete="currentStep > formStep.step"
+              :editable="false"
+              :step="formStep.step"
+            >
+              {{ formStep.title }}
+            </v-stepper-step>
+            <v-divider
+              v-if="formStep.step < steps.length"
+              :key="formStep.step"
+            />
           </template>
         </v-stepper-header>
 
@@ -39,24 +53,48 @@
                     :label="steps[0].last_name.label"
                     :rules="rules.required"
                     class="col-sm-6"
-                  ></v-text-field>
+                  />
                   <v-text-field
                     v-model="steps[0].first_name.value"
                     :label="steps[0].first_name.label"
                     class="col-sm-6"
                     :rules="rules.required"
-                  ></v-text-field>
+                  />
                   <v-text-field
                     v-model="steps[0].address_1.value"
                     :label="steps[0].address_1.label"
                     class="col-sm-6"
                     :rules="rules.required"
-                  ></v-text-field>
-                  <v-text-field v-model="steps[0].address_2.value" :label="steps[0].address_2.label" class="col-sm-6"></v-text-field>
-                  <v-text-field v-model="steps[0].city.value" :label="steps[0].city.label" class="col-sm-6" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[0].state.value" :label="steps[0].state.label" class="col-sm-2" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[0].zip.value" :label="steps[0].zip.label" class="col-sm-4" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[0].phone.value" :label="steps[0].phone.label" class="col-sm-6" :rules="rules.required"></v-text-field>
+                  />
+                  <v-text-field
+                    v-model="steps[0].address_2.value"
+                    :label="steps[0].address_2.label"
+                    class="col-sm-6"
+                  />
+                  <v-text-field
+                    v-model="steps[0].city.value"
+                    :label="steps[0].city.label"
+                    class="col-sm-6"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[0].state.value"
+                    :label="steps[0].state.label"
+                    class="col-sm-2"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[0].zip.value"
+                    :label="steps[0].zip.label"
+                    class="col-sm-4"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[0].phone.value"
+                    :label="steps[0].phone.label"
+                    class="col-sm-6"
+                    :rules="rules.required"
+                  />
                 </v-row>
               </v-container>
             </v-form>
@@ -66,22 +104,42 @@
             <v-form :ref="steps[1].ref">
               <v-container>
                 <v-row>
-                  <v-text-field v-model="steps[1].vin.value" :label="steps[1].vin.label" class="col-12" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[1].year.value" :label="steps[1].year.label" class="col-sm-3" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[1].make.value" :label="steps[1].make.label" class="col-sm-4" :rules="rules.required"></v-text-field>
-                  <v-text-field v-model="steps[1].model.value" :label="steps[1].model.label" class="col-sm-5" :rules="rules.required"></v-text-field>
+                  <v-text-field
+                    v-model="steps[1].vin.value"
+                    :label="steps[1].vin.label"
+                    class="col-12"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[1].year.value"
+                    :label="steps[1].year.label"
+                    class="col-sm-3"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[1].make.value"
+                    :label="steps[1].make.label"
+                    class="col-sm-4"
+                    :rules="rules.required"
+                  />
+                  <v-text-field
+                    v-model="steps[1].model.value"
+                    :label="steps[1].model.label"
+                    class="col-sm-5"
+                    :rules="rules.required"
+                  />
                   <v-text-field
                     v-model="steps[1].license_plate.value"
                     :label="steps[1].license_plate.label"
                     class="col-sm-6"
                     :rules="rules.required"
-                  ></v-text-field>
+                  />
                   <v-text-field
                     v-model="steps[1].license_state.value"
                     :label="steps[1].license_state.label"
                     class="col-sm-2"
                     :rules="rules.required"
-                  ></v-text-field>
+                  />
                 </v-row>
               </v-container>
             </v-form>
@@ -111,9 +169,14 @@
                           readonly
                           :rules="rules.required"
                           v-on="on"
-                        ></v-text-field>
+                        />
                       </template>
-                      <v-date-picker v-model="steps[2].date.value" no-title scrollable @change="steps[2].date.menu = false"></v-date-picker>
+                      <v-date-picker
+                        v-model="steps[2].date.value"
+                        no-title
+                        scrollable
+                        @change="steps[2].date.menu = false"
+                      />
                     </v-menu>
                   </v-col>
 
@@ -137,62 +200,89 @@
                           readonly
                           :rules="rules.required"
                           v-on="on"
-                        ></v-text-field>
+                        />
                       </template>
                       <v-time-picker
                         v-model="steps[2].time.value"
                         :ampm-in-title="true"
                         format="ampm"
                         @change="steps[2].time.menu = false"
-                      ></v-time-picker>
+                      />
                     </v-menu>
                   </v-col>
                   <v-col cols="12" md="4">
-                    <v-text-field v-model="steps[2].vehicles.value" :label="steps[2].vehicles.label" prepend-icon="directions_car"></v-text-field>
+                    <v-text-field
+                      v-model="steps[2].vehicles.value"
+                      :label="steps[2].vehicles.label"
+                      prepend-icon="directions_car"
+                    />
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-switch v-model="steps[2].injuries.value" :label="steps[2].injuries.label" class="col-4"></v-switch>
+                  <v-switch
+                    v-model="steps[2].injuries.value"
+                    :label="steps[2].injuries.label"
+                    class="col-4"
+                  />
                   <v-switch
                     v-if="steps[2].injuries.value"
                     v-model="steps[2].others_injured.value"
                     :label="steps[2].others_injured.label"
                     class="col-4"
-                  ></v-switch>
+                  />
                   <v-switch
                     v-if="steps[2].injuries.value"
                     v-model="steps[2].you_injured.value"
                     :label="steps[2].you_injured.label"
                     class="col-4"
-                  ></v-switch>
+                  />
                   <v-textarea
                     v-if="steps[2].injuries.value && steps[2].you_injured.value"
                     v-model="steps[2].injured_extent.value"
                     :label="steps[2].injured_extent.label"
                     :rows="1"
                     class="col-12"
-                  ></v-textarea>
+                  />
                 </v-row>
                 <v-row>
-                  <v-switch v-model="steps[2].police_contacted.value" :label="steps[2].police_contacted.label" class="col-12"></v-switch>
+                  <v-switch
+                    v-model="steps[2].police_contacted.value"
+                    :label="steps[2].police_contacted.label"
+                    class="col-12"
+                  />
                   <v-text-field
                     v-if="steps[2].police_contacted.value"
                     v-model="steps[2].police_report.value"
                     :label="steps[2].police_report.label"
                     class="col-6"
-                  ></v-text-field>
+                  />
                   <v-switch
                     v-if="steps[2].police_contacted.value"
                     v-model="steps[2].citations.value"
                     :label="steps[2].citations.label"
                     class="col-12"
-                  ></v-switch>
+                  />
                 </v-row>
                 <v-row>
-                  <v-divider></v-divider>
-                  <v-textarea v-model="steps[2].location.value" outlined :label="steps[2].location.label" class="col-12"></v-textarea>
-                  <v-textarea v-model="steps[2].description.value" outlined :label="steps[2].description.label" class="col-12"></v-textarea>
-                  <v-textarea v-model="steps[2].damages.value" outlined :label="steps[2].damages.label" class="col-12"></v-textarea>
+                  <v-divider />
+                  <v-textarea
+                    v-model="steps[2].location.value"
+                    outlined
+                    :label="steps[2].location.label"
+                    class="col-12"
+                  />
+                  <v-textarea
+                    v-model="steps[2].description.value"
+                    outlined
+                    :label="steps[2].description.label"
+                    class="col-12"
+                  />
+                  <v-textarea
+                    v-model="steps[2].damages.value"
+                    outlined
+                    :label="steps[2].damages.label"
+                    class="col-12"
+                  />
                 </v-row>
                 <v-row>
                   <v-file-input
@@ -206,7 +296,9 @@
                     accept="image/*"
                   >
                     <template v-slot:selection="{ text }">
-                      <v-chip small label color="primary">{{ text }}</v-chip>
+                      <v-chip small label color="primary">
+                        {{ text }}
+                      </v-chip>
                     </template>
                   </v-file-input>
                 </v-row>
@@ -221,50 +313,82 @@
                   <v-list two-line>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Name</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ fullName }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Name
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          fullName }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Address</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ fullAddress }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Address
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          fullAddress }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Vehicle</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ vehicleInfo }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Vehicle
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          vehicleInfo }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">License</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ licenseInfo }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          License
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          licenseInfo }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Accident</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ accidentTime }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Accident
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          accidentTime }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Location</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ steps[2].location.value }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Location
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          steps[2].location.value }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Description</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ steps[2].description.value }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Description
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          steps[2].description.value }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item class="pa-0">
                       <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">Damages</v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">{{ steps[2].damages.value }}</v-list-item-title>
+                        <v-list-item-subtitle :class="summaryLabelClass">
+                          Damages
+                        </v-list-item-subtitle>
+                        <v-list-item-title :class="summaryTextClass">
+                          steps[2].damages.value }}
+                        </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -274,14 +398,38 @@
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
-      <v-divider></v-divider>
-      <v-progress-linear slot="progress" absolute bottom color="primary" :height="5" indeterminate></v-progress-linear>
+      <v-divider />
+      <v-progress-linear
+        slot="progress"
+        absolute
+        bottom
+        color="primary"
+        :height="5"
+        indeterminate
+      />
       <v-card-actions>
-        <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
-        <v-spacer></v-spacer>
-        <v-btn v-if="currentStep > 1" text color="secondary" @click.prevent="currentStep--">Back</v-btn>
-        <v-btn v-if="currentStep < steps.length" color="primary" @click.prevent="nextStep">Next</v-btn>
-        <v-btn v-else color="primary" @click.prevent="onSubmit">Submit</v-btn>
+        <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
+          {{ errorMessage }}
+        </v-alert>
+        <v-spacer />
+        <v-btn
+          v-if="currentStep > 1"
+          text
+          color="secondary"
+          @click.prevent="currentStep--"
+        >
+          Back
+        </v-btn>
+        <v-btn
+          v-if="currentStep < steps.length"
+          color="primary"
+          @click.prevent="nextStep"
+        >
+          Next
+        </v-btn>
+        <v-btn v-else color="primary" @click.prevent="onSubmit">
+          Submit
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -472,7 +620,8 @@ export default {
     nextStep() {
       // console.log('CurrentStep: ' + this.currentStep)
       // console.log('Total: ' + this.steps.length)
-      if (this.$refs[`formStep${this.currentStep}`].validate()) this.currentStep += 1
+      if (this.$refs[`formStep${this.currentStep}`].validate())
+        this.currentStep += 1
     },
     onSubmit() {
       this.errorMessage = null

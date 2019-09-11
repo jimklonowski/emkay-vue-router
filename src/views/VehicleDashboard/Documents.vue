@@ -7,12 +7,26 @@
       <v-card>
         <v-card-title :class="headerClass">
           <header class="text-uppercase">
-            <span class="font-weight-black">{{ title1 }}</span>
-            <span class="font-weight-thin">{{ title2 }}</span>
+            <span class="font-weight-black">
+              {{ title1 }}
+            </span>
+            <span class="font-weight-thin">
+              {{ title2 }}
+            </span>
           </header>
-          <v-subheader dark>{{ vehicle }}</v-subheader>
+          <v-subheader dark>
+            {{ vehicle }}
+          </v-subheader>
           <v-spacer />
-          <v-text-field v-model="search" class="font-weight-regular" append-icon="search" label="Search" single-line hide-details dark />
+          <v-text-field
+            v-model="search"
+            class="font-weight-regular"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            dark
+          />
         </v-card-title>
         <v-divider />
         <v-card-text class="pa-0">
@@ -27,7 +41,9 @@
             dense
           >
             <template v-slot:item.download="{ item }">
-              <v-icon small @click="download(item)">get_app</v-icon>
+              <v-icon small @click="download(item)">
+                get_app
+              </v-icon>
             </template>
           </v-data-table>
         </v-card-text>

@@ -2,18 +2,31 @@
   <v-container fluid>
     <v-row>
       <v-col xs="12">
-        <header class="font-weight-light display-2 py-5 mr-auto">Vehicle Dashboard</header>
+        <header class="font-weight-light display-2 py-5 mr-auto">
+          Vehicle Dashboard
+        </header>
       </v-col>
     </v-row>
     <v-row>
       <v-col md="6">
-        <v-alert border="left" colored-border type="info" elevation="2" dense>Enter any vehicle number, this is not real data</v-alert>
+        <v-alert border="left" colored-border type="info" elevation="2" dense>
+          Enter any vehicle number, this is not real data
+        </v-alert>
       </v-col>
     </v-row>
     <v-row>
       <v-col md="6">
         <v-form ref="form" @submit.prevent="search">
-          <v-text-field v-model="vehicle" name="vehicle" label="Vehicle Number" :counter="6" required filled shaped outlined />
+          <v-text-field
+            v-model="vehicle"
+            name="vehicle"
+            label="Vehicle Number"
+            :counter="6"
+            required
+            filled
+            shaped
+            outlined
+          />
         </v-form>
       </v-col>
     </v-row>

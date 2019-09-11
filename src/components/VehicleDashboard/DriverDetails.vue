@@ -4,18 +4,33 @@
       <v-card :loading="loading">
         <v-card-title :class="headerClass">
           <header class="text-uppercase">
-            <span class="font-weight-black">{{ title1 }}</span>
-            <span class="font-weight-thin">{{ title2 }}</span>
+            <span class="font-weight-black">
+              {{ title1 }}
+            </span>
+            <span class="font-weight-thin">
+              {{ title2 }}
+            </span>
           </header>
 
-          <v-subheader dark>{{ vehNum }}</v-subheader>
+          <v-subheader dark>
+            {{ vehNum }}
+          </v-subheader>
         </v-card-title>
         <v-divider />
         <v-card-text class="row no-gutters">
           <v-list class="flex row">
-            <v-list-item v-for="item in driver" :key="item.index" class="col-6 py-0" style="user-select:text !important;">
+            <v-list-item
+              v-for="item in driver"
+              :key="item.index"
+              class="col-6 py-0"
+              style="user-select:text !important;"
+            >
               <transition name="rotate" mode="out-in">
-                <v-list-item-content v-if="item.editable && isEditing" :key="isEditing" class="py-0">
+                <v-list-item-content
+                  v-if="item.editable && isEditing"
+                  :key="isEditing"
+                  class="py-0"
+                >
                   <v-text-field
                     height="24"
                     :class="inputClass"
@@ -24,12 +39,17 @@
                     :v-model="item"
                     :value="item.value"
                     :rules="editorRules.required"
-                    >{{ item.value }}</v-text-field
                   >
+                    {{ item.value }}
+                  </v-text-field>
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing" class="py-1">
-                  <v-list-item-subtitle :class="labelClass">{{ item.name }}</v-list-item-subtitle>
-                  <v-list-item-title :class="fieldClass">{{ item.value }}</v-list-item-title>
+                  <v-list-item-subtitle :class="labelClass">
+                    item.name }}
+                  </v-list-item-subtitle>
+                  <v-list-item-title :class="fieldClass">
+                    item.value }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </transition>
             </v-list-item>
@@ -37,7 +57,15 @@
         </v-card-text>
         <v-divider />
         <v-card-actions class="pa-4">
-          <v-alert v-if="isEditing && errorMessage" outlined dense class="mb-0" type="error">{{ errorMessage }}</v-alert>
+          <v-alert
+            v-if="isEditing && errorMessage"
+            outlined
+            dense
+            class="mb-0"
+            type="error"
+          >
+            {{ errorMessage }}
+          </v-alert>
           <v-spacer />
           <v-btn
             v-if="isEditing"
@@ -47,14 +75,38 @@
               isEditing = !isEditing
               errorMessage = null
             "
-            >Cancel</v-btn
           >
-          <v-btn v-if="isEditing" type="submit" dark tile outlined color="primary"> <v-icon dark>save</v-icon>&nbsp;Save </v-btn>
-          <v-btn v-else color="primary" dark tile outlined @click.prevent="isEditing = !isEditing">
-            <v-icon dark>edit</v-icon>&nbsp;Change Driver Information
+            Cancel
+          </v-btn>
+          <v-btn
+            v-if="isEditing"
+            type="submit"
+            dark
+            tile
+            outlined
+            color="primary"
+          >
+            <v-icon dark> save </v-icon>&nbsp;Save
+          </v-btn>
+          <v-btn
+            v-else
+            color="primary"
+            dark
+            tile
+            outlined
+            @click.prevent="isEditing = !isEditing"
+          >
+            <v-icon dark> edit </v-icon>&nbsp;Change Driver Information
           </v-btn>
         </v-card-actions>
-        <v-progress-linear slot="progress" absolute bottom color="primary" :height="4" indeterminate></v-progress-linear>
+        <v-progress-linear
+          slot="progress"
+          absolute
+          bottom
+          color="primary"
+          :height="4"
+          indeterminate
+        />
       </v-card>
     </v-form>
   </section>

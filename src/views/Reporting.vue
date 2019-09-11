@@ -2,7 +2,9 @@
   <v-container fluid class="content-wrap">
     <v-row>
       <v-col xs="12">
-        <header class="font-weight-thin display-2 pa-3">{{ title }}</header>
+        <header class="font-weight-thin display-2 pa-3">
+          {{ title }}
+        </header>
       </v-col>
     </v-row>
     <v-row>
@@ -10,13 +12,15 @@
         <v-card dark>
           <v-card-title>{{ report.text }}</v-card-title>
           <v-card-text>
-            <v-btn :to="report.to">{{ report.text }}</v-btn>
+            <v-btn :to="report.to">
+              {{ report.text }}
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     <v-row>
-      <router-view></router-view>
+      <router-view />
     </v-row>
   </v-container>
 </template>

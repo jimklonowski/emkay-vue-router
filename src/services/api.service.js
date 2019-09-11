@@ -10,7 +10,10 @@ const API_URL = process.env.VUE_APP_ROOT_API
 
 import createAuthRefreshInterceptor from './helpers/401interceptor'
 
-const refreshAuthToken = () => store.dispatch(REFRESH_TOKEN, JwtService.getRefreshToken()).then(() => Promise.resolve())
+const refreshAuthToken = () =>
+  store
+    .dispatch(REFRESH_TOKEN, JwtService.getRefreshToken())
+    .then(() => Promise.resolve())
 
 // Mock API calls
 import MockService from './mock.service'
@@ -25,7 +28,9 @@ const ApiService = {
   },
 
   setHeader() {
-    Vue.axios.defaults.headers.common['Authorization'] = `Bearer ${JwtService.getAccessToken()}`
+    Vue.axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${JwtService.getAccessToken()}`
   },
 
   query(resource, params) {

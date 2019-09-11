@@ -3,12 +3,26 @@
     <v-card>
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">
+            {{ title }}
+          </span>
+          <span class="font-weight-thin">
+            {{ subtitle }}
+          </span>
         </header>
-        <v-subheader dark>{{ vehNum }}</v-subheader>
+        <v-subheader dark>
+          {{ vehNum }}
+        </v-subheader>
         <v-spacer />
-        <v-text-field v-model="search" class="font-weight-regular" append-icon="search" label="Search" single-line hide-details dark />
+        <v-text-field
+          v-model="search"
+          class="font-weight-regular"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+          dark
+        />
       </v-card-title>
       <v-divider />
       <v-card-text class="pa-0">

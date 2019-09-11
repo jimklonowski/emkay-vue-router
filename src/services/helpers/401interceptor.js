@@ -28,8 +28,17 @@ function createAuthRefreshInterceptor(axios, refreshTokenCall, options = {}) {
     response => response,
     error => {
       // Reject promise if the error status is not in options.ports or defaults.ports
-      const statusCodes = options.hasOwnProperty('statusCodes') && options.statusCodes.length ? options.statusCodes : defaults.statusCodes
-      if (!error.response || (error.response.status && statusCodes.indexOf(+error.response.status) === -1)) {
+      const statusCodes =
+        //options.hasOwnProperty('statusCodes') && options.statusCodes.length
+        // eslint-disable-next-line prettier/prettier
+        Object.prototype.hasOwnProperty.call(options, 'statusCodes') && options.statusCodes.length
+          ? options.statusCodes
+          : defaults.statusCodes
+      if (
+        !error.response ||
+        (error.response.status &&
+          statusCodes.indexOf(+error.response.status) === -1)
+      ) {
         return Promise.reject(error)
       }
 
@@ -43,7 +52,9 @@ function createAuthRefreshInterceptor(axios, refreshTokenCall, options = {}) {
       //const refreshCall = () => store.dispatch(REFRESH_TOKEN, JwtService.getRefreshToken())
 
       // Create interceptor that will bind all the other REQUESTS until refreshTokenCall is resolved
-      const requestQueueInterceptor = axios.interceptors.request.use(request => refreshCall.then(() => request))
+      const requestQueueInterceptor = axios.interceptors.request.use(request =>
+        refreshCall.then(() => request)
+      )
 
       // When code is 401, try to refresh the token.
       return refreshCall
@@ -55,7 +66,9 @@ function createAuthRefreshInterceptor(axios, refreshTokenCall, options = {}) {
           axios.interceptors.request.eject(requestQueueInterceptor)
           return Promise.reject(error)
         })
-        .finally(() => createAuthRefreshInterceptor(axios, refreshTokenCall, options))
+        .finally(() =>
+          createAuthRefreshInterceptor(axios, refreshTokenCall, options)
+        )
     }
   )
   return axios
