@@ -4,9 +4,9 @@ module.exports = {
     node: true
   },
   extends: [
-    //'prettier',
+    'prettier',
     'plugin:vue/recommended',
-    '@vue/prettier',
+    //'@vue/prettier',
     'plugin:prettier/recommended',
     'eslint:recommended'
   ],
@@ -26,13 +26,13 @@ module.exports = {
       {
         singleline: 10,
         multiline: {
-          max: 1,
-          allowFirstLine: false
+          max: 2,
+          allowFirstLine: true
         }
       }
     ],
     'vue/singleline-html-element-content-newline': 0,
-    'vue/multiline-html-element-content-newline': 0,
+    'vue/multiline-html-element-content-newline': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

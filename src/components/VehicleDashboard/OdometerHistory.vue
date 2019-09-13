@@ -3,17 +3,11 @@
     <v-card>
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
-          <span class="font-weight-black">
-            {{ title }}
-          </span>
-          <span class="font-weight-thin">
-            {{ subtitle }}
-          </span>
+          <span class="font-weight-black">{{ title }}</span>
+          <span class="font-weight-thin">{{ subtitle }}</span>
         </header>
-        <v-subheader dark>
-          {{ vehNum }}
-        </v-subheader>
-        <v-spacer />
+        <v-subheader dark>{{ vehNum }}</v-subheader>
+        <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
           class="font-weight-regular"
@@ -24,19 +18,17 @@
           dark
         />
       </v-card-title>
-      <v-divider />
+      <v-divider></v-divider>
       <v-card-text class="pa-0">
         <v-data-table
-          :search="search"
           :headers="headers"
           :items="items"
           :items-per-page="10"
+          :search="search"
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
           class="elevation-0"
-          dense
         />
       </v-card-text>
     </v-card>
@@ -45,7 +37,7 @@
 
 <script>
 export default {
-  name: 'ViolationHistory',
+  name: 'OdometerHistory',
   props: {
     vehNum: {
       type: String,
@@ -53,7 +45,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Violation',
+    title: 'Odometer',
     subtitle: 'History',
     search: '',
     loading: true,

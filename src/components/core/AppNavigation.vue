@@ -38,13 +38,10 @@
     <v-app-bar :class="this.$config.APP_BAR_CLASS" app dark clipped-left>
       <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer" />
       <v-spacer class="hidden-md-and-up" />
-      <v-toolbar-title class="hidden-sm-and-down">
-        {{ title }}
-      </v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down">{{ title }}</v-toolbar-title>
       <v-spacer class="hidden-sm-and-down" />
       <v-layout v-if="authed" align-center style="max-width:650px;">
         <v-text-field
-          :append-icon-cb="() => {}"
           append-icon="search"
           placeholder="Search..."
           single-line
@@ -52,9 +49,9 @@
           color="white"
         />
       </v-layout>
-      <v-btn v-if="!authed" text class="hidden-sm-and-down" to="/login">
-        SIGN IN
-      </v-btn>
+      <v-btn v-if="!authed" text class="hidden-sm-and-down" to="/login"
+        >SIGN IN</v-btn
+      >
     </v-app-bar>
 
     <v-navigation-drawer v-if="authed" v-model="drawer" app fixed light clipped>

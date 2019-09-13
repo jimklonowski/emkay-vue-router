@@ -45,10 +45,10 @@
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing" class="py-1">
                   <v-list-item-subtitle :class="labelClass">
-                    item.name }}
+                    {{ item.name }}
                   </v-list-item-subtitle>
                   <v-list-item-title :class="fieldClass">
-                    item.value }}
+                    {{ item.value }}
                   </v-list-item-title>
                 </v-list-item-content>
               </transition>

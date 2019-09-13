@@ -8,15 +8,9 @@
         <v-card-title :class="headerClass">
           <v-col sm="12" lg="4">
             <header class="text-uppercase">
-              <span class="font-weight-black">
-                {{ title1 }}
-              </span>
-              <span class="font-weight-thin">
-                {{ title2 }}
-              </span>
-              <v-subheader style="display:inline-flex;vertical-align:middle;">
-                {{ vehicle }}
-              </v-subheader>
+              <span class="font-weight-black">{{ title1 }}</span>
+              <span class="font-weight-thin">{{ title2 }}</span>
+              <v-subheader dark>{{ vehicle }}</v-subheader>
             </header>
           </v-col>
           <v-spacer />
@@ -112,8 +106,8 @@
                         :color="getColor(category.score)"
                         class="ml-2"
                       >
-                        {{ category.score }}
-                      </v-chip>
+                        {{ category.score }}</v-chip
+                      >
                     </v-subheader>
                     <v-divider />
                     <v-rating
@@ -160,39 +154,37 @@
               <v-data-table :headers="headers" :items="items">
                 <template v-slot:item.saferoads="{ item }">
                   <v-chip outlined :color="getScoreColor(item.saferoads)">
-                    <v-icon left>
-                      show_chart
-                    </v-icon>
+                    <v-icon left>show_chart</v-icon>
                     {{ item.saferoads }}
                   </v-chip>
                 </template>
                 <template v-slot:item.phone_use="{ item }">
-                  <v-chip x-small :color="getColor(item.phone_use)">
-                    {{ item.phone_use }}
-                  </v-chip>
+                  <v-chip x-small :color="getColor(item.phone_use)">{{
+                    item.phone_use
+                  }}</v-chip>
                 </template>
                 <template v-slot:item.excessive_speeding="{ item }">
-                  <v-chip x-small :color="getColor(item.excessive_speeding)">
-                    {{ item.excessive_speeding }}
-                  </v-chip>
+                  <v-chip x-small :color="getColor(item.excessive_speeding)">{{
+                    item.excessive_speeding
+                  }}</v-chip>
                 </template>
                 <template v-slot:item.hard_braking="{ item }">
-                  <v-chip x-small :color="getColor(item.hard_braking)">
-                    {{ item.hard_braking }}
-                  </v-chip>
+                  <v-chip x-small :color="getColor(item.hard_braking)">{{
+                    item.hard_braking
+                  }}</v-chip>
                 </template>
                 <template v-slot:item.aggressive_acceleration="{ item }">
                   <v-chip
                     x-small
                     :color="getColor(item.aggressive_acceleration)"
                   >
-                    {{ item.aggressive_acceleration }}
-                  </v-chip>
+                    {{ item.aggressive_acceleration }}</v-chip
+                  >
                 </template>
                 <template v-slot:item.hard_turn="{ item }">
-                  <v-chip x-small :color="getColor(item.hard_turn)">
-                    {{ item.hard_turn }}
-                  </v-chip>
+                  <v-chip x-small :color="getColor(item.hard_turn)">{{
+                    item.hard_turn
+                  }}</v-chip>
                 </template>
               </v-data-table>
             </v-col>
@@ -200,7 +192,7 @@
               <v-card elevation="0">
                 <v-card-title>Chart of Speed</v-card-title>
                 <v-card-text>
-                  <kendo-chart />
+                  <kendo-chart ref="chart1" />
                 </v-card-text>
               </v-card>
             </v-col>
@@ -212,6 +204,8 @@
 </template>
 
 <script>
+//import { debounce } from 'lodash-es'
+import { debounce } from 'lodash-es'
 export default {
   name: 'SafeRoads',
   data() {
@@ -331,9 +325,12 @@ export default {
     this.headerClass = this.$config.COMPONENT_HEADER_CLASS
   },
   methods: {
-    handleResize() {
+    handleResize: debounce(function() {
+      //console.log("debounce resize...");
       this.$refs.arcgauge1.kendoWidget().resize()
-    },
+      this.$refs.map1.kendoWidget().resize()
+      this.$refs.chart1.kendoWidget().resize()
+    }, 300),
     getColor(score) {
       switch (score) {
         case 'A':

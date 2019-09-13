@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col sm="12" md="9" lg="9" xl="10">
+    <v-col sm="12" md="10" lg="10" xl="11">
       <v-row>
         <component
           :is="section.component"
@@ -12,12 +12,12 @@
         />
       </v-row>
     </v-col>
-    <v-col class="hidden-sm-and-down" md="3" lg="3" xl="2">
+    <v-col class="hidden-sm-and-down" md="2" lg="2" xl="1">
       <v-navigation-drawer
         height="auto"
         width="auto"
         color="transparent"
-        style="position:sticky;top:100px;"
+        style="position:sticky;top:148px;"
         right
         floating
         permanent

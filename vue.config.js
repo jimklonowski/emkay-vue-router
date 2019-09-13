@@ -4,26 +4,26 @@ module.exports = {
   //publicPath: process.env.NODE_ENV === 'production' ? '../apps/VueTest' : '/vue/',
   publicPath: '/vue/',
 
-  css: {
-    loaderOptions: {
-      sass: {
-        data: '@import "~@/styles/main.scss"'
-      }
-    }
-  },
+  // css: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data: '@import "~@/styles/main.scss"'
+  //     }
+  //   }
+  // },
 
-  chainWebpack: config => {
-    // eslint-disable-next-line prettier/prettier
-    ["vue-modules", "vue", "normal-modules", "normal"].forEach(match => {
-      config.module
-        .rule('scss')
-        .oneOf(match)
-        .use('sass-loader')
-        .tap(opt =>
-          Object.assign(opt, { data: `@import '~@/styles/main.scss';` })
-        )
-    })
-  },
+  // chainWebpack: config => {
+  //   // eslint-disable-next-line prettier/prettier
+  //   ["vue-modules", "vue", "normal-modules", "normal"].forEach(match => {
+  //     config.module
+  //       .rule('scss')
+  //       .oneOf(match)
+  //       .use('sass-loader')
+  //       .tap(opt =>
+  //         Object.assign(opt, { data: `@import '~@/styles/main.scss';` })
+  //       )
+  //   })
+  // },
 
   productionSourceMap: false
 }

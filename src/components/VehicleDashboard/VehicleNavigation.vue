@@ -1,16 +1,23 @@
 <template>
-  <v-toolbar dense>
-    <v-tabs light>
+  <v-app-bar app tile dense style="z-index:4;top:100px;margin-top:0;">
+    <v-tabs
+      color="blue-grey lighten-2"
+      background-color="white"
+      show-arrows
+      light
+    >
+      <v-tabs-slider color="blue-grey lighten-2" />
       <v-tab
         v-for="item in items"
         :key="item.text"
+        color="blue-grey lighten-2"
         :to="item.to"
         :vehicle="vehicle"
       >
         {{ item.text }}
       </v-tab>
     </v-tabs>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>

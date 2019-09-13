@@ -20,3 +20,5 @@ export default new Vuetify({
     iconfont: 'md'
   }
 })
+
+// see https://vuetifyjs.com/en/customization/theme#light-and-dark

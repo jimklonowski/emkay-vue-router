@@ -22,7 +22,7 @@
             right
             direction="bottom"
             transition="slide-x-reverse-transition"
-            style="top:40px;"
+            style="top:40px;z-index:auto;"
           >
             <template v-slot:activator>
               <v-btn
@@ -117,10 +117,10 @@
                 </v-list-item-content>
                 <v-list-item-content v-else :key="isEditing" class="py-1">
                   <v-list-item-subtitle :class="labelClass">
-                    item.name }}
+                    {{ item.name }}
                   </v-list-item-subtitle>
                   <v-list-item-title :class="textClass">
-                    item.value }}
+                    {{ item.value }}
                   </v-list-item-title>
                 </v-list-item-content>
               </transition>

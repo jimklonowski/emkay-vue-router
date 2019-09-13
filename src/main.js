@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import App from '@/App.vue'
-import router from '@/router.js'
+import '@babel/polyfill'
+//import router from '@/router.js'
+import router from '@/router'
 import store from '@/store'
 import axios from 'axios'
-import vuetify from '@/plugins/vuetify'
-import '@babel/polyfill'
 
-import kendoComponents from './plugins/kendo'
+import vuetify from '@/plugins/vuetify'
+import nprogress from '@/plugins/nprogress'
+import kendoComponents from '@/plugins/kendo'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -26,6 +28,7 @@ new Vue({
   router,
   store,
   vuetify,
+  nprogress,
   components: {
     kendoComponents
   },
