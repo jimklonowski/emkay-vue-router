@@ -1,15 +1,17 @@
 // Vehicle Dashboard Routes
 
 export default [
-  // vehicle dashboard search
+  // // vehicle dashboard search
+  // {
+  //   path: '/vehicle',
+  //   name: 'vehicle-search',
+  //   component: () => import('@/views/VehicleSearch.vue')
+  // },
+
+  // https://github.com/vuejs/vue-router/issues/235#issuecomment-245447122
+  // vehicle dashboard (the '?' makes the vehicle parameter optional)
   {
-    path: '/vehicle',
-    name: 'vehicle-search',
-    component: () => import('@/views/VehicleSearch.vue')
-  },
-  //vehicle dashboard
-  {
-    path: '/vehicle/:vehicle',
+    path: '/vehicle/:vehicle?',
     name: 'vehicle-dashboard',
     component: () => import('@/views/VehicleDashboard.vue'),
     children: [

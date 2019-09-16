@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <article>
     <v-card>
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
@@ -57,7 +57,7 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-  </section>
+  </article>
 </template>
 
 <script>

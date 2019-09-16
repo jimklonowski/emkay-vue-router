@@ -1,5 +1,5 @@
 <template>
-  <div v-scroll="onScroll" class="mb-12 pt-5" v-on="$listeners">
+  <div v-scroll="onScroll" class="mb-12" v-on="$listeners">
     <slot name="top" />
     <ul class="toc my-5">
       <li class="grey--text text--darken-3 pl-4 mb-2 body-1">
@@ -50,7 +50,7 @@ export default {
     options() {
       return {
         duration: 500,
-        offset: 0,
+        offset: 48,
         easing: 'easeInOutCubic'
       }
     }

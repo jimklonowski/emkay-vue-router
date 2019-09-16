@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <article>
     <v-card>
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
@@ -7,7 +7,7 @@
           <span class="font-weight-thin">{{ subtitle }}</span>
         </header>
         <v-subheader dark>{{ vehNum }}</v-subheader>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-text-field
           v-model="search"
           class="font-weight-regular"
@@ -18,7 +18,7 @@
           dark
         />
       </v-card-title>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
@@ -32,7 +32,7 @@
         />
       </v-card-text>
     </v-card>
-  </section>
+  </article>
 </template>
 
 <script>

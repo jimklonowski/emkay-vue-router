@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
         <v-card-title :class="headerClass">
@@ -109,7 +109,7 @@
         />
       </v-card>
     </v-form>
-  </section>
+  </article>
 </template>
 
 <script>
@@ -278,11 +278,4 @@ export default {
   }
 }
 </script>
-<style scoped>
-.details-label {
-  height: 16px;
-  line-height: 16px;
-  font-size: 12px;
-  font-weight: 400;
-}
-</style>
+<style></style>

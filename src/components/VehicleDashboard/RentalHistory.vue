@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <article>
     <v-card>
       <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
         <header class="text-uppercase">
@@ -39,7 +39,7 @@
         />
       </v-card-text>
     </v-card>
-  </v-layout>
+  </article>
 </template>
 
 <script>

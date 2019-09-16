@@ -8,13 +8,7 @@
       height="36"
       style="z-index:5"
     >
-      <v-btn
-        small
-        text
-        tile
-        dark
-        :to="{ name: 'messaging' }"
-      >
+      <v-btn small text tile dark :to="{ name: 'messaging' }">
         <v-icon>mail</v-icon>
         <span
           v-if="messageCount > 0"
@@ -31,9 +25,19 @@
         <span v-text="formatFullDate(now)" />
       </v-tooltip>
     </v-system-bar>
-    <v-divider dark style="position:fixed;top:36px;left:0;width:100%;z-index:6;" />
-    <v-app-bar :class="this.$config.APP_BAR_CLASS" height="64" app dark>
-      <!-- <v-app-bar-nav-icon v-if="authed" @click.stop="drawer = !drawer" /> -->
+
+    <v-app-bar
+      :class="this.$config.APP_BAR_CLASS"
+      height="64"
+      app
+      clipped-left
+      dark
+    >
+      <v-app-bar-nav-icon
+        v-if="authed"
+        class="hidden-lg-and-up"
+        @click.stop="drawer = !drawer"
+      />
       <!-- <v-toolbar-items >
         <v-btn
           v-for="item in items"
@@ -46,35 +50,79 @@
           {{ item.text }}
         </v-btn>
       </v-toolbar-items> -->
-      <v-tabs background-color="transparent" show-arrows>
+      <v-tabs
+        v-if="authed"
+        class="hidden-md-and-down"
+        background-color="transparent"
+        show-arrows
+      >
         <v-tab v-for="item in items" :key="item.text" :to="item.to">
           {{ item.text }}
         </v-tab>
       </v-tabs>
       <!-- <div class="flex-grow-1" /> -->
       <v-spacer />
-      <v-text-field
-        v-if="authed"
-        class="mr-4 py-2 hidden-md-and-down"
-        clearable
-        append-icon="search"
-        hint="Search"
-        placeholder="Find a vehicle, driver, or website feature..."
-        hide-details
-        label="Search"
-        type="search"
-        rounded
-        solo-inverted
-        style="min-width:500px;"
-        color="blue-grey darken-2"
-        flat
-        dark
-      />
-      <v-btn v-if="!authed" class="hidden-sm-and-down" to="/login">SIGN IN</v-btn>
-      <!-- <template #extension>
-        
-      </template> -->
+
+      <v-toolbar-items>
+        <v-text-field
+          v-if="authed"
+          class="py-2"
+          clearable
+          append-icon="search"
+          hint="Search"
+          placeholder="Find a vehicle, driver, or website feature..."
+          hide-details
+          label="Search"
+          type="search"
+          rounded
+          solo-inverted
+          style="min-width:400px;"
+          color="blue-grey darken-2"
+          flat
+          dense
+          dark
+        />
+      </v-toolbar-items>
     </v-app-bar>
+
+    <v-navigation-drawer
+      v-if="authed"
+      v-model="drawer"
+      class="hidden-lg-and-up"
+      mobile-break-point="9999"
+      height="400"
+      app
+      bottom
+    >
+      <v-list dense nav>
+        <v-list-item
+          v-for="item in items"
+          :key="item.text"
+          :to="item.to"
+          active-class="primary--text"
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <template v-slot:append>
+        <v-divider />
+        <v-list dense nav>
+          <v-list-item link @click="logout">
+            <v-list-item-action>
+              <v-icon>domain_disabled</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Log Off</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+    </v-navigation-drawer>
   </nav>
 </template>
 
@@ -86,7 +134,7 @@ export default {
   name: 'AppNavigation2',
   data: () => ({
     title: 'EMKAY',
-    drawer: true,
+    drawer: false,
     now: Date.now(),
     messageCount: 10,
     items: [

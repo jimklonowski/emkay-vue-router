@@ -1,5 +1,6 @@
 <template>
-  <v-app-bar app tile dense style="z-index:4;top:100px;margin-top:0;">
+  <!-- <v-app-bar tile dense style="z-index:4;top:100px;margin-top:0;"> -->
+  <v-app-bar tile dense absolute style="position:sticky;top:100px;">
     <v-tabs
       color="blue-grey lighten-2"
       background-color="white"
@@ -32,11 +33,34 @@ export default {
   data: () => ({
     items: [
       //{ text: 'General', to: '/vehicle-dashboard/general' },
-      { text: 'Dashboard', to: { name: 'dashboard' } },
-      { text: 'Documents', to: { name: 'documents' } },
-      { text: 'Inspections', to: { name: 'inspections' } },
-      { text: 'SafeRoads', to: { name: 'saferoads' } },
-      { text: 'Transport/Storage', to: { name: 'transport-storage' } }
+      {
+        text: 'Dashboard',
+        to: { name: 'dashboard' },
+        meta: {
+          // allow this route to be taken without a vehicle parameter (shows the search route)
+          allowNoParam: true
+        }
+      },
+      {
+        text: 'Documents',
+        to: { name: 'documents' },
+        meta: {}
+      },
+      {
+        text: 'Inspections',
+        to: { name: 'inspections' },
+        meta: {}
+      },
+      {
+        text: 'SafeRoads',
+        to: { name: 'saferoads' },
+        meta: {}
+      },
+      {
+        text: 'Transport/Storage',
+        to: { name: 'transport-storage' },
+        meta: {}
+      }
     ]
   })
 }

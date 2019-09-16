@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
         <v-card-title :class="headerClass">
@@ -171,7 +171,7 @@
         />
       </v-card>
     </v-form>
-  </section>
+  </article>
 </template>
 
 <script>

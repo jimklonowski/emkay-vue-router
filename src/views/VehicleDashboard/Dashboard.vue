@@ -1,7 +1,7 @@
 <template>
-  <v-row>
-    <v-col sm="12" md="10" lg="10" xl="11">
-      <v-row>
+  <v-row tag="section">
+    <v-col cols="12" xl="11" lg="10" md="10">
+      <v-row tag="section">
         <component
           :is="section.component"
           v-for="section in sections"
@@ -12,15 +12,18 @@
         />
       </v-row>
     </v-col>
-    <v-col class="hidden-sm-and-down" md="2" lg="2" xl="1">
+    <v-col cols="0" md="2" lg="2" xl="1">
       <v-navigation-drawer
-        height="auto"
-        width="auto"
         color="transparent"
-        style="position:sticky;top:148px;"
-        right
+        clipped
         floating
+        height="100vh"
+        light
+        right
+        fixed
+        style="top:148px;"
         permanent
+        class="overflow-hidden hidden-sm-and-down mr-4 mt-12 align-center align-md-end"
       >
         <table-of-contents :toc-items="sections" />
       </v-navigation-drawer>

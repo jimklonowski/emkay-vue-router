@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="content-wrap">
+  <v-container class="content-wrap">
     <v-row>
       <v-col xs="12">
         <header class="font-weight-thin display-2 pa-3">
