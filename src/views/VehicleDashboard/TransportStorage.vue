@@ -1,5 +1,10 @@
 <template>
-  <header>{{ title }}</header>
+  <section>
+    <v-container>
+      <header class="font-weight-thin display-2">{{ title }}</header>
+      <v-subheader class="pl-1">Transport Storage</v-subheader>
+    </v-container>
+  </section>
 </template>
 
 <script>

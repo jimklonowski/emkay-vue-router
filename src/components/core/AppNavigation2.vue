@@ -1,172 +1,67 @@
 <template>
   <nav>
-    <v-system-bar
-      v-if="authed"
-      :class="this.$config.SYSTEM_BAR_CLASS"
-      app
-      dark
-      height="36"
-      style="z-index:5"
-    >
-      <v-btn small text tile dark :to="{ name: 'messaging' }">
-        <v-icon>mail</v-icon>
-        <span
-          v-if="messageCount > 0"
-          style="font-family:'Roboto Condensed',sans-serif;"
-        >
-          {{ messageCount }} unread messages
-        </span>
-      </v-btn>
-      <div class="flex-grow-1" />
-      <v-tooltip left>
-        <template v-slot:activator="{ on }">
-          <span v-on="on" v-text="formatTime(now)" />
-        </template>
-        <span v-text="formatFullDate(now)" />
-      </v-tooltip>
-    </v-system-bar>
-
-    <v-app-bar
-      :class="this.$config.APP_BAR_CLASS"
-      height="64"
-      app
-      clipped-left
-      dark
-    >
-      <v-app-bar-nav-icon
-        v-if="authed"
-        class="hidden-lg-and-up"
-        @click.stop="drawer = !drawer"
-      />
-      <!-- <v-toolbar-items >
-        <v-btn
-          v-for="item in items"
-          :key="item.to"
-          :to="item.to"
-          color="rgba(255,255,255,0.7)"
-          class="font-weight-regular"
-          text
-        >
-          {{ item.text }}
-        </v-btn>
-      </v-toolbar-items> -->
-      <v-tabs
-        v-if="authed"
-        class="hidden-md-and-down"
-        background-color="transparent"
-        show-arrows
-      >
-        <v-tab v-for="item in items" :key="item.text" :to="item.to">
-          {{ item.text }}
-        </v-tab>
-      </v-tabs>
-      <!-- <div class="flex-grow-1" /> -->
-      <v-spacer />
-
-      <v-toolbar-items>
-        <v-text-field
-          v-if="authed"
-          class="py-2"
-          clearable
-          append-icon="search"
-          hint="Search"
-          placeholder="Find a vehicle, driver, or website feature..."
-          hide-details
-          label="Search"
-          type="search"
-          rounded
-          solo-inverted
-          style="min-width:400px;"
-          color="blue-grey darken-2"
-          flat
-          dense
-          dark
-        />
-      </v-toolbar-items>
-    </v-app-bar>
-
-    <v-navigation-drawer
-      v-if="authed"
-      v-model="drawer"
-      class="hidden-lg-and-up"
-      mobile-break-point="9999"
-      height="400"
-      app
-      bottom
-    >
-      <v-list dense nav>
-        <v-list-item
-          v-for="item in items"
-          :key="item.text"
-          :to="item.to"
-          active-class="primary--text"
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <template v-slot:append>
-        <v-divider />
-        <v-list dense nav>
-          <v-list-item link @click="logout">
-            <v-list-item-action>
-              <v-icon>domain_disabled</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Log Off</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </template>
-    </v-navigation-drawer>
+    <system-bar v-if="authed" />
+    <main-navbar v-if="authed" :items="items" />
   </nav>
 </template>
 
 <script>
-import moment from 'moment'
+import VBtn from 'vuetify/lib/components/VBtn'
+
+import SystemBar from '@/components/core/navigation/SystemBar'
+
+import FleetManagementMegaMenu from '@/components/core/navigation/FleetManagementMegaMenu'
+import MainNavbar from '@/components/core/navigation/MainNavbar'
 import { LOGOUT } from '@/store/actions.type'
 
 export default {
   name: 'AppNavigation2',
+  components: {
+    SystemBar,
+    MainNavbar
+  },
   data: () => ({
     title: 'EMKAY',
     drawer: false,
-    now: Date.now(),
     messageCount: 10,
     items: [
       {
         text: 'Home',
         icon: 'home',
-        to: '/'
+        to: '/',
+        component: VBtn
       },
       {
         text: 'Fleet Dashboard',
         icon: 'dashboard',
-        to: '/fleet-dashboard'
+        to: '/fleet-dashboard',
+        component: VBtn
       },
       {
         text: 'Vehicle Dashboard',
         icon: 'table_chart',
-        to: '/vehicle'
+        to: '/vehicle',
+        component: VBtn
       },
       {
         text: 'Ordering',
         icon: 'pages',
-        to: '/ordering'
+        to: '/ordering',
+        component: VBtn
       },
       {
         text: 'Reporting',
         icon: 'show_chart',
-        to: '/reporting'
+        to: '/reporting',
+        component: VBtn
       },
       {
-        text: 'Account Management',
+        text: 'Fleet Management',
         icon: 'build',
-        to: '/account'
+        to: '/fleet-management',
+        ripple: false,
+        component: FleetManagementMegaMenu,
+        hasMegaMenu: true
       }
     ]
   }),
@@ -175,24 +70,11 @@ export default {
       return this.$store.getters.isAuthenticated
     }
   },
-  mounted() {
-    this.updateNow()
-    setInterval(this.updateNow.bind(this), 1000)
-  },
   methods: {
-    formatTime() {
-      return moment(this.now).format('hh:mm A')
-    },
-    formatFullDate() {
-      return moment(this.now).format('LLLL')
-    },
     logout() {
       this.$store.dispatch(LOGOUT).then(() => {
         this.$router.push({ name: 'login' })
       })
-    },
-    updateNow() {
-      this.now = Date.now()
     }
   }
 }

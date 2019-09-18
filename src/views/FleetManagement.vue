@@ -5,7 +5,7 @@
         <v-btn icon @click="goBack">
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <v-divider inset vertical />&nbsp; Account Management
+        <v-divider inset vertical />&nbsp; Fleet Management
       </v-toolbar>
     </v-row>
     <v-row>
@@ -25,13 +25,13 @@
 import AccountNavigation from '@/components/Account/AccountNavigation'
 
 export default {
-  name: 'Account',
+  name: 'FleetManagement',
   components: {
     AccountNavigation
   },
   data() {
     return {
-      title: 'Account Management'
+      title: 'Fleet Management'
     }
   },
   methods: {

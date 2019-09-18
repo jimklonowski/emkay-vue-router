@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000" persistent>
     <template v-slot:activator="{ on }">
-      <v-btn outlined tile color="error" v-on="on" @click.prevent>
+      <v-btn outlined tile color="error" v-on="on" @click.stop.prevent>
         <v-icon left>
           drive_eta
         </v-icon>
@@ -154,7 +154,6 @@
                       v-model="steps[2].date.menu"
                       :close-on-content-click="false"
                       transition="scale-transition"
-                      full-width
                       min-width="290px"
                       max-width="290px"
                       :nudge-right="40"
@@ -185,7 +184,6 @@
                       v-model="steps[2].time.menu"
                       :close-on-content-click="false"
                       transition="scale-transition"
-                      full-width
                       max-width="290px"
                       min-width="290px"
                       :nudge-right="40"
@@ -327,7 +325,7 @@
                           Address
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          fullAddress }}
+                          {{ fullAddress }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -337,7 +335,7 @@
                           Vehicle
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          vehicleInfo }}
+                          {{ vehicleInfo }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -347,7 +345,7 @@
                           License
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          licenseInfo }}
+                          {{ licenseInfo }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -357,7 +355,7 @@
                           Accident
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          accidentTime }}
+                          {{ accidentTime }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -367,7 +365,7 @@
                           Location
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          steps[2].location.value }}
+                          {{ steps[2].location.value }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -377,7 +375,7 @@
                           Description
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          steps[2].description.value }}
+                          {{ steps[2].description.value }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -387,7 +385,7 @@
                           Damages
                         </v-list-item-subtitle>
                         <v-list-item-title :class="summaryTextClass">
-                          steps[2].damages.value }}
+                          {{ steps[2].damages.value }}
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>

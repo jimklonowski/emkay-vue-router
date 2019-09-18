@@ -2,73 +2,83 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-card-title :class="headerClass">
-          <header class="text-uppercase">
-            <span class="font-weight-black">
-              {{ title1 }}
-            </span>
-            <span class="font-weight-thin">
-              {{ title2 }}
-            </span>
-          </header>
-
-          <v-subheader dark>
-            {{ vehNum }}
-          </v-subheader>
-        </v-card-title>
+        <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+          <v-toolbar-title class="text-uppercase">
+            <span class="font-weight-black">{{ title }}</span>
+            <span class="font-weight-thin">{{ subtitle }}</span>
+            <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+          </v-toolbar-title>
+          <v-spacer />
+          <v-menu transition="slide-y-transition" left>
+            <template v-slot:activator="{ on }">
+              <v-btn dark icon v-on="on">
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </template>
+            <v-list nav dense>
+              <v-list-item
+                v-for="(item, i) in actions"
+                :key="i"
+                :color="item.color"
+                @click="item.action"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-toolbar>
         <v-divider />
-        <v-card-text class="row no-gutters">
-          <v-list class="flex row">
+        <v-card-text>
+          <v-list
+            v-for="(section, i) in driverSections"
+            :key="i"
+            class="row"
+            subheader
+            dense
+          >
+            <v-subheader class="col-12 overline">{{ section.name }}</v-subheader>
             <v-list-item
-              v-for="item in driver"
-              :key="item.index"
-              class="col-6 py-0"
+              v-for="(field, j) in section.fields"
+              :key="j"
+              :class="field.class"
               style="user-select:text !important;"
             >
-              <transition name="rotate" mode="out-in">
-                <v-list-item-content
-                  v-if="item.editable && isEditing"
-                  :key="isEditing"
-                  class="py-0"
+              <v-list-item-content v-if="isEditing" class="py-0">
+                <v-text-field
+                  :label="field.label"
+                  :v-model="field"
+                  :value="field.value"
+                  :rules="editorRules.required"
+                  :disabled="!field.editable"
                 >
-                  <v-text-field
-                    height="24"
-                    :class="inputClass"
-                    :name="item.key"
-                    :label="item.name"
-                    :v-model="item"
-                    :value="item.value"
-                    :rules="editorRules.required"
-                  >
-                    {{ item.value }}
-                  </v-text-field>
-                </v-list-item-content>
-                <v-list-item-content v-else :key="isEditing" class="py-1">
-                  <v-list-item-subtitle :class="labelClass">
-                    {{ item.name }}
-                  </v-list-item-subtitle>
-                  <v-list-item-title :class="fieldClass">
-                    {{ item.value }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </transition>
+                  {{ field.value }}
+                </v-text-field>
+              </v-list-item-content>
+              <v-list-item-content v-else>
+                <v-list-item-subtitle class="details-label">
+                  {{ field.label }}
+                </v-list-item-subtitle>
+                <v-list-item-title
+                  class="text-label blue-grey--text text--darken-2"
+                >
+                  {{ field.value }}
+                </v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card-text>
-        <v-divider />
-        <v-card-actions class="pa-4">
-          <v-alert
-            v-if="isEditing && errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-          >
+        <v-card-actions v-if="isEditing">
+          <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
             {{ errorMessage }}
           </v-alert>
           <v-spacer />
           <v-btn
-            v-if="isEditing"
+            type="button"
             color="error"
             text
             @click.prevent="
@@ -78,25 +88,8 @@
           >
             Cancel
           </v-btn>
-          <v-btn
-            v-if="isEditing"
-            type="submit"
-            dark
-            tile
-            outlined
-            color="primary"
-          >
-            <v-icon dark> save </v-icon>&nbsp;Save
-          </v-btn>
-          <v-btn
-            v-else
-            color="primary"
-            dark
-            tile
-            outlined
-            @click.prevent="isEditing = !isEditing"
-          >
-            <v-icon dark> edit </v-icon>&nbsp;Change Driver Information
+          <v-btn type="submit" dark outlined color="primary">
+            <v-icon dark> save </v-icon>&nbsp;Save Changes
           </v-btn>
         </v-card-actions>
         <v-progress-linear
@@ -116,12 +109,14 @@
 export default {
   name: 'DriverDetails',
   props: {
-    vehNum: {
+    vehicle: {
       type: String,
       default: ''
     }
   },
-  data: () => ({
+  data: self => ({
+    title: 'Driver',
+    subtitle: 'Details',
     editorRules: {
       required: [v => !!v || 'Field is required']
     },
@@ -132,120 +127,179 @@ export default {
     inputClass: 'blue-grey--text text--darken-2',
     isEditing: false,
     loading: false,
-    title1: 'Driver',
-    title2: 'Details',
-    driver: [
+
+    actions: [
       {
-        index: 0,
-        key: 'last_name',
-        name: 'Last Name',
-        value: 'Klonowski',
-        editable: true
+        text: 'Edit Driver',
+        icon: 'edit',
+        action: () => (self.isEditing = !self.isEditing)
       },
       {
-        index: 1,
-        key: 'first_name',
-        name: 'First Name',
-        value: 'James',
-        editable: true
+        text: 'Reassign Driver',
+        icon: 'assignment_ind',
+        action: () => alert('reassign driver')
       },
       {
-        index: 2,
-        key: 'address_1',
-        name: 'Address 1',
-        value: 'Emkay Inc',
-        editable: true
+        text: 'Add New Driver',
+        icon: 'person_add',
+        action: () => alert('add new driver')
+      }
+    ],
+    driverSections: [
+      {
+        name: 'Driver Information',
+        fields: [
+          {
+            key: 'last_name',
+            label: 'Last Name',
+            editable: true,
+            class: 'col-6',
+            value: 'Klonowski'
+          },
+          {
+            key: 'first_name',
+            label: 'First Name',
+            editable: true,
+            class: 'col-6',
+            value: 'Jimmy'
+          },
+          {
+            key: 'selector_level',
+            label: 'Selector Level',
+            editable: true,
+            class: 'col-6',
+            value: 'something'
+          },
+          {
+            key: 'employee_id',
+            label: 'Employee ID',
+            editable: false,
+            class: 'col-6',
+            value: '112233'
+          }
+        ]
       },
       {
-        index: 3,
-        key: 'address_2',
-        name: 'Address 2',
-        value: '805 w Thorndale Ave',
-        editable: true
+        name: 'Contact Information',
+        fields: [
+          {
+            key: 'address_1',
+            label: 'Address 1',
+            editable: true,
+            class: 'col-6',
+            value: 'EMKAY, Inc'
+          },
+          {
+            key: 'address_2',
+            label: 'Address 2',
+            editable: true,
+            class: 'col-6',
+            value: '805 W Thorndale Ave.'
+          },
+          {
+            key: 'city_state_zip',
+            label: 'City/State/ZIP',
+            editable: true,
+            class: 'col-6',
+            value: 'Itasca, IL 60189'
+          },
+          {
+            key: 'county',
+            label: 'County',
+            editable: true,
+            class: 'col-6',
+            value: 'DuPage'
+          },
+          {
+            key: 'phone',
+            label: 'Phone',
+            editable: true,
+            class: 'col-6',
+            value: '630-864-0999'
+          },
+          {
+            key: 'cell',
+            label: 'Cell',
+            editable: true,
+            class: 'col-6',
+            value: '630-864-0000'
+          },
+          {
+            key: 'fax',
+            label: 'Fax',
+            editable: true,
+            class: 'col-6',
+            value: '630-FAX-MKAY'
+          },
+          {
+            key: 'email',
+            label: 'Email',
+            editable: true,
+            class: 'col-6',
+            value: 'jklonowski@email.com'
+          }
+        ]
       },
       {
-        index: 4,
-        key: 'city_state_zip',
-        name: 'City/State/ZIP',
-        value: 'Itasca, IL 60189',
-        editable: true
-      },
-      {
-        index: 5,
-        key: 'county',
-        name: 'County',
-        value: 'DuPage',
-        editable: true
-      },
-      {
-        index: 6,
-        key: 'phone',
-        name: 'Phone',
-        value: '630-123-4567',
-        editable: true
-      },
-      {
-        index: 7,
-        key: 'cell',
-        name: 'Cell',
-        value: '630-987-6543',
-        editable: true
-      },
-      {
-        index: 8,
-        key: 'fax',
-        name: 'Fax',
-        value: '773-630-7081',
-        editable: true
-      },
-      {
-        index: 9,
-        key: 'email',
-        name: 'Email',
-        value: 'jklonowski@emkay.com',
-        editable: true
-      },
-      {
-        index: 10,
-        key: 'employee_id',
-        name: 'Employee ID',
-        value: '112233',
-        editable: false
-      },
-      {
-        index: 11,
-        key: 'driver_misc_1',
-        name: 'Driver Misc 1',
-        value: 'custom',
-        editable: true
-      },
-      {
-        index: 12,
-        key: 'driver_misc_2',
-        name: 'Driver Misc 2',
-        value: 'labels',
-        editable: true
-      },
-      {
-        index: 13,
-        key: 'driver_misc_3',
-        name: 'Driver Misc 3',
-        value: 'for',
-        editable: true
-      },
-      {
-        index: 14,
-        key: 'driver_misc_4',
-        name: 'Driver Misc 4',
-        value: 'drivers',
-        editable: true
-      },
-      {
-        index: 15,
-        key: 'selector_level',
-        name: 'Selector Level',
-        value: 'something',
-        editable: true
+        name: 'Customization',
+        fields: [
+          {
+            key: 'driver_1_label',
+            label: 'Driver Misc 1 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Driver Misc 1'
+          },
+          {
+            key: 'driver_1',
+            label: 'Driver 1',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'driver_2_label',
+            label: 'Driver Misc 2 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Driver Misc 2'
+          },
+          {
+            key: 'driver_2',
+            label: 'Driver 2',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'driver_3_label',
+            label: 'Driver Misc 3 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Driver Misc 3'
+          },
+          {
+            key: 'driver_3',
+            label: 'Driver 3',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'driver_4_label',
+            label: 'Driver Misc 4 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Driver Misc 4'
+          },
+          {
+            key: 'driver_4',
+            label: 'Driver 4',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+        ]
       }
     ]
   }),

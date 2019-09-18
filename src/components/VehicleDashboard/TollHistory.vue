@@ -1,18 +1,12 @@
 <template>
   <article>
     <v-card>
-      <v-card-title :class="this.$config.COMPONENT_HEADER_CLASS">
-        <header class="text-uppercase">
-          <span class="font-weight-black">
-            {{ title }}
-          </span>
-          <span class="font-weight-thin">
-            {{ subtitle }}
-          </span>
-        </header>
-        <v-subheader dark>
-          {{ vehNum }}
-        </v-subheader>
+      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase">
+          <span class="font-weight-black">{{ title }}</span>
+          <span class="font-weight-thin">{{ subtitle }}</span>
+          <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+        </v-toolbar-title>
         <v-spacer />
         <v-text-field
           v-model="search"
@@ -23,26 +17,43 @@
           hide-details
           dark
         />
-      </v-card-title>
+        <v-menu transition="slide-y-transition" left>
+          <template v-slot:activator="{ on }">
+            <v-btn dark icon v-on="on">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+          </template>
+          <v-list nav dense>
+            <v-list-item
+              v-for="(item, i) in actions"
+              :key="i"
+              :color="item.color"
+              @click="item.action"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="item.icon" />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar>
       <v-divider />
       <v-card-text class="pa-0">
         <v-data-table
-          :search="search"
           :headers="headers"
           :items="items"
           :items-per-page="10"
+          :search="search"
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
           :loading-text="`Loading...`"
-          class="elevation-0"
           dense
         />
       </v-card-text>
-      <v-divider />
-      <v-card-actions class="pa-4">
-        <v-spacer />
-      </v-card-actions>
     </v-card>
   </article>
 </template>
@@ -51,17 +62,53 @@
 export default {
   name: 'TollHistory',
   props: {
-    vehNum: {
+    vehicle: {
       type: String,
       default: ''
     }
   },
   data: () => ({
-    search: '',
     title: 'Toll',
     subtitle: 'History',
-    loading: true,
-    headers: [],
+    search: '',
+    loading: false,
+    actions: [
+      {
+        text: 'Export to Excel',
+        icon: 'cloud_download',
+        action: () => alert('download')
+      }
+    ],
+    headers: [
+      {
+        text: 'Date',
+        width: '150px',
+        align: 'left',
+        sortable: true,
+        value: 'date'
+      },
+      {
+        text: 'Merchant',
+        width: '250px',
+        align: 'left',
+        sortable: true,
+        value: 'merchant'
+      },
+      {
+        text: 'Address',
+        width: '250px',
+        align: 'left',
+        sortable: true,
+        value: 'address'
+      },
+      {
+        text: 'Amount',
+        width: '150px',
+        align: 'left',
+        sortable: true,
+        value: 'amount'
+      }
+    ],
     items: []
   })
 }

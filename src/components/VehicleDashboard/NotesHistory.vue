@@ -50,15 +50,8 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
           dense
-        >
-          <template v-slot:item.in_network="{ item }">
-            <v-icon :color="getColor(item.in_network)">
-              {{ item.value ? 'check_circle' : 'remove_circle' }}
-            </v-icon>
-          </template>
-        </v-data-table>
+        />
       </v-card-text>
     </v-card>
   </article>
@@ -66,7 +59,7 @@
 
 <script>
 export default {
-  name: 'MaintenanceHistory',
+  name: 'NotesHistory',
   props: {
     vehicle: {
       type: String,
@@ -74,7 +67,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Maintenance',
+    title: 'Notes',
     subtitle: 'History',
     search: '',
     loading: false,
@@ -82,12 +75,7 @@ export default {
       {
         text: 'Export to Excel',
         icon: 'cloud_download',
-        action: () => alert('Excel Export')
-      },
-      {
-        text: 'eVoucher',
-        icon: 'local_play',
-        action: () => alert('eVoucher')
+        action: () => alert('download')
       }
     ],
     headers: [
@@ -99,71 +87,22 @@ export default {
         value: 'date'
       },
       {
-        text: 'Odometer',
-        width: '150px',
+        text: 'Subject',
+        width: '250px',
         align: 'left',
         sortable: true,
-        value: 'odometer'
+        value: 'subject'
       },
       {
-        text: 'Vendor',
-        width: '200px',
+        text: 'Notes',
+        width: '350px',
         align: 'left',
         sortable: true,
-        value: 'vendor'
-      },
-      {
-        text: 'In Network',
-        width: '100px',
-        align: 'left',
-        sortable: true,
-        value: 'in_network'
-      },
-      {
-        text: 'Service',
-        width: '200px',
-        align: 'left',
-        sortable: true,
-        value: 'service'
-      },
-      {
-        text: 'Amount',
-        width: '150px',
-        align: 'left',
-        sortable: true,
-        value: 'amount'
+        value: 'notes'
       }
     ],
-    items: [
-      {
-        date: '2019-08-20',
-        odometer: '12345',
-        vendor: 'EMKAY Motors',
-        in_network: true,
-        service: 'Wash & Detail (Fee)',
-        amount: '$24.00'
-      },
-      {
-        date: '2019-06-13',
-        odometer: '11323',
-        vendor: 'EMKAY Motors',
-        in_network: false,
-        service: 'Wash & Detail (Fee)',
-        amount: '$19.00'
-      },
-      {
-        date: '2019-04-01',
-        odometer: '10901',
-        vendor: 'EMKAY Motors',
-        in_network: true,
-        service: 'Wash & Detail (Fee)',
-        amount: '$750.00'
-      }
-    ]
-  }),
-  methods: {
-    getColor: type => (type ? 'success' : 'error')
-  }
+    items: []
+  })
 }
 </script>
 

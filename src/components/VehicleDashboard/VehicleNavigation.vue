@@ -1,6 +1,6 @@
 <template>
   <!-- <v-app-bar tile dense style="z-index:4;top:100px;margin-top:0;"> -->
-  <v-app-bar tile dense absolute style="position:sticky;top:100px;">
+  <v-app-bar tile dense absolute style="position:sticky;top:100px;" tag="nav">
     <v-tabs
       color="blue-grey lighten-2"
       background-color="white"

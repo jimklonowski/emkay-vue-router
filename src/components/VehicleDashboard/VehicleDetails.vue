@@ -2,144 +2,83 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-card-title :class="headerClass">
-          <header class="text-uppercase">
-            <span class="font-weight-black">
-              {{ title1 }}
-            </span>
-            <span class="font-weight-thin">
-              {{ title2 }}
-            </span>
-          </header>
-
-          <v-subheader dark>
-            {{ vehNum }}
-          </v-subheader>
+        <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+          <v-toolbar-title class="text-uppercase">
+            <span class="font-weight-black">{{ title }}</span>
+            <span class="font-weight-thin">{{ subtitle }}</span>
+            <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+          </v-toolbar-title>
           <v-spacer />
-          <v-speed-dial
-            v-model="fab"
-            absolute
-            right
-            direction="bottom"
-            transition="slide-x-reverse-transition"
-            style="top:40px;z-index:auto;"
-          >
-            <template v-slot:activator>
-              <v-btn
-                v-model="fab"
-                color="blue-grey lighten-1 white--text"
-                dark
-                fab
-              >
-                <v-icon v-if="fab">
-                  close
-                </v-icon>
-                <v-icon v-else>
-                  settings
-                </v-icon>
+          <v-menu transition="slide-y-transition" left>
+            <template v-slot:activator="{ on }">
+              <v-btn dark icon v-on="on">
+                <v-icon>more_vert</v-icon>
               </v-btn>
             </template>
-            <v-tooltip v-if="!isEditing" left>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  color="primary lighten-2"
-                  @click.prevent="isEditing = !isEditing"
-                  v-on="on"
-                >
-                  <v-icon>edit</v-icon>
-                </v-btn>
-              </template>
-              <span>Edit Vehicle Details</span>
-            </v-tooltip>
-            <v-tooltip v-else left>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  color="success darken-1"
-                  v-on="on"
-                  @click.prevent="onSubmit"
-                >
-                  <v-icon>save</v-icon>
-                </v-btn>
-              </template>
-              <span>Save Vehicle Details</span>
-            </v-tooltip>
-            <v-tooltip v-if="isEditing" left>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  color="error"
-                  @click.prevent="
-                    isEditing = !isEditing
-                    errorMessage = null
-                  "
-                >
-                  <v-icon>delete</v-icon>
-                </v-btn>
-              </template>
-              <span>Discard Changes</span>
-            </v-tooltip>
-          </v-speed-dial>
-        </v-card-title>
+            <v-list nav dense>
+              <v-list-item
+                v-for="(item, i) in actions"
+                :key="i"
+                :color="item.color"
+                @click="item.action"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-toolbar>
         <v-divider />
-        <v-card-text class="row no-gutters">
-          <v-list class="flex row">
+        <v-card-text>
+          <v-list
+            v-for="(section, i) in vehicleSections"
+            :key="i"
+            class="row"
+            subheader
+            dense
+          >
+            <v-subheader class="col-12 overline">{{ section.name }}</v-subheader>
             <v-list-item
-              v-for="item in vehicle"
-              :key="item.index"
-              class="col-6 py-0"
+              v-for="(field, j) in section.fields"
+              :key="j"
+              :class="field.class"
               style="user-select:text !important;"
             >
-              <transition name="rotate" mode="out-in">
-                <v-list-item-content
-                  v-if="item.editable && isEditing"
-                  :key="isEditing"
-                  class="py-0"
+              <v-list-item-content v-if="isEditing" class="py-0">
+                <v-text-field
+                  :label="field.label"
+                  :v-model="field"
+                  :value="field.value"
+                  :rules="editorRules.required"
+                  :disabled="!field.editable"
                 >
-                  <v-text-field
-                    height="24"
-                    :class="inputClass"
-                    :name="item.key"
-                    :label="item.name"
-                    :v-model="item"
-                    :value="item.value"
-                    :rules="editorRules.required"
-                  >
-                    {{ item.value }}
-                  </v-text-field>
-                </v-list-item-content>
-                <v-list-item-content v-else :key="isEditing" class="py-1">
-                  <v-list-item-subtitle :class="labelClass">
-                    {{ item.name }}
-                  </v-list-item-subtitle>
-                  <v-list-item-title :class="textClass">
-                    {{ item.value }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </transition>
+                  {{ field.value }}
+                </v-text-field>
+              </v-list-item-content>
+              <v-list-item-content v-else>
+                <v-list-item-subtitle class="details-label">
+                  {{ field.label }}
+                </v-list-item-subtitle>
+                <v-list-item-title
+                  class="text-label blue-grey--text text--darken-2"
+                >
+                  {{ field.value }}
+                </v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card-text>
-        <v-card-actions class="pa-4">
-          <v-alert
-            v-if="isEditing && errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-          >
+
+        <v-card-actions v-if="isEditing">
+          <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
             {{ errorMessage }}
           </v-alert>
           <v-spacer />
           <v-btn
-            v-if="isEditing"
             type="button"
             color="error"
             text
@@ -150,15 +89,8 @@
           >
             Cancel
           </v-btn>
-          <v-btn
-            v-if="isEditing"
-            type="submit"
-            dark
-            tile
-            outlined
-            color="primary"
-          >
-            <v-icon dark> save </v-icon>&nbsp;Save
+          <v-btn type="submit" dark outlined color="primary">
+            <v-icon dark> save </v-icon>&nbsp;Save Changes
           </v-btn>
         </v-card-actions>
         <v-progress-linear
@@ -178,26 +110,186 @@
 export default {
   name: 'VehicleDetails',
   props: {
-    vehNum: {
+    vehicle: {
       type: String,
       default: ''
     }
   },
-  data: () => ({
-    fab: false,
+  data: self => ({
+    title: 'Vehicle',
+    subtitle: 'Details',
+    actions: [
+      {
+        text: 'Edit Vehicle',
+        icon: 'edit',
+        action: () => (self.isEditing = !self.isEditing)
+      },
+      {
+        text: 'Order Status',
+        icon: 'av_timer',
+        action: () => alert('order status')
+      },
+      {
+        text: 'Schedule A/C',
+        icon: 'schedule',
+        action: () => alert('A/C click')
+      },
+      {
+        text: 'Report Expenses',
+        icon: 'assessment',
+        action: () => alert('Report Expenses')
+      },
+      {
+        text: 'Used Vehicle Quote',
+        icon: 'local_atm',
+        action: () => alert('Used Quote')
+      },
+      {
+        text: 'Terminate Vehicle',
+        icon: 'cancel_presentation',
+        action: () => alert('Terminate Vehicle')
+      }
+    ],
+    pendingOrder: true,
     errorMessage: null,
-    labelClass: 'details-label',
-    textClass: 'blue-grey--text text--darken-2',
-    headerClass: '',
-    inputClass: 'blue-grey--text text--darken-2',
     isEditing: false,
     loading: false,
-    title1: 'Vehicle',
-    title2: 'Details',
     editorRules: {
       required: [v => !!v || 'Field is required']
     },
-    vehicle: [
+
+    vehicleSections: [
+      {
+        name: 'Account Information',
+        fields: [
+          {
+            key: 'account',
+            label: 'Account',
+            editable: false,
+            class: 'col-6',
+            value: 'EM102'
+          },
+          {
+            key: 'billing_sort',
+            label: 'Billing Sort',
+            editable: false,
+            class: 'col-6',
+            value: '987654321OMG'
+          },
+          {
+            key: 'center',
+            label: 'Center',
+            editable: true,
+            class: 'col-12',
+            component: '',
+            value: '001'
+          }
+        ]
+      },
+      {
+        name: 'Vehicle Information',
+        fields: [
+          {
+            key: 'vin',
+            label: 'VIN',
+            editable: false,
+            class: 'col-12',
+            value: '987654321QWERTY'
+          },
+          {
+            key: 'vehicle_number',
+            label: 'Vehicle Number',
+            editable: false,
+            class: 'col-6',
+            value: 'E69420'
+          },
+          {
+            key: 'client_vehicle_number',
+            label: 'Client Vehicle Number',
+            editable: true,
+            class: 'col-6',
+            value: 'AAABBB'
+          }
+        ]
+      },
+      {
+        name: 'Customization',
+        fields: [
+          {
+            key: 'client_1_label',
+            label: 'Client Use 1 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Client Use 1'
+          },
+          {
+            key: 'client_1',
+            label: 'Client Use 1',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'client_2_label',
+            label: 'Client Use 2 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Client Use 2'
+          },
+          {
+            key: 'client_2',
+            label: 'Client Use 2',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'client_3_label',
+            label: 'Client Use 3 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Client Use 3'
+          },
+          {
+            key: 'client_3',
+            label: 'Client Use 3',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'client_4_label',
+            label: 'Client Use 4 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Client Use 4'
+          },
+          {
+            key: 'client_4',
+            label: 'Client Use 4',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          },
+          {
+            key: 'client_5_label',
+            label: 'Client Use 5 Label',
+            editable: true,
+            class: 'col-6',
+            value: 'Client Use 5'
+          },
+          {
+            key: 'client_5',
+            label: 'Client Use 5',
+            editable: true,
+            class: 'col-6',
+            value: 'asdf'
+          }
+        ]
+      }
+    ],
+
+    vehicleInfo: [
       {
         index: 0,
         key: 'account',
@@ -210,7 +302,7 @@ export default {
         key: 'billing_sort',
         name: 'Billing Sort',
         value: '1234567890-WOW',
-        editable: false
+        editable: true
       },
       {
         index: 2,
@@ -231,21 +323,21 @@ export default {
         key: 'center',
         name: 'Center',
         value: '001',
-        editable: false
+        editable: true
       },
       {
         index: 5,
         key: 'center_description',
         name: 'Center Description',
         value: 'Executive',
-        editable: false
+        editable: true
       },
       {
         index: 6,
         key: 'client_vehicle_number',
         name: 'Client Vehicle Number',
         value: '987654',
-        editable: false
+        editable: true
       },
       {
         index: 7,
@@ -320,9 +412,16 @@ export default {
     ]
   }),
   created() {
-    this.headerClass = this.$config.COMPONENT_HEADER_CLASS
+    //this.headerClass = this.$config.COMPONENT_HEADER_CLASS
   },
   methods: {
+    toggleEdit() {
+      console.log('toggle edit')
+      this.isEditing = !this.isEditing
+    },
+    orderStatus() {
+      alert('pending order status')
+    },
     onSubmit() {
       this.errorMessage = null
       this.loading = true
@@ -353,10 +452,16 @@ export default {
 </script>
 <style>
 .details-label {
-  height: 16px;
-  line-height: 16px;
-  font-size: 12px;
-  font-weight: 400;
+  height: 16px !important;
+  line-height: 16px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+.text-label {
+  height: 20px !important;
+  line-height: 20px !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
 }
 .rotate-enter {
   transform: perspective(500px) rotate3d(0, 1, 0, 90deg);

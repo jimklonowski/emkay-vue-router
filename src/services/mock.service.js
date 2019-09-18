@@ -33,6 +33,8 @@ const MockService = {
           refresh_token: 'REFRESH_TOKEN2'
         }
       })
+      .onPost('/test/error')
+      .reply(400, { success: false })
       // .onPost('/reportAccident')
       // .replyOnce(401)
       // .onPost('/reportAccident')

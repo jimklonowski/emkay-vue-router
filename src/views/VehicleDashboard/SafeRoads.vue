@@ -1,206 +1,211 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-subheader>SafeRoads Dashboard for this vehicle</v-subheader>
-    </v-col>
-    <v-col cols="12">
-      <v-card>
-        <v-card-title :class="headerClass">
-          <v-col sm="12" lg="4">
-            <header class="text-uppercase">
-              <span class="font-weight-black">{{ title1 }}</span>
-              <span class="font-weight-thin">{{ title2 }}</span>
+  <section>
+    <v-container>
+      <header class="font-weight-thin display-2">
+        SafeRoads Dashboard
+      </header>
+      <v-subheader class="pl-1">OMG!</v-subheader>
+      <v-row>
+        <v-col cols="12">
+          <v-card>
+            <v-card-title :class="headerClass">
+              <header class="text-uppercase">
+                <span class="font-weight-black">{{ title1 }}</span>
+                <span class="font-weight-thin">{{ title2 }}</span>
+              </header>
               <v-subheader dark>{{ vehicle }}</v-subheader>
-            </header>
-          </v-col>
-          <v-spacer />
-          <v-col sm="12" md="6" lg="4">
-            <v-menu
-              v-model="startMenu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              full-width
-              min-width="290px"
-              max-width="290px"
-              :nudge-right="40"
-              offset-y
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="startDate"
-                  label="Start Date"
-                  clearable
-                  prepend-icon="event"
-                  readonly
-                  dark
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="startDate"
-                no-title
-                scrollable
-                @change="startMenu = false"
-              />
-            </v-menu>
-          </v-col>
-          <v-col sm="12" md="6" lg="4">
-            <v-menu
-              v-model="endMenu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              full-width
-              min-width="290px"
-              max-width="290px"
-              :nudge-right="40"
-              offset-y
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="endDate"
-                  label="End Date"
-                  clearable
-                  prepend-icon="event"
-                  readonly
-                  dark
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="endDate"
-                no-title
-                scrollable
-                @change="endMenu = false"
-              />
-            </v-menu>
-          </v-col>
-        </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-card elevation="0">
-                <v-card-title>SafeRoads Score</v-card-title>
-                <v-card-text>
-                  <!-- <kendo-chart :series-defaults-type="'donut'" :chart-area-background="''" :series="series" :tooltip="tooltip"></kendo-chart> -->
-                  <kendo-arcgauge
-                    ref="arcgauge1"
-                    :scale-min="0"
-                    :value="score"
-                    :scale-max="100"
-                    :center-template="'#: value #'"
-                    style="width:100%;font-size:3rem;"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-card elevation="0">
-                <v-card-title>Score Breakdown</v-card-title>
-                <v-card-text>
-                  <div v-for="category in scores" :key="category.text">
-                    <v-subheader class="caption">
-                      {{ category.text }} -
-                      <v-chip
-                        label
-                        x-small
-                        :color="getColor(category.score)"
-                        class="ml-2"
-                      >
-                        {{ category.score }}</v-chip
-                      >
-                    </v-subheader>
-                    <v-divider />
-                    <v-rating
-                      v-model="category.value"
+              <v-spacer />
+              <v-col sm="6" lg="4">
+                <v-menu
+                  v-model="startMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  full-width
+                  min-width="290px"
+                  max-width="290px"
+                  :nudge-right="40"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="startDate"
+                      label="Start Date"
+                      clearable
+                      prepend-icon="event"
                       readonly
-                      :color="getColor(category.score)"
-                      empty-icon="texture"
-                      full-icon="directions_car"
-                      background-color="grey lighten-1"
+                      dark
+                      v-on="on"
                     />
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col cols="12">
-              <v-card elevation="0">
-                <v-card-title>Map of Trips</v-card-title>
-                <v-card-text>
-                  <kendo-map
-                    ref="map1"
-                    :center="[41.98345, -88.02516]"
-                    :zoom="18"
-                    style="width:100%; height:350px;"
-                  >
-                    <kendo-map-layer
-                      :type="'tile'"
-                      :url-template="
-                        'https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png'
-                      "
-                      :subdomains="['a', 'b', 'c']"
-                      :attribution="
-                        '%copy; <a href=\'https://osm.org/copyright\'>OpenStreetMap contributors</a>'
-                      "
+                  </template>
+                  <v-date-picker
+                    v-model="startDate"
+                    no-title
+                    scrollable
+                    @change="startMenu = false"
+                  />
+                </v-menu>
+              </v-col>
+              <v-col sm="6" lg="4">
+                <v-menu
+                  v-model="endMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  full-width
+                  min-width="290px"
+                  max-width="290px"
+                  :nudge-right="40"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="endDate"
+                      label="End Date"
+                      clearable
+                      prepend-icon="event"
+                      readonly
+                      dark
+                      v-on="on"
                     />
-                    <kendo-map-marker
-                      :location="[41.98345, -88.02516]"
-                      shape="pinTarget"
-                    />
-                  </kendo-map>
-                </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col cols="12">
-              <v-data-table :headers="headers" :items="items">
-                <template v-slot:item.saferoads="{ item }">
-                  <v-chip outlined :color="getScoreColor(item.saferoads)">
-                    <v-icon left>show_chart</v-icon>
-                    {{ item.saferoads }}
-                  </v-chip>
-                </template>
-                <template v-slot:item.phone_use="{ item }">
-                  <v-chip x-small :color="getColor(item.phone_use)">{{
-                    item.phone_use
-                  }}</v-chip>
-                </template>
-                <template v-slot:item.excessive_speeding="{ item }">
-                  <v-chip x-small :color="getColor(item.excessive_speeding)">{{
-                    item.excessive_speeding
-                  }}</v-chip>
-                </template>
-                <template v-slot:item.hard_braking="{ item }">
-                  <v-chip x-small :color="getColor(item.hard_braking)">{{
-                    item.hard_braking
-                  }}</v-chip>
-                </template>
-                <template v-slot:item.aggressive_acceleration="{ item }">
-                  <v-chip
-                    x-small
-                    :color="getColor(item.aggressive_acceleration)"
-                  >
-                    {{ item.aggressive_acceleration }}</v-chip
-                  >
-                </template>
-                <template v-slot:item.hard_turn="{ item }">
-                  <v-chip x-small :color="getColor(item.hard_turn)">{{
-                    item.hard_turn
-                  }}</v-chip>
-                </template>
-              </v-data-table>
-            </v-col>
-            <v-col cols="12">
-              <v-card elevation="0">
-                <v-card-title>Chart of Speed</v-card-title>
-                <v-card-text>
-                  <kendo-chart ref="chart1" />
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+                  </template>
+                  <v-date-picker
+                    v-model="endDate"
+                    no-title
+                    scrollable
+                    @change="endMenu = false"
+                  />
+                </v-menu>
+              </v-col>
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-card elevation="0">
+                    <v-card-title>SafeRoads Score</v-card-title>
+                    <v-card-text>
+                      <!-- <kendo-chart :series-defaults-type="'donut'" :chart-area-background="''" :series="series" :tooltip="tooltip"></kendo-chart> -->
+                      <kendo-arcgauge
+                        ref="arcgauge1"
+                        :scale-min="0"
+                        :value="score"
+                        :scale-max="100"
+                        :center-template="'#: value #'"
+                        style="width:100%;font-size:3rem;"
+                      />
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-card elevation="0">
+                    <v-card-title>Score Breakdown</v-card-title>
+                    <v-card-text>
+                      <div v-for="category in scores" :key="category.text">
+                        <v-subheader class="caption">
+                          {{ category.text }} -
+                          <v-chip
+                            label
+                            x-small
+                            :color="getColor(category.score)"
+                            class="ml-2"
+                          >
+                            {{ category.score }}</v-chip
+                          >
+                        </v-subheader>
+                        <v-divider />
+                        <v-rating
+                          v-model="category.value"
+                          readonly
+                          :color="getColor(category.score)"
+                          empty-icon="texture"
+                          full-icon="directions_car"
+                          background-color="grey lighten-1"
+                        />
+                      </div>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+                <v-col cols="12">
+                  <v-card elevation="0">
+                    <v-card-title>Map of Trips</v-card-title>
+                    <v-card-text>
+                      <kendo-map
+                        ref="map1"
+                        :center="[41.98345, -88.02516]"
+                        :zoom="18"
+                        style="width:100%; height:350px;"
+                      >
+                        <kendo-map-layer
+                          :type="'tile'"
+                          :url-template="
+                            'https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png'
+                          "
+                          :subdomains="['a', 'b', 'c']"
+                          :attribution="
+                            '%copy; <a href=\'https://osm.org/copyright\'>OpenStreetMap contributors</a>'
+                          "
+                        />
+                        <kendo-map-marker
+                          :location="[41.98345, -88.02516]"
+                          shape="pinTarget"
+                        />
+                      </kendo-map>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+                <v-col cols="12">
+                  <v-data-table :headers="headers" :items="items">
+                    <template v-slot:item.saferoads="{ item }">
+                      <v-chip outlined :color="getScoreColor(item.saferoads)">
+                        <v-icon left>show_chart</v-icon>
+                        {{ item.saferoads }}
+                      </v-chip>
+                    </template>
+                    <template v-slot:item.phone_use="{ item }">
+                      <v-chip x-small :color="getColor(item.phone_use)">{{
+                        item.phone_use
+                      }}</v-chip>
+                    </template>
+                    <template v-slot:item.excessive_speeding="{ item }">
+                      <v-chip
+                        x-small
+                        :color="getColor(item.excessive_speeding)"
+                      >{{ item.excessive_speeding }}</v-chip
+                      >
+                    </template>
+                    <template v-slot:item.hard_braking="{ item }">
+                      <v-chip x-small :color="getColor(item.hard_braking)">{{
+                        item.hard_braking
+                      }}</v-chip>
+                    </template>
+                    <template v-slot:item.aggressive_acceleration="{ item }">
+                      <v-chip
+                        x-small
+                        :color="getColor(item.aggressive_acceleration)"
+                      >
+                        {{ item.aggressive_acceleration }}</v-chip
+                      >
+                    </template>
+                    <template v-slot:item.hard_turn="{ item }">
+                      <v-chip x-small :color="getColor(item.hard_turn)">{{
+                        item.hard_turn
+                      }}</v-chip>
+                    </template>
+                  </v-data-table>
+                </v-col>
+                <v-col cols="12">
+                  <v-card elevation="0">
+                    <v-card-title>Chart of Speed</v-card-title>
+                    <v-card-text>
+                      <kendo-chart ref="chart1" />
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 
 <script>
