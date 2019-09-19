@@ -24,7 +24,7 @@
             @mouseleave="hideMenu(item)"
           >
             <span>
-              {{ item.text }}
+              {{ $t(item.key) }}
               <v-icon>arrow_drop_down</v-icon>
             </span>
             <transition name="mega-menu-fade">
@@ -36,7 +36,7 @@
             </transition>
           </div>
           <v-btn v-else :key="i" :to="item.to" text dark>
-            {{ item.text }}
+            {{ $t(item.key) }}
           </v-btn>
         </template>
       </v-toolbar-items>

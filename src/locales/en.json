@@ -1,0 +1,11 @@
+{
+  "navigation": {
+    "tagline": "simple. better. different.",
+    "home": "Home",
+    "fleet_dashboard": "Fleet Dashboard",
+    "vehicle_dashboard": "Vehicle Dashboard",
+    "reporting": "Reporting",
+    "ordering": "Ordering",
+    "fleet_management": "Fleet Management"
+  }
+}

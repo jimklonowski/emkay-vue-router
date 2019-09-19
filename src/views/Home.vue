@@ -8,7 +8,7 @@
       </v-col>
       <v-col cols="12">
         <v-subheader class="display-1 font-italic font-weight-thin">
-          {{ subtitle }}
+          {{ $t('navigation.tagline') }}
         </v-subheader>
       </v-col>
       <v-col md="5">

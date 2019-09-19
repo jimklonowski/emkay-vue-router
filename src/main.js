@@ -9,6 +9,7 @@ import axios from 'axios'
 import vuetify from '@/plugins/vuetify'
 import nprogress from '@/plugins/nprogress'
 import kendoComponents from '@/plugins/kendo'
+import i18n from '@/plugins/i18n'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -19,6 +20,7 @@ Vue.use(vueConfig, config)
 
 //import { CHECK_AUTH } from './store/actions.type'
 import ApiService from './services/api.service'
+
 ApiService.init()
 
 // Ensure we checked auth before each page load
@@ -29,6 +31,7 @@ new Vue({
   store,
   vuetify,
   nprogress,
+  i18n,
   components: {
     kendoComponents
   },

@@ -31,6 +31,7 @@
       <v-icon>widgets</v-icon>
       <span style="font-family:'Roboto Condensed', sans-serif;">Fleet Navigator</span>
     </v-btn>
+    <locale-switch />
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <span v-on="on" v-text="formatTime(now)" />
@@ -42,9 +43,13 @@
 
 <script>
 import moment from 'moment'
+import LocaleSwitch from '@/components/core/navigation/LocaleSwitch'
 
 export default {
   name: 'SystemBar',
+  components: {
+    LocaleSwitch
+  },
   props: {
     height: {
       type: Number,

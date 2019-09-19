@@ -24,21 +24,25 @@ export default {
     items: [
       {
         text: 'Home',
+        key: 'navigation.home',
         icon: 'home',
         to: '/'
       },
       {
         text: 'Fleet Dashboard',
+        key: 'navigation.fleet_dashboard',
         icon: 'dashboard',
         to: '/fleet-dashboard'
       },
       {
         text: 'Vehicle Dashboard',
+        key: 'navigation.vehicle_dashboard',
         icon: 'table_chart',
         to: '/vehicle'
       },
       {
         text: 'Ordering',
+        key: 'navigation.ordering',
         icon: 'pages',
         to: '/ordering',
         hasMegaMenu: true,
@@ -96,6 +100,7 @@ export default {
       },
       {
         text: 'Reporting',
+        key: 'navigation.reporting',
         icon: 'show_chart',
         to: '/reporting',
         hasMegaMenu: true,
@@ -256,6 +261,7 @@ export default {
       },
       {
         text: 'Fleet Management',
+        key: 'navigation.fleet_management',
         icon: 'build',
         to: '/fleet-management',
         hasMegaMenu: true,
