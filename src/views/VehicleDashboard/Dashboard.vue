@@ -1,5 +1,5 @@
 <template>
-  <section style="padding-right: 200px;">
+  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right: 200px;' : ''">
     <v-container>
       <v-row tag="section">
         <header class="col-12 font-weight-thin display-2 pa-3">
@@ -43,8 +43,9 @@ import AccidentHistory from '@/components/VehicleDashboard/AccidentHistory'
 import RentalHistory from '@/components/VehicleDashboard/RentalHistory'
 import TollHistory from '@/components/VehicleDashboard/TollHistory'
 import ViolationHistory from '@/components/VehicleDashboard/ViolationHistory'
-import OdometerHistory from '@/components/VehicleDashboard/OdometerHistory'
-import NotesHistory from '@/components/VehicleDashboard/NotesHistory'
+import ReportedOdometers from '@/components/VehicleDashboard/ReportedOdometers'
+import VehicleNotes from '@/components/VehicleDashboard/VehicleNotes'
+import DriverHistory from '@/components/VehicleDashboard/DriverHistory'
 
 export default {
   name: 'Dashboard',
@@ -60,8 +61,9 @@ export default {
     RentalHistory,
     TollHistory,
     ViolationHistory,
-    OdometerHistory,
-    NotesHistory
+    ReportedOdometers,
+    DriverHistory,
+    VehicleNotes
   },
   data: () => ({
     vehicle: '',
@@ -123,21 +125,28 @@ export default {
       {
         text: 'Violation History',
         id: 'toc10',
-        class: 'pa-5 col-12',
+        class: 'pa-5 col-lg-6',
         component: ViolationHistory
       },
       {
-        text: 'Notes History',
+        text: 'Reported Odometers',
         id: 'toc11',
-        class: 'pa-5 col-12',
-        component: NotesHistory
+        class: 'pa-5 col-lg-6',
+        component: ReportedOdometers
       },
       {
-        text: 'Odometer History',
+        text: 'Driver History',
         id: 'toc12',
-        class: 'pa-5 col-12',
-        component: OdometerHistory
-      }
+        class: 'pa-5 col-lg-6',
+        component: DriverHistory
+      },
+      {
+        text: 'Notes',
+        id: 'toc13',
+        class: 'pa-5 col-lg-6',
+        component: VehicleNotes
+      },
+      
     ]
   }),
   computed: {

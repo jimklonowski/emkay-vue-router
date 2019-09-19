@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: 'NotesHistory',
+  name: 'VehicleNotes',
   props: {
     vehicle: {
       type: String,

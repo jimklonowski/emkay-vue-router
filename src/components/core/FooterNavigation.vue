@@ -52,52 +52,94 @@ export default {
   data: () => ({
     buckets: [
       {
-        title: 'Fleet Managers',
-        items: [
-          { text: 'Fleet Dashboard', to: { name: 'fleet-dashboard' } },
-          { text: 'Reporting', to: { name: 'reporting' } },
-          { text: 'FOR Builder', to: { name: 'for-builder' } }
-        ]
-      },
-      {
-        title: 'Drivers',
-        items: [
-          { text: 'Vehicle Dashboard', to: { name: 'vehicle-search' } },
-          { text: 'Driver Dashboard', to: { name: 'driver' } },
-          { text: 'Account', to: { name: 'account' } }
-        ]
-      },
-      {
         title: 'About',
         items: [
           {
-            text: 'About',
+            text: 'About EMKAY',
             to: {},
             href: '//emkay.com/about',
             target: '_blank'
           },
           {
-            text: 'Leasing',
+            text: 'Blog',
             to: {},
-            href: '//emkay.com/leasing/trac',
+            href: '//emkay.com/blog',
             target: '_blank'
           },
           {
-            text: 'Services',
+            text: 'Careers',
             to: {},
-            href: '//emkay.com/services/maintenance',
+            href: '//emkay.com/careers/job-listings',
             target: '_blank'
           },
           {
-            text: 'Technology',
+            text: 'Contact',
             to: {},
-            href: '//emkay.com/technology/client-website',
+            href: '//emkay.com/contact',
+            target: '_blank'
+          }
+        ]
+      },
+      {
+        title: 'More',
+        items: [
+          {
+            text: 'Press Releases',
+            to: {},
+            href: '//emkay.com/news',
             target: '_blank'
           },
           {
-            text: 'Solutions',
+            text: 'Leadtime Guides',
             to: {},
-            href: '//emkay.com/strategic-solutions',
+            href: '//emkay.com/',
+            target: '_blank'
+          },
+          {
+            text: 'Fleet Incentives',
+            to: {},
+            href: '//emkay.com/',
+            target: '_blank'
+          },
+          {
+            text: 'Automotive Links',
+            to: {},
+            href: '//emkay.com/',
+            target: '_blank'
+          }
+        ]
+      },
+      {
+        title: 'Technology',
+        items: [
+          {
+            text: 'Celsius',
+            to: {},
+            href: '//emkay.com/about',
+            target: '_blank'
+          },
+          {
+            text: 'Driver360',
+            to: {},
+            href: '//emkay.com/technology/mobile-apps',
+            target: '_blank'
+          },
+          {
+            text: 'Fleet360',
+            to: {},
+            href: '//emkay.com/technology/mobile-apps',
+            target: '_blank'
+          },
+          {
+            text: 'Fleet Exchange',
+            to: {},
+            href: '//emkay.com/',
+            target: '_blank'
+          },
+          {
+            text: 'Geotab',
+            to: {},
+            href: '//emkay.com/',
             target: '_blank'
           }
         ]

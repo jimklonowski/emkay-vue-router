@@ -33,5 +33,13 @@ export default [
       guest: true,
       onlyWhenLoggedOut: true
     }
-  }
+  },
+  {
+    path: '/todo',
+    name: 'todo',
+    component: () => import('@/views/Todo.vue'),
+    meta: {
+      guest: true
+    }
+  },
 ]

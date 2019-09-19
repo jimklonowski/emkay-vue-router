@@ -33,43 +33,48 @@
           </v-menu>
         </v-toolbar>
         <v-divider />
-        <v-card-text>
+        <v-card-text class="pa-0">
           <v-list
             v-for="(section, i) in vehicleSections"
             :key="i"
-            class="row"
             subheader
             dense
           >
-            <v-subheader class="col-12 overline">{{ section.name }}</v-subheader>
-            <v-list-item
-              v-for="(field, j) in section.fields"
-              :key="j"
-              :class="field.class"
-              style="user-select:text !important;"
-            >
-              <v-list-item-content v-if="isEditing" class="py-0">
-                <v-text-field
-                  :label="field.label"
-                  :v-model="field"
-                  :value="field.value"
-                  :rules="editorRules.required"
-                  :disabled="!field.editable"
+            <v-subheader class="col-12 overline blue-grey lighten-5">
+              {{ section.name }}
+            </v-subheader>
+            <div class="pa-3">
+              <v-row>
+                <v-list-item
+                  v-for="(field, j) in section.fields"
+                  :key="j"
+                  :class="field.class"
+                  style="user-select:text !important;"
                 >
-                  {{ field.value }}
-                </v-text-field>
-              </v-list-item-content>
-              <v-list-item-content v-else>
-                <v-list-item-subtitle class="details-label">
-                  {{ field.label }}
-                </v-list-item-subtitle>
-                <v-list-item-title
-                  class="text-label blue-grey--text text--darken-2"
-                >
-                  {{ field.value }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+                  <v-list-item-content v-if="isEditing" class="py-0">
+                    <v-text-field
+                      :label="field.label"
+                      :v-model="field"
+                      :value="field.value"
+                      :rules="editorRules.required"
+                      :disabled="!field.editable"
+                    >
+                      {{ field.value }}
+                    </v-text-field>
+                  </v-list-item-content>
+                  <v-list-item-content v-else>
+                    <v-list-item-subtitle class="details-label">
+                      {{ field.label }}
+                    </v-list-item-subtitle>
+                    <v-list-item-title
+                      class="text-label blue-grey--text text--darken-2"
+                    >
+                      {{ field.value }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-row>
+            </div>
           </v-list>
         </v-card-text>
 
@@ -166,14 +171,14 @@ export default {
             key: 'account',
             label: 'Account',
             editable: false,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'EM102'
           },
           {
             key: 'billing_sort',
             label: 'Billing Sort',
             editable: false,
-            class: 'col-6',
+            class: 'col-md-6',
             value: '987654321OMG'
           },
           {
@@ -193,21 +198,21 @@ export default {
             key: 'vin',
             label: 'VIN',
             editable: false,
-            class: 'col-12',
+            class: 'col-md-6',
             value: '987654321QWERTY'
           },
           {
             key: 'vehicle_number',
             label: 'Vehicle Number',
             editable: false,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'E69420'
           },
           {
             key: 'client_vehicle_number',
             label: 'Client Vehicle Number',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'AAABBB'
           }
         ]
@@ -219,70 +224,70 @@ export default {
             key: 'client_1_label',
             label: 'Client Use 1 Label',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'Client Use 1'
           },
           {
             key: 'client_1',
             label: 'Client Use 1',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'asdf'
           },
           {
             key: 'client_2_label',
             label: 'Client Use 2 Label',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'Client Use 2'
           },
           {
             key: 'client_2',
             label: 'Client Use 2',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'asdf'
           },
           {
             key: 'client_3_label',
             label: 'Client Use 3 Label',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'Client Use 3'
           },
           {
             key: 'client_3',
             label: 'Client Use 3',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'asdf'
           },
           {
             key: 'client_4_label',
             label: 'Client Use 4 Label',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'Client Use 4'
           },
           {
             key: 'client_4',
             label: 'Client Use 4',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'asdf'
           },
           {
             key: 'client_5_label',
             label: 'Client Use 5 Label',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'Client Use 5'
           },
           {
             key: 'client_5',
             label: 'Client Use 5',
             editable: true,
-            class: 'col-6',
+            class: 'col-md-6',
             value: 'asdf'
           }
         ]

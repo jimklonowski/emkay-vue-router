@@ -1,39 +1,96 @@
 <template>
-  <v-container fluid class="content-wrap pt-0">
-    <v-row>
-      <v-toolbar dark>
-        <v-btn icon @click="goBack">
-          <v-icon>chevron_left</v-icon>
-        </v-btn>
-        <v-divider inset vertical />&nbsp; Fleet Management
-      </v-toolbar>
-    </v-row>
-    <v-row>
-      <v-col cols="12" md="4" lg="4" xl="3" pa-10>
-        <account-navigation />
-      </v-col>
-
-      <v-col cols="12" md="8" lg="8" xl="9" pa-10>
-        <!-- <header class="display-3">{{ title }}</header> -->
-        <router-view />
-      </v-col>
-    </v-row>
-  </v-container>
+  <section>
+    <mega-menu :categories="categories" style="position:fixed;left:0;right:0;top:100px;" />
+  </section>
 </template>
 
 <script>
-import AccountNavigation from '@/components/Account/AccountNavigation'
-
+import MegaMenu from '@/components/core/navigation/MegaMenu'
 export default {
   name: 'FleetManagement',
   components: {
-    AccountNavigation
+    MegaMenu
   },
-  data() {
-    return {
-      title: 'Fleet Management'
-    }
-  },
+  data: () => ({
+    title: 'Fleet Management',
+    categories: [
+      {
+        text: 'Category X',
+        items: [
+          {
+            text: 'Manage Your Online Users',
+            to: '/todo'
+          },
+          {
+            text: 'Manage Your Fleet Policies',
+            to: '/todo'
+          },
+          {
+            text: 'Customize Your Fleet Labels',
+            to: '/todo'
+          },
+          {
+            text: 'Manage Your Drivers',
+            to: '/todo'
+          },
+          {
+            text: 'Manage Your Driver Fuel PINs',
+            to: '/todo'
+          },
+          {
+            text: 'Manage Your eNotifications',
+            to: '/todo'
+          },
+          {
+            text: 'Manage Your Cases',
+            to: '/todo'
+          },
+          {
+            text: 'View Your Fuel Auth Profiles',
+            to: '/todo'
+          }
+        ]
+      },
+      {
+        text: 'Category Y',
+        items: [
+          {
+            text: 'Approve Your Maintenance Repairs',
+            to: '/todo'
+          },
+          {
+            text: 'Approve Your Driver Prders',
+            to: '/todo'
+          },
+          {
+            text: 'Request an MVR',
+            to: '/todo'
+          },
+          {
+            text: 'Upload Your Odometers',
+            to: '/todo'
+          }
+        ]
+      },
+      {
+        text: 'Tools',
+        items: [
+          {
+            text: 'Locate Preferred Shops',
+            to: '/todo'
+          },
+          {
+            text: 'Quote a Transport',
+            to: '/todo'
+          },
+          {
+            text: 'LCCA',
+            to: '/todo'
+          }
+        ]
+      }
+    ]
+  }),
   methods: {
     goBack() {
       this.$router.back()

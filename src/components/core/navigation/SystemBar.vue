@@ -21,6 +21,16 @@
       </span>
     </v-btn>
     <div class="flex-grow-1" />
+    <v-btn
+      to="/fleet-navigator"
+      small
+      text
+      tile
+      dark
+    >
+      <v-icon>widgets</v-icon>
+      <span style="font-family:'Roboto Condensed', sans-serif;">Fleet Navigator</span>
+    </v-btn>
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <span v-on="on" v-text="formatTime(now)" />
@@ -54,6 +64,18 @@ export default {
         to: { name: 'messaging' },
         icon: 'notifications',
         count: 3
+      },
+      {
+        text: 'Driver Order Approvals',
+        to: { name: 'messaging' },
+        icon: 'drive_eta',
+        count: 0
+      },
+      {
+        text: 'Maintenance Approvals',
+        to: { name: 'messaging' },
+        icon: 'report',
+        count: 1
       }
     ],
     now: Date.now()
@@ -65,7 +87,7 @@ export default {
   },
   methods: {
     alertText(count, text) {
-      return `${count} ${text}`
+      return count ? `${count} ${text}` : `${text}`
     },
     formatTime() {
       return moment(this.now).format('hh:mm A')

@@ -13,16 +13,32 @@
       />
 
       <v-toolbar-items class="hidden-md-and-down">
-        <component
-          :is="item.component"
-          v-for="item in items"
-          :key="item.text"
-          :to="item.to"
-          text
-          dark
-        >
-          {{ item.text }}
-        </component>
+        <template v-for="(item, i) in items">
+          <div
+            v-if="item.hasMegaMenu"
+            :key="i"
+            :ref="item.ref"
+            class="v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+            :class="{ 'v-btn--active': $route.path === item.to }"
+            @mouseover="showMenu(item)"
+            @mouseleave="hideMenu(item)"
+          >
+            <span>
+              {{ item.text }}
+              <v-icon>arrow_drop_down</v-icon>
+            </span>
+            <transition name="mega-menu-fade">
+              <mega-menu
+                v-show="item.visible"
+                :categories="item.categories"
+                :style="'position:fixed;left:0;right:0;top:64px;cursor:auto;width:100vw;min-width:100vw;'"
+              />
+            </transition>
+          </div>
+          <v-btn v-else :key="i" :to="item.to" text dark>
+            {{ item.text }}
+          </v-btn>
+        </template>
       </v-toolbar-items>
       <v-spacer />
       <v-text-field
@@ -80,10 +96,14 @@
 </template>
 
 <script>
+import MegaMenu from '@/components/core/navigation/MegaMenu'
 import { LOGOUT } from '@/store/actions.type'
 
 export default {
   name: 'MainNavbar',
+  components: {
+    MegaMenu
+  },
   props: {
     items: {
       type: Array,
@@ -92,6 +112,7 @@ export default {
   },
   data: () => ({
     title: 'test',
+    fleetManagementMenuVisible: false,
     drawer: {
       isOpen: false,
       app: true,
@@ -105,9 +126,25 @@ export default {
       this.$store.dispatch(LOGOUT).then(() => {
         this.$router.push({ name: 'login' })
       })
+    },
+    showMenu(item) {
+      if (this.$route.path !== item.to) item.visible = true
+    },
+    hideMenu(item) {
+      if (this.$route.path !== item.to) item.visible = false
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+.mega-menu-fade-enter-active,
+.mega-menu-fade-leave-active {
+  transition: all 0.2s ease-in-out;
+}
+.mega-menu-fade-enter,
+.mega-menu-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+</style>

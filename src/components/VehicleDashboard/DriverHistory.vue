@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: 'OdometerHistory',
+  name: 'DriverHistory',
   props: {
     vehicle: {
       type: String,
@@ -68,8 +68,8 @@ export default {
     }
   },
   data: () => ({
-    title: 'Reported',
-    subtitle: 'Odometers',
+    title: 'Driver',
+    subtitle: 'History',
     search: '',
     loading: false,
     actions: [
@@ -77,22 +77,34 @@ export default {
         text: 'Export to Excel',
         icon: 'cloud_download',
         action: () => alert('download')
+      },
+      {
+        text: 'Change Driver Effective Date',
+        icon: 'date_range',
+        action: () => alert('change driver effective date')
       }
     ],
     headers: [
       {
-        text: 'Date',
+        text: 'Effective Date',
         width: 'auto',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Odometer',
+        text: 'End Date',
         width: 'auto',
         align: 'left',
         sortable: true,
-        value: 'odometer'
+        value: 'end_date'
+      },
+      {
+        text: 'Driver',
+        width: 'auto',
+        align: 'left',
+        sortable: true,
+        value: 'driver'
       }
     ],
     items: []
@@ -100,4 +112,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
