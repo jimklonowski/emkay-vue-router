@@ -9,7 +9,7 @@
             <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
           </v-toolbar-title>
           <v-spacer />
-          <v-menu transition="slide-y-transition" left>
+          <v-menu transition="slide-y-transition" z-index="3" left>
             <template v-slot:activator="{ on }">
               <v-btn dark icon v-on="on">
                 <v-icon>more_vert</v-icon>
@@ -37,19 +37,20 @@
           <v-list
             v-for="(section, i) in driverSections"
             :key="i"
+            class="pa-0"
             subheader
             dense
           >
             <v-subheader class="col-12 overline blue-grey lighten-5">
               {{ section.name }}
             </v-subheader>
-            <div class="pa-3">
-              <v-row>
+            <div class="px-3">
+              <v-row dense>
                 <v-list-item
                   v-for="(field, j) in section.fields"
                   :key="j"
                   :class="field.class"
-                  style="user-select:text !important;"
+                  style="user-select:text !important;height:72px;"
                 >
                   <v-list-item-content v-if="isEditing" class="py-0">
                     <v-text-field
@@ -62,7 +63,7 @@
                       {{ field.value }}
                     </v-text-field>
                   </v-list-item-content>
-                  <v-list-item-content v-else>
+                  <v-list-item-content v-else class="pt-0 pb-4">
                     <v-list-item-subtitle class="details-label">
                       {{ field.label }}
                     </v-list-item-subtitle>

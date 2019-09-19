@@ -17,7 +17,7 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" left>
+        <v-menu transition="slide-y-transition" z-index="3" left>
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
               <v-icon>more_vert</v-icon>

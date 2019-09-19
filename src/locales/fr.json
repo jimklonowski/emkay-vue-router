@@ -3,5 +3,8 @@
     "tagline": "facile. mieux. différent.",
     "fleet_dashboard": "Tableau de Flotte",
     "vehicle_dashboard": "Tableau du véhicule"
+  },
+  "messages": {
+    "unread_messages": "pas de messages non lus | un message non lu | {n} messages non lus"
   }
 }

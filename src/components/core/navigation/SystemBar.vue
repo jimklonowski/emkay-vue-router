@@ -17,7 +17,7 @@
     >
       <v-icon>{{ button.icon }}</v-icon>
       <span style="font-family:'Roboto Condensed', sans-serif;">
-        {{ alertText(button.count, button.text) }}
+        {{ $tc(button.key, button.count) }}
       </span>
     </v-btn>
     <div class="flex-grow-1" />
@@ -60,24 +60,28 @@ export default {
     buttons: [
       {
         text: 'Unread Messages',
+        key: 'messages.unread_messages',
         to: { name: 'messaging' },
         icon: 'mail',
         count: 10
       },
       {
         text: 'Critical Alerts',
+        key: 'messages.critical_alerts',
         to: { name: 'messaging' },
         icon: 'notifications',
         count: 3
       },
       {
         text: 'Driver Order Approvals',
+        key: 'messages.driver_order_approvals',
         to: { name: 'messaging' },
         icon: 'drive_eta',
         count: 0
       },
       {
         text: 'Maintenance Approvals',
+        key: 'messages.maintenance_approvals',
         to: { name: 'messaging' },
         icon: 'report',
         count: 1

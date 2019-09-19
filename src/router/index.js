@@ -61,12 +61,12 @@ router.beforeEach((to, from, next) => {
     // this is an authenticated route, check auth status before proceeding
     if (store.getters.isAuthenticated) {
       // user is authenticated, pass route through
-      console.log(`IsAuthed -> ${to.path}`)
-      console.log(store)
+      //console.log(`IsAuthed -> ${to.path}`)
+      //console.log(store)
       next()
     } else {
       // user is not authenticated and trying to access auth route -> send to login
-      console.log(`Not authed -> ${to.path}`)
+      //console.log(`Not authed -> ${to.path}`)
       store.dispatch(LOGOUT).then(() => next('/login'))
     }
   }

@@ -7,5 +7,11 @@
     "reporting": "Reporting",
     "ordering": "Ordering",
     "fleet_management": "Fleet Management"
+  },
+  "messages": {
+    "unread_messages": "no unread messages | 1 unread message | {count} unread messages",
+    "critical_alerts": "no critical alerts | 1 critical alert | {count} critical alerts",
+    "driver_order_approvals": "no driver order approvals | 1 driver order approval | {count} driver order approvals",
+    "maintenance_approvals": "no maintenance approvals | 1 maintenance approval | {count} maintenance approvals"
   }
 }

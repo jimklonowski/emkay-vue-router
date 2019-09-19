@@ -17,7 +17,7 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" left>
+        <v-menu transition="slide-y-transition" z-index="3" left>
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
               <v-icon>more_vert</v-icon>
@@ -30,7 +30,7 @@
               :color="item.color"
               @click="item.action"
             >
-              <component v-if="item.component" :is="item.component" />
+              <component :is="item.component" v-if="item.component" />
               <template v-else>
                 <v-list-item-icon>
                   <v-icon v-text="item.icon" />
