@@ -112,7 +112,17 @@
       "saferoads": "SafeRoads",
       "transport_storage": "Transport/Storage"
     },
+    "edit_vehicle": "Edit Vehicle",
+    "order_status": "Order Status",
+    "schedule_ac": "Schedule A/C",
+    "report_expenses": "Report Expenses",
+    "used_vehicle_quote": "Used Vehicle Quote",
+    "terminate_vehicle": "Terminate Vehicle",
+    "edit_driver": "Edit Driver",
+    "reassign_driver": "Reassign Driver",
+    "add_new_driver": "Add New Driver",
     "order_fuel_card": "Order Fuel Card",
-    "reassign_auth_profile": "Reassign Authorization Profile"
+    "reassign_auth_profile": "Reassign Authorization Profile",
+    "evoucher": "eVoucher"
   }
 }

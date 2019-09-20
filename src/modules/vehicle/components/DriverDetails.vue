@@ -26,7 +26,7 @@
                   <v-icon v-text="item.icon" />
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                  <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -134,17 +134,17 @@ export default {
 
     actions: [
       {
-        text: 'Edit Driver',
+        key: 'vehicle_dashboard.edit_driver',
         icon: 'edit',
         action: () => (self.isEditing = !self.isEditing)
       },
       {
-        text: 'Reassign Driver',
+        key: 'vehicle_dashboard.reassign_driver',
         icon: 'assignment_ind',
         action: () => alert('reassign driver')
       },
       {
-        text: 'Add New Driver',
+        key: 'vehicle_dashboard.add_new_driver',
         icon: 'person_add',
         action: () => alert('add new driver')
       }

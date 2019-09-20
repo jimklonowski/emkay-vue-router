@@ -26,7 +26,7 @@
                   <v-icon v-text="item.icon" />
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                  <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -124,32 +124,32 @@ export default {
   data: self => ({
     actions: [
       {
-        text: 'Edit Vehicle',
+        key: 'vehicle_dashboard.edit_vehicle',
         icon: 'edit',
         action: () => (self.isEditing = !self.isEditing)
       },
       {
-        text: 'Order Status',
+        key: 'vehicle_dashboard.order_status',
         icon: 'av_timer',
         action: () => alert('order status')
       },
       {
-        text: 'Schedule A/C',
+        key: 'vehicle_dashboard.schedule_ac',
         icon: 'schedule',
         action: () => alert('A/C click')
       },
       {
-        text: 'Report Expenses',
+        key: 'vehicle_dashboard.report_expenses',
         icon: 'assessment',
         action: () => alert('Report Expenses')
       },
       {
-        text: 'Used Vehicle Quote',
+        key: 'vehicle_dashboard.used_vehicle_quote',
         icon: 'local_atm',
         action: () => alert('Used Quote')
       },
       {
-        text: 'Terminate Vehicle',
+        key: 'vehicle_dashboard.terminate_vehicle',
         icon: 'cancel_presentation',
         action: () => alert('Terminate Vehicle')
       }

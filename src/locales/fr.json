@@ -112,7 +112,17 @@
       "saferoads": "SafeRoads",
       "transport_storage": "Transport/Entreposage"
     },
+    "edit_vehicle": "Modifier le véhicule",
+    "order_status": "Statut de la commande",
+    "schedule_ac": "Annexe A / C",
+    "report_expenses": "Signaler des dépenses",
+    "used_vehicle_quote": "Devis de véhicule d'occasion",
+    "terminate_vehicle": "Terminer le véhicule",
+    "edit_driver": "Modifier le pilote",
+    "reassign_driver": "Réaffecter le pilote",
+    "add_new_driver": "Ajouter un nouveau pilote",
     "order_fuel_card": "Commander une carte de carburant",
-    "reassign_auth_profile": "Réaffecter le profil d'autorisation"
+    "reassign_auth_profile": "Réaffecter le profil d'autorisation",
+    "evoucher": "eVoucher"
   }
 }

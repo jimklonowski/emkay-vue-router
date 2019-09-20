@@ -34,7 +34,7 @@
                 <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -78,12 +78,12 @@ export default {
     loading: false,
     actions: [
       {
-        text: 'Export to Excel',
+        key: 'common.export_to_excel',
         icon: 'cloud_download',
         action: () => alert('Excel Export')
       },
       {
-        text: 'eVoucher',
+        key: 'vehicle_dashboard.evoucher',
         icon: 'local_play',
         action: () => alert('eVoucher')
       }
