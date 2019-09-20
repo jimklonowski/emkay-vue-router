@@ -16,23 +16,17 @@
       dark
     >
       <v-icon>{{ button.icon }}</v-icon>
-      <span style="font-family:'Roboto Condensed', sans-serif;">
+      <span class="system-bar-text">
         {{ $tc(button.key, button.count) }}
       </span>
     </v-btn>
     <div class="flex-grow-1" />
-    <v-btn
-      to="/fleet-navigator"
-      small
-      text
-      tile
-      dark
-    >
+    <v-btn to="/fleet-navigator" small text tile dark>
       <v-icon>widgets</v-icon>
-      <span style="font-family:'Roboto Condensed', sans-serif;">Fleet Navigator</span>
+      <span class="system-bar-text">{{ $t('features.fleet_navigator') }}</span>
     </v-btn>
     <locale-switch />
-    <v-tooltip left>
+    <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <span v-on="on" v-text="formatTime(now)" />
       </template>
@@ -60,28 +54,28 @@ export default {
     buttons: [
       {
         text: 'Unread Messages',
-        key: 'messages.unread_messages',
+        key: 'notifications.unread_messages',
         to: { name: 'messaging' },
         icon: 'mail',
         count: 10
       },
       {
         text: 'Critical Alerts',
-        key: 'messages.critical_alerts',
+        key: 'notifications.critical_alerts',
         to: { name: 'messaging' },
         icon: 'notifications',
         count: 3
       },
       {
         text: 'Driver Order Approvals',
-        key: 'messages.driver_order_approvals',
+        key: 'notifications.driver_order_approvals',
         to: { name: 'messaging' },
         icon: 'drive_eta',
         count: 0
       },
       {
         text: 'Maintenance Approvals',
-        key: 'messages.maintenance_approvals',
+        key: 'notifications.maintenance_approvals',
         to: { name: 'messaging' },
         icon: 'report',
         count: 1
@@ -111,4 +105,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.system-bar-text {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+</style>

@@ -11,7 +11,7 @@
     <v-container fluid>
       <v-container tag="section">
         <v-row tag="header" class="font-weight-thin display-2 pa-3">
-          {{ dashboardTitle }}
+          {{ $t('features.vehicle_dashboard') }}
         </v-row>
         <v-row
           ref="search"

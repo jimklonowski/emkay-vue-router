@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.fuel') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -34,7 +34,7 @@
                 <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -53,6 +53,15 @@
           :loading-text="`Loading...`"
           dense
         >
+          <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
+            https://github.com/vuetifyjs/vuetify/issues/8571#issuecomment-524846520
+          -->
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
           <template v-slot:item.type="{ item }">
             <v-chip
               :color="getColor(item.type)"
@@ -80,31 +89,30 @@ export default {
     }
   },
   data: () => ({
-    title: 'Fuel',
-    subtitle: 'History',
     search: '',
     loading: true,
     //goto: { name: 'fuel' },
     actions: [
       {
-        text: 'Export to Excel',
+        key: 'common.export_to_excel',
         icon: 'cloud_download',
         action: () => alert('download')
       },
       {
-        text: 'Order Fuel Card',
+        key: 'vehicle_dashboard.order_fuel_card',
         icon: 'credit_card',
         action: () => alert('order fuel card')
       },
       {
-        text: 'Reassign Authorization Profile',
+        key: 'vehicle_dashboard.reassign_auth_profile',
         icon: 'assignment_return',
         action: () => alert('reassign profile')
       }
     ],
     headers: [
       {
-        text: 'Date',
+        text: 'Ddtate',
+        key: 'common.date',
         width: '150px',
         align: 'left',
         sortable: true,
@@ -112,6 +120,7 @@ export default {
       },
       {
         text: 'Odometer',
+        key: 'vehicle_dashboard.odometer',
         width: '150px',
         align: 'left',
         sortable: true,
@@ -119,6 +128,7 @@ export default {
       },
       {
         text: 'Driver',
+        key: 'vehicle_dashboard.driver',
         width: '200px',
         align: 'left',
         sortable: true,
@@ -126,6 +136,7 @@ export default {
       },
       {
         text: 'Merchant',
+        key: 'vehicle_dashboard.merchant',
         width: '200px',
         align: 'left',
         sortable: true,
@@ -133,6 +144,7 @@ export default {
       },
       {
         text: 'Merchant Address',
+        key: 'vehicle_dashboard.merchant_address',
         width: '200px',
         align: 'left',
         sortable: true,
@@ -140,6 +152,7 @@ export default {
       },
       {
         text: 'Type',
+        key: 'vehicle_dashboard.type',
         width: '100px',
         align: 'left',
         sortable: true,
@@ -147,6 +160,7 @@ export default {
       },
       {
         text: 'Quantity',
+        key: 'vehicle_dashboard.quantity',
         width: '100px',
         align: 'left',
         sortable: true,
@@ -154,6 +168,7 @@ export default {
       },
       {
         text: 'Unit Cost',
+        key: 'vehicle_dashboard.unit_cost',
         width: '150px',
         align: 'left',
         sortable: true,
@@ -161,6 +176,7 @@ export default {
       },
       {
         text: 'Amount',
+        key: 'vehicle_dashboard.amount',
         width: '150px',
         align: 'left',
         sortable: true,

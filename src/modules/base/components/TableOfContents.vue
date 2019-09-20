@@ -3,7 +3,7 @@
     <slot name="top" />
     <ul class="toc my-5">
       <li class="grey--text text--darken-3 pl-4 mb-2 body-1">
-        Contents
+        {{ $t('common.contents') }}
       </li>
       <li
         v-for="(item, index) in toc"
@@ -19,9 +19,10 @@
           }"
           :style="{ borderColor: activeIndex === index ? 'inherit' : null }"
           class="body-2"
-          @click.stop.prevent="$vuetify.goTo(`#${item.id}`, options)"
-          v-text="item.text"
-        />
+          @click.stop.prevent="$vuetify.goTo(`#toc${index}`, options)"
+        >
+          {{ $t(item.key) }}
+        </a>
       </li>
     </ul>
     <slot />
@@ -75,8 +76,8 @@ export default {
         return
       }
       const list = this.toc.slice().reverse()
-      const index = list.findIndex(item => {
-        const section = document.getElementById(item.id)
+      const index = list.findIndex((item, i) => {
+        const section = document.getElementById(`toc${i}`)
         if (!section) return false
         return section.offsetTop - 100 < this.currentOffset
       })

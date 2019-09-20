@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <nprogress-container />
-    <app-navigation-2 />
+    <app-navigation />
     <v-content>
       <transition name="fade" mode="out-in">
         <router-view class="content-wrap" />
@@ -13,12 +13,12 @@
 
 <script>
 import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
-import AppNavigation2 from '@/components/core/AppNavigation2'
-import FooterNavigation from '@/components/core/FooterNavigation'
+import AppNavigation from '@/components/core/navigation/AppNavigation'
+import FooterNavigation from '@/components/core/navigation/FooterNavigation'
 export default {
   name: 'App',
   components: {
-    AppNavigation2,
+    AppNavigation,
     FooterNavigation,
     NprogressContainer
   },

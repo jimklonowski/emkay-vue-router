@@ -3,7 +3,7 @@
     <v-row>
       <v-col xs="12">
         <header class="font-weight-thin display-2 pa-3">
-          {{ title }}
+          {{ $t('features.vehicle_dashboard') }}
         </header>
       </v-col>
     </v-row>

@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.licensing') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -52,13 +52,7 @@
           :loading="loading"
           :loading-text="`Loading...`"
           dense
-        >
-          <template v-slot:item.in_network="{ item }">
-            <v-icon :color="getColor(item.in_network)">
-              {{ item.value ? 'check_circle' : 'remove_circle' }}
-            </v-icon>
-          </template>
-        </v-data-table>
+        />
       </v-card-text>
     </v-card>
   </article>
@@ -66,7 +60,7 @@
 
 <script>
 export default {
-  name: 'MaintenanceHistory',
+  name: 'LicensingHistory',
   props: {
     vehicle: {
       type: String,
@@ -74,7 +68,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Maintenance',
+    title: 'Licensing',
     subtitle: 'History',
     search: '',
     loading: false,
@@ -82,88 +76,46 @@ export default {
       {
         text: 'Export to Excel',
         icon: 'cloud_download',
-        action: () => alert('Excel Export')
+        action: () => alert('download')
       },
       {
-        text: 'eVoucher',
-        icon: 'local_play',
-        action: () => alert('eVoucher')
+        text: 'Change Plate',
+        icon: 'money',
+        action: () => alert('change plate')
       }
     ],
     headers: [
       {
-        text: 'Date',
+        text: 'Expiration Date',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Odometer',
+        text: 'Plate',
         width: '150px',
         align: 'left',
         sortable: true,
-        value: 'odometer'
+        value: 'plate'
       },
       {
-        text: 'Vendor',
-        width: '200px',
-        align: 'left',
-        sortable: true,
-        value: 'vendor'
-      },
-      {
-        text: 'In Network',
-        width: '100px',
-        align: 'left',
-        sortable: true,
-        value: 'in_network'
-      },
-      {
-        text: 'Service',
-        width: '200px',
-        align: 'left',
-        sortable: true,
-        value: 'service'
-      },
-      {
-        text: 'Amount',
+        text: 'Status',
         width: '150px',
         align: 'left',
         sortable: true,
-        value: 'amount'
+        value: 'status'
+      },
+      {
+        text: 'Needs',
+        width: '150px',
+        align: 'left',
+        sortable: true,
+        value: 'needs'
       }
     ],
-    items: [
-      {
-        date: '2019-08-20',
-        odometer: '12345',
-        vendor: 'EMKAY Motors',
-        in_network: true,
-        service: 'Wash & Detail (Fee)',
-        amount: '$24.00'
-      },
-      {
-        date: '2019-06-13',
-        odometer: '11323',
-        vendor: 'EMKAY Motors',
-        in_network: false,
-        service: 'Wash & Detail (Fee)',
-        amount: '$19.00'
-      },
-      {
-        date: '2019-04-01',
-        odometer: '10901',
-        vendor: 'EMKAY Motors',
-        in_network: true,
-        service: 'Wash & Detail (Fee)',
-        amount: '$750.00'
-      }
-    ]
-  }),
-  methods: {
-    getColor: type => (type ? 'success' : 'error')
-  }
+    items: []
+  })
 }
 </script>
 

@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.odometer') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: 'ViolationHistory',
+  name: 'OdometerHistory',
   props: {
     vehicle: {
       type: String,
@@ -68,8 +68,8 @@ export default {
     }
   },
   data: () => ({
-    title: 'Violation',
-    subtitle: 'History',
+    title: 'Reported',
+    subtitle: 'Odometers',
     search: '',
     loading: false,
     actions: [
@@ -77,36 +77,27 @@ export default {
         text: 'Export to Excel',
         icon: 'cloud_download',
         action: () => alert('download')
+      },
+      {
+        text: 'Report Mileage',
+        icon: 'speed',
+        action: () => alert('report mileage')
       }
     ],
     headers: [
       {
         text: 'Date',
-        width: '150px',
+        width: 'auto',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Reason',
-        width: '250px',
+        text: 'Odometer',
+        width: 'auto',
         align: 'left',
         sortable: true,
-        value: 'reason'
-      },
-      {
-        text: 'Address',
-        width: '250px',
-        align: 'left',
-        sortable: true,
-        value: 'address'
-      },
-      {
-        text: 'Amount',
-        width: '150px',
-        align: 'left',
-        sortable: true,
-        value: 'amount'
+        value: 'odometer'
       }
     ],
     items: []

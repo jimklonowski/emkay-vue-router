@@ -57,7 +57,7 @@ export default {
     translateI18n(lang) {
       lang = lang.alternate || lang.locale
       this.$i18n.locale = lang
-
+      this.$vuetify.lang.current = lang
       //this.$router.replace({ params: { lang }})
     }
   }

@@ -46,7 +46,7 @@
         clearable
         append-icon="search"
         hint="Search"
-        placeholder="Find a vehicle, driver, or website feature..."
+        :placeholder="`${ $t('navigation.search_placeholder') }`"
         hide-details
         label="Search"
         type="search"

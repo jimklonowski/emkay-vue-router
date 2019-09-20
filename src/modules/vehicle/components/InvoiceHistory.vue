@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.invoice') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: 'TollHistory',
+  name: 'InvoiceHistory',
   props: {
     vehicle: {
       type: String,
@@ -68,7 +68,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Toll',
+    title: 'Invoice',
     subtitle: 'History',
     search: '',
     loading: false,
@@ -77,7 +77,7 @@ export default {
         text: 'Export to Excel',
         icon: 'cloud_download',
         action: () => alert('download')
-      }
+      },
     ],
     headers: [
       {
@@ -88,18 +88,18 @@ export default {
         value: 'date'
       },
       {
-        text: 'Merchant',
-        width: '250px',
+        text: 'Description',
+        width: '200px',
         align: 'left',
         sortable: true,
-        value: 'merchant'
+        value: 'description'
       },
       {
-        text: 'Address',
-        width: '250px',
+        text: 'Invoice',
+        width: '150px',
         align: 'left',
         sortable: true,
-        value: 'address'
+        value: 'invoice'
       },
       {
         text: 'Amount',
@@ -109,7 +109,14 @@ export default {
         value: 'amount'
       }
     ],
-    items: []
+    items: [
+      {
+        date: '2019-08-01',
+        description: 'FMS Billing',
+        invoice: 'BF7718',
+        amount: '$604.44'
+      }
+    ]
   })
 }
 </script>

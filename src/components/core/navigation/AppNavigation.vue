@@ -7,10 +7,7 @@
 
 <script>
 import SystemBar from '@/components/core/navigation/SystemBar'
-
 import MainNavbar from '@/components/core/navigation/MainNavbar'
-import { LOGOUT } from '@/store/actions.type'
-
 export default {
   name: 'AppNavigation2',
   components: {
@@ -19,8 +16,7 @@ export default {
   },
   data: () => ({
     title: 'EMKAY',
-    drawer: false,
-    messageCount: 10,
+    // array of menu items. this is passed to the main bar AND the mobile bottom drawer
     items: [
       {
         text: 'Home',
@@ -350,13 +346,6 @@ export default {
   computed: {
     authed() {
       return this.$store.getters.isAuthenticated
-    }
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch(LOGOUT).then(() => {
-        this.$router.push({ name: 'login' })
-      })
     }
   }
 }

@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.driver') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: 'InvoiceHistory',
+  name: 'DriverHistory',
   props: {
     vehicle: {
       type: String,
@@ -68,7 +68,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Invoice',
+    title: 'Driver',
     subtitle: 'History',
     search: '',
     loading: false,
@@ -78,47 +78,40 @@ export default {
         icon: 'cloud_download',
         action: () => alert('download')
       },
+      {
+        text: 'Change Driver Effective Date',
+        icon: 'date_range',
+        action: () => alert('change driver effective date')
+      }
     ],
     headers: [
       {
-        text: 'Date',
-        width: '150px',
+        text: 'Effective Date',
+        width: 'auto',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Description',
-        width: '200px',
+        text: 'End Date',
+        width: 'auto',
         align: 'left',
         sortable: true,
-        value: 'description'
+        value: 'end_date'
       },
       {
-        text: 'Invoice',
-        width: '150px',
+        text: 'Driver',
+        width: 'auto',
         align: 'left',
         sortable: true,
-        value: 'invoice'
-      },
-      {
-        text: 'Amount',
-        width: '150px',
-        align: 'left',
-        sortable: true,
-        value: 'amount'
+        value: 'driver'
       }
     ],
-    items: [
-      {
-        date: '2019-08-01',
-        description: 'FMS Billing',
-        invoice: 'BF7718',
-        amount: '$604.44'
-      }
-    ]
+    items: []
   })
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

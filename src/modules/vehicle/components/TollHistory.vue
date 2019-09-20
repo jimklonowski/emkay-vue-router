@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{ title }}</span>
-          <span class="font-weight-thin">{{ subtitle }}</span>
+          <span class="font-weight-black">{{ $t('vehicle_dashboard.toll') }}</span>
+          <span class="font-weight-thin">{{ $t('vehicle_dashboard.history') }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -50,6 +50,7 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
+          :loading-text="`Loading...`"
           dense
         />
       </v-card-text>
@@ -59,7 +60,7 @@
 
 <script>
 export default {
-  name: 'VehicleNotes',
+  name: 'TollHistory',
   props: {
     vehicle: {
       type: String,
@@ -67,7 +68,7 @@ export default {
     }
   },
   data: () => ({
-    title: 'Notes',
+    title: 'Toll',
     subtitle: 'History',
     search: '',
     loading: false,
@@ -87,18 +88,25 @@ export default {
         value: 'date'
       },
       {
-        text: 'Subject',
+        text: 'Merchant',
         width: '250px',
         align: 'left',
         sortable: true,
-        value: 'subject'
+        value: 'merchant'
       },
       {
-        text: 'Notes',
-        width: '350px',
+        text: 'Address',
+        width: '250px',
         align: 'left',
         sortable: true,
-        value: 'notes'
+        value: 'address'
+      },
+      {
+        text: 'Amount',
+        width: '150px',
+        align: 'left',
+        sortable: true,
+        value: 'amount'
       }
     ],
     items: []

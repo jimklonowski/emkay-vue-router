@@ -15,7 +15,7 @@
         :to="item.to"
         :vehicle="vehicle"
       >
-        {{ item.text }}
+        {{ $t(item.key) }}
       </v-tab>
     </v-tabs>
   </v-app-bar>
@@ -34,7 +34,7 @@ export default {
     items: [
       //{ text: 'General', to: '/vehicle-dashboard/general' },
       {
-        text: 'Dashboard',
+        key: 'vehicle_dashboard.navigation.dashboard',
         to: { name: 'dashboard' },
         meta: {
           // allow this route to be taken without a vehicle parameter (shows the search route)
@@ -42,22 +42,22 @@ export default {
         }
       },
       {
-        text: 'Documents',
+        key: 'vehicle_dashboard.navigation.documents',
         to: { name: 'documents' },
         meta: {}
       },
       {
-        text: 'Inspections',
+        key: 'vehicle_dashboard.navigation.inspections',
         to: { name: 'inspections' },
         meta: {}
       },
       {
-        text: 'SafeRoads',
+        key: 'vehicle_dashboard.navigation.saferoads',
         to: { name: 'saferoads' },
         meta: {}
       },
       {
-        text: 'Transport/Storage',
+        key: 'vehicle_dashboard.navigation.transport_storage',
         to: { name: 'transport-storage' },
         meta: {}
       }

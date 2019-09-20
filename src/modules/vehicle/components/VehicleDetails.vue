@@ -4,8 +4,8 @@
       <v-card :loading="loading">
         <v-toolbar :class="this.$config.TOOLBAR_CLASS">
           <v-toolbar-title class="text-uppercase">
-            <span class="font-weight-black">{{ title }}</span>
-            <span class="font-weight-thin">{{ subtitle }}</span>
+            <span class="font-weight-black">{{ $t('vehicle_dashboard.vehicle') }}</span>
+            <span class="font-weight-thin">{{ $t('vehicle_dashboard.details') }}</span>
             <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
           </v-toolbar-title>
           <v-spacer />
@@ -42,7 +42,7 @@
             dense
           >
             <v-subheader class="col-12 overline blue-grey lighten-5">
-              {{ section.name }}
+              {{ $t(section.key) }}
             </v-subheader>
             <div class="px-3">
               <v-row dense>
@@ -54,7 +54,7 @@
                 >
                   <v-list-item-content v-if="isEditing" class="py-0">
                     <v-text-field
-                      :label="field.label"
+                      :label="$t(field.key)"
                       :v-model="field"
                       :value="field.value"
                       :rules="editorRules.required"
@@ -65,7 +65,7 @@
                   </v-list-item-content>
                   <v-list-item-content v-else class="pt-0 pb-4">
                     <v-list-item-subtitle class="details-label">
-                      {{ field.label }}
+                      {{ $t(field.key) }}
                     </v-list-item-subtitle>
                     <v-list-item-title
                       class="text-label blue-grey--text text--darken-2"
@@ -122,8 +122,6 @@ export default {
     }
   },
   data: self => ({
-    title: 'Vehicle',
-    subtitle: 'Details',
     actions: [
       {
         text: 'Edit Vehicle',
@@ -166,24 +164,24 @@ export default {
 
     vehicleSections: [
       {
-        name: 'Account Information',
+        key: 'vehicle_dashboard.account_information',
         fields: [
           {
-            key: 'account',
+            key: 'vehicle_dashboard.account',
             label: 'Account',
             editable: false,
             class: 'col-md-6',
             value: 'EM102'
           },
           {
-            key: 'billing_sort',
+            key: 'vehicle_dashboard.billing_sort',
             label: 'Billing Sort',
             editable: false,
             class: 'col-md-6',
             value: '987654321OMG'
           },
           {
-            key: 'center',
+            key: 'vehicle_dashboard.center',
             label: 'Center',
             editable: true,
             class: 'col-12',
@@ -193,24 +191,24 @@ export default {
         ]
       },
       {
-        name: 'Vehicle Information',
+        key: 'vehicle_dashboard.vehicle_information',
         fields: [
           {
-            key: 'vin',
+            key: 'vehicle_dashboard.vin',
             label: 'VIN',
             editable: false,
             class: 'col-md-6',
             value: '987654321QWERTY'
           },
           {
-            key: 'vehicle_number',
+            key: 'vehicle_dashboard.vehicle_number',
             label: 'Vehicle Number',
             editable: false,
             class: 'col-md-6',
             value: 'E69420'
           },
           {
-            key: 'client_vehicle_number',
+            key: 'vehicle_dashboard.client_vehicle_number',
             label: 'Client Vehicle Number',
             editable: true,
             class: 'col-md-6',
@@ -219,73 +217,73 @@ export default {
         ]
       },
       {
-        name: 'Customization',
+        key: 'vehicle_dashboard.customization',
         fields: [
           {
-            key: 'client_1_label',
+            key: 'vehicle_dashboard.custom_label_1',
             label: 'Client Use 1 Label',
             editable: true,
             class: 'col-md-6',
             value: 'Client Use 1'
           },
           {
-            key: 'client_1',
+            key: 'vehicle_dashboard.custom_1',
             label: 'Client Use 1',
             editable: true,
             class: 'col-md-6',
             value: 'asdf'
           },
           {
-            key: 'client_2_label',
+            key: 'vehicle_dashboard.custom_label_2',
             label: 'Client Use 2 Label',
             editable: true,
             class: 'col-md-6',
             value: 'Client Use 2'
           },
           {
-            key: 'client_2',
+            key: 'vehicle_dashboard.custom_2',
             label: 'Client Use 2',
             editable: true,
             class: 'col-md-6',
             value: 'asdf'
           },
           {
-            key: 'client_3_label',
+            key: 'vehicle_dashboard.custom_label_3',
             label: 'Client Use 3 Label',
             editable: true,
             class: 'col-md-6',
             value: 'Client Use 3'
           },
           {
-            key: 'client_3',
+            key: 'vehicle_dashboard.custom_3',
             label: 'Client Use 3',
             editable: true,
             class: 'col-md-6',
             value: 'asdf'
           },
           {
-            key: 'client_4_label',
+            key: 'vehicle_dashboard.custom_label_4',
             label: 'Client Use 4 Label',
             editable: true,
             class: 'col-md-6',
             value: 'Client Use 4'
           },
           {
-            key: 'client_4',
+            key: 'vehicle_dashboard.custom_4',
             label: 'Client Use 4',
             editable: true,
             class: 'col-md-6',
             value: 'asdf'
           },
           {
-            key: 'client_5_label',
+            key: 'vehicle_dashboard.custom_label_5',
             label: 'Client Use 5 Label',
             editable: true,
             class: 'col-md-6',
             value: 'Client Use 5'
           },
           {
-            key: 'client_5',
+            key: 'vehicle_dashboard.custom_5',
             label: 'Client Use 5',
             editable: true,
             class: 'col-md-6',

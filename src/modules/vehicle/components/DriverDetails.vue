@@ -4,8 +4,8 @@
       <v-card :loading="loading">
         <v-toolbar :class="this.$config.TOOLBAR_CLASS">
           <v-toolbar-title class="text-uppercase">
-            <span class="font-weight-black">{{ title }}</span>
-            <span class="font-weight-thin">{{ subtitle }}</span>
+            <span class="font-weight-black">{{ $t('vehicle_dashboard.driver') }}</span>
+            <span class="font-weight-thin">{{ $t('vehicle_dashboard.details') }}</span>
             <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
           </v-toolbar-title>
           <v-spacer />
@@ -42,7 +42,7 @@
             dense
           >
             <v-subheader class="col-12 overline blue-grey lighten-5">
-              {{ section.name }}
+              {{ $t(section.key) }}
             </v-subheader>
             <div class="px-3">
               <v-row dense>
@@ -54,7 +54,7 @@
                 >
                   <v-list-item-content v-if="isEditing" class="py-0">
                     <v-text-field
-                      :label="field.label"
+                      :label="$t(field.key)"
                       :v-model="field"
                       :value="field.value"
                       :rules="editorRules.required"
@@ -65,7 +65,7 @@
                   </v-list-item-content>
                   <v-list-item-content v-else class="pt-0 pb-4">
                     <v-list-item-subtitle class="details-label">
-                      {{ field.label }}
+                      {{ $t(field.key) }}
                     </v-list-item-subtitle>
                     <v-list-item-title
                       class="text-label blue-grey--text text--darken-2"
@@ -121,8 +121,6 @@ export default {
     }
   },
   data: self => ({
-    title: 'Driver',
-    subtitle: 'Details',
     editorRules: {
       required: [v => !!v || 'Field is required']
     },
@@ -153,32 +151,28 @@ export default {
     ],
     driverSections: [
       {
-        name: 'Driver Information',
+        key: 'vehicle_dashboard.driver_information',
         fields: [
           {
-            key: 'last_name',
-            label: 'Last Name',
+            key: 'vehicle_dashboard.last_name',
             editable: true,
             class: 'col-6',
             value: 'Klonowski'
           },
           {
-            key: 'first_name',
-            label: 'First Name',
+            key: 'vehicle_dashboard.first_name',
             editable: true,
             class: 'col-6',
             value: 'Jimmy'
           },
           {
-            key: 'selector_level',
-            label: 'Selector Level',
+            key: 'vehicle_dashboard.selector_level',
             editable: true,
             class: 'col-6',
             value: 'something'
           },
           {
-            key: 'employee_id',
-            label: 'Employee ID',
+            key: 'vehicle_dashboard.employee_id',
             editable: false,
             class: 'col-6',
             value: '112233'
@@ -186,60 +180,52 @@ export default {
         ]
       },
       {
-        name: 'Contact Information',
+        key: 'vehicle_dashboard.contact_information',
         fields: [
           {
-            key: 'address_1',
-            label: 'Address 1',
+            key: 'vehicle_dashboard.address_1',
             editable: true,
             class: 'col-6',
             value: 'EMKAY, Inc'
           },
           {
-            key: 'address_2',
-            label: 'Address 2',
+            key: 'vehicle_dashboard.address_2',
             editable: true,
             class: 'col-6',
             value: '805 W Thorndale Ave.'
           },
           {
-            key: 'city_state_zip',
-            label: 'City/State/ZIP',
+            key: 'vehicle_dashboard.city_state_zip',
             editable: true,
             class: 'col-6',
             value: 'Itasca, IL 60189'
           },
           {
-            key: 'county',
-            label: 'County',
+            key: 'vehicle_dashboard.county',
             editable: true,
             class: 'col-6',
             value: 'DuPage'
           },
           {
-            key: 'phone',
-            label: 'Phone',
+            key: 'vehicle_dashboard.phone',
             editable: true,
             class: 'col-6',
             value: '630-864-0999'
           },
           {
-            key: 'cell',
-            label: 'Cell',
+            key: 'vehicle_dashboard.cell',
             editable: true,
             class: 'col-6',
             value: '630-864-0000'
           },
           {
-            key: 'fax',
-            label: 'Fax',
+            key: 'vehicle_dashboard.fax',
             editable: true,
             class: 'col-6',
             value: '630-FAX-MKAY'
           },
           {
-            key: 'email',
-            label: 'Email',
+            key: 'vehicle_dashboard.email',
             editable: true,
             class: 'col-6',
             value: 'jklonowski@email.com'
@@ -247,60 +233,52 @@ export default {
         ]
       },
       {
-        name: 'Customization',
+        key: 'vehicle_dashboard.customization',
         fields: [
           {
-            key: 'driver_1_label',
-            label: 'Driver Misc 1 Label',
+            key: 'vehicle_dashboard.driver_custom_1_label',
             editable: true,
             class: 'col-6',
             value: 'Driver Misc 1'
           },
           {
-            key: 'driver_1',
-            label: 'Driver 1',
+            key: 'vehicle_dashboard.driver_custom_1',
             editable: true,
             class: 'col-6',
             value: 'asdf'
           },
           {
-            key: 'driver_2_label',
-            label: 'Driver Misc 2 Label',
+            key: 'vehicle_dashboard.driver_custom_2_label',
             editable: true,
             class: 'col-6',
             value: 'Driver Misc 2'
           },
           {
-            key: 'driver_2',
-            label: 'Driver 2',
+            key: 'vehicle_dashboard.driver_custom_2',
             editable: true,
             class: 'col-6',
             value: 'asdf'
           },
           {
-            key: 'driver_3_label',
-            label: 'Driver Misc 3 Label',
+            key: 'vehicle_dashboard.driver_custom_3_label',
             editable: true,
             class: 'col-6',
             value: 'Driver Misc 3'
           },
           {
-            key: 'driver_3',
-            label: 'Driver 3',
+            key: 'vehicle_dashboard.driver_custom_3',
             editable: true,
             class: 'col-6',
             value: 'asdf'
           },
           {
-            key: 'driver_4_label',
-            label: 'Driver Misc 4 Label',
+            key: 'vehicle_dashboard.driver_custom_4_label',
             editable: true,
             class: 'col-6',
             value: 'Driver Misc 4'
           },
           {
-            key: 'driver_4',
-            label: 'Driver 4',
+            key: 'vehicle_dashboard.driver_custom_4',
             editable: true,
             class: 'col-6',
             value: 'asdf'
