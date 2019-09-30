@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import OrderStatus from '@/modules/vehicle/components/OrderStatus'
+import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
 
 export default {
   name: 'VehicleDetails',

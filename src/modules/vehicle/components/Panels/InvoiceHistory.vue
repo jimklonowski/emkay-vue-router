@@ -3,12 +3,12 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">
-            {{ $t('vehicle_dashboard.invoice') }}
-          </span>
-          <span class="font-weight-thin">
-            {{ $t('vehicle_dashboard.history') }}
-          </span>
+          <span class="font-weight-black">{{
+            $t('vehicle_dashboard.invoice')
+          }}</span>
+          <span class="font-weight-thin">{{
+            $t('vehicle_dashboard.history')
+          }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -38,7 +38,7 @@
                 <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -48,7 +48,7 @@
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="invoice_history"
           :items-per-page="10"
           :search="search"
           :sort-by="['date']"
@@ -56,7 +56,14 @@
           :loading="loading"
           :loading-text="`Loading...`"
           dense
-        />
+        >
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
+        </v-data-table>
       </v-card-text>
     </v-card>
   </article>
@@ -78,42 +85,42 @@ export default {
     loading: false,
     actions: [
       {
-        text: 'Export to Excel',
+        key: 'common.export_to_excel',
         icon: 'cloud_download',
         action: () => alert('download')
       }
     ],
     headers: [
       {
-        text: 'Date',
+        key: 'common.date',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Description',
+        key: 'common.description',
         width: '200px',
         align: 'left',
         sortable: true,
         value: 'description'
       },
       {
-        text: 'Invoice',
+        key: 'vehicle_dashboard.invoice',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'invoice'
       },
       {
-        text: 'Amount',
+        key: 'vehicle_dashboard.amount',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'amount'
       }
     ],
-    items: [
+    invoice_history: [
       {
         date: '2019-08-01',
         description: 'FMS Billing',

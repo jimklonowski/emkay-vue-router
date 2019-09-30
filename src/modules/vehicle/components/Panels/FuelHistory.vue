@@ -32,6 +32,7 @@
               v-for="(item, i) in actions"
               :key="i"
               :color="item.color"
+              :data="fuel_history"
               @click="item.action"
             >
               <v-list-item-icon>
@@ -78,16 +79,25 @@
           </template>
         </v-data-table>
       </v-card-text>
+      <v-card-actions>
+        <json-excel :data="fuel_history">Download Excel!</json-excel>
+        <v-btn depressed dark @click="downloadCsv">Download CSV?</v-btn>
+      </v-card-actions>
     </v-card>
   </article>
 </template>
 
 <script>
+import JsonExcel from 'vue-json-excel'
+import { csvDownload } from '@/util/helpers'
 import { mapActions } from 'vuex'
 import { FETCH_FUEL_HISTORY } from '@/modules/vehicle/store/actions.type'
 
 export default {
   name: 'FuelHistory',
+  components: {
+    JsonExcel
+  },
   props: {
     vehicle: {
       type: String,
@@ -118,7 +128,6 @@ export default {
     ],
     headers: [
       {
-        text: 'Ddtate',
         key: 'common.date',
         width: '150px',
         align: 'left',
@@ -126,7 +135,6 @@ export default {
         value: 'date'
       },
       {
-        text: 'Odometer',
         key: 'vehicle_dashboard.odometer',
         width: '150px',
         align: 'left',
@@ -134,7 +142,6 @@ export default {
         value: 'odometer'
       },
       {
-        text: 'Driver',
         key: 'vehicle_dashboard.driver',
         width: '200px',
         align: 'left',
@@ -142,7 +149,6 @@ export default {
         value: 'driver'
       },
       {
-        text: 'Merchant',
         key: 'vehicle_dashboard.merchant',
         width: '200px',
         align: 'left',
@@ -150,7 +156,6 @@ export default {
         value: 'merchant'
       },
       {
-        text: 'Merchant Address',
         key: 'vehicle_dashboard.merchant_address',
         width: '200px',
         align: 'left',
@@ -158,7 +163,6 @@ export default {
         value: 'merchant_address'
       },
       {
-        text: 'Type',
         key: 'vehicle_dashboard.type',
         width: '100px',
         align: 'left',
@@ -166,7 +170,6 @@ export default {
         value: 'type'
       },
       {
-        text: 'Quantity',
         key: 'vehicle_dashboard.quantity',
         width: '100px',
         align: 'left',
@@ -174,7 +177,6 @@ export default {
         value: 'quantity'
       },
       {
-        text: 'Unit Cost',
         key: 'vehicle_dashboard.unit_cost',
         width: '150px',
         align: 'left',
@@ -182,7 +184,6 @@ export default {
         value: 'unit_cost'
       },
       {
-        text: 'Amount',
         key: 'vehicle_dashboard.amount',
         width: '150px',
         align: 'left',
@@ -207,6 +208,18 @@ export default {
   },
   methods: {
     ...mapActions([FETCH_FUEL_HISTORY]),
+    downloadCsv() {
+      debugger
+      const rows = this.fuel_history
+        .map(item => this.headers.map(k => `"${item[k] || ''}"`).join(','))
+        .join('\n')
+      debugger
+      csvDownload(
+        //`${this.headers.map(s => this.$t(`item.${s}`)).join(',')}\n${rows}`
+        `${this.headers.map(column => this.$t(column.key)).join(',')}\n${rows}`
+        //`${this.headers.join(',')}\n${rows}`
+      )
+    },
     // color chips for transaction typeS
     getColor: type => {
       switch (true) {

@@ -3,12 +3,12 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">
-            {{ $t('vehicle_dashboard.accident') }}
-          </span>
-          <span class="font-weight-thin">
-            {{ $t('vehicle_dashboard.history') }}
-          </span>
+          <span class="font-weight-black">{{
+            $t('vehicle_dashboard.accident')
+          }}</span>
+          <span class="font-weight-thin">{{
+            $t('vehicle_dashboard.history')
+          }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -59,7 +59,14 @@
           :loading="loading"
           :loading-text="`Loading...`"
           dense
-        />
+        >
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
+        </v-data-table>
       </v-card-text>
       <!-- <v-divider />
       <v-card-actions class="pa-4">
@@ -105,35 +112,35 @@ export default {
     ],
     headers: [
       {
-        text: 'Loss Date',
+        key: 'vehicle_dashboard.loss_date',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Claim #',
+        key: 'vehicle_dashboard.claim_number',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'claim'
       },
       {
-        text: 'Claim Type',
+        key: 'vehicle_dashboard.claim_type',
         width: '200px',
         align: 'left',
         sortable: true,
         value: 'type'
       },
       {
-        text: 'Claim Amount',
+        key: 'vehicle_dashboard.claim_amount',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'claim_amount'
       },
       {
-        text: 'Subrogation Amount',
+        key: 'vehicle_dashboard.subrogation_amount',
         width: '150px',
         align: 'left',
         sortable: true,

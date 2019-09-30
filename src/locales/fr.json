@@ -3,7 +3,8 @@
     "search": "Chercher",
     "contents": "Contenu",
     "date": "Date",
-    "export_to_excel": "Exporter en Excel"
+    "export_to_excel": "Exporter en Excel",
+    "description": "La description"
   },
   "navigation": {
     "tagline": "facile. mieux. différent.",
@@ -63,6 +64,7 @@
     "selector_level": "Niveau de sélecteur",
     "employee_id": "Identifiant d'employé",
     "contact_information": "Informations de contact",
+    "address": "Adresse",
     "address_1": "Adresse 1",
     "address_2": "Adresse 2",
     "city": "Ville",
@@ -124,7 +126,7 @@
     "order_fuel_card": "Commander une carte de carburant",
     "reassign_auth_profile": "Réaffecter le profil d'autorisation",
     "evoucher": "eVoucher",
-
+    "vendor": "Vendeur",
     "vehicle_description": "Description du Véhicule",
     "factory_order_number": "Numéro de commande d'usine",
     "emkay_ordered_date": "Date de commande EMKAY",
@@ -146,6 +148,33 @@
     "delivery_date": "Date de livraison",
     "ship_to_dealer_info": "Expédier à l'information de marchand",
     "priority_code": "Code de priorité",
-    "comments": "Commentaires"
+    "comments": "Commentaires",
+
+    "in_network": "En réseau",
+    "service": "Un service",
+
+    "loss_date": "Date de perte",
+    "claim_number": "Numéro de réclamation",
+    "claim_type": "Type de réclamation",
+    "claim_amount": "Montant de la réclamation",
+    "subrogation_amount": "Montant subrogé",
+    
+    "needs": "Besoins",
+    "expiration_date": "Date d'expiration",
+    "status": "Statut",
+    "plate": "Plaque d'immatriculation",
+    "reason": "Raison",
+    "voucher": "Bon",
+    "rental_rate": "Taux de location",
+    "days": "Journées",
+    "total_amount": "Montant total",
+
+    "effective_date": "Date effective",
+    "end_date": "Date de fin",
+    "subject": "Matière",
+    "add": "Ajouter",
+    "note": "Note",
+    "add_note": "Ajouter une note",
+    "change_plate": "Modifier la plaque"
   }
 }

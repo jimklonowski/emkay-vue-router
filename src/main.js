@@ -6,10 +6,13 @@ import router from '@/router'
 import store from '@/store'
 import axios from 'axios'
 
+// plugins
 import vuetify from '@/plugins/vuetify'
 import nprogress from '@/plugins/nprogress'
 import kendoComponents from '@/plugins/kendo'
 import i18n from '@/plugins/i18n'
+
+// excel export component
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

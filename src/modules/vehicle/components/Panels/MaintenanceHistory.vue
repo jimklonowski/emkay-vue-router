@@ -3,12 +3,12 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">
-            {{ $t('vehicle_dashboard.maintenance') }}
-          </span>
-          <span class="font-weight-thin">
-            {{ $t('vehicle_dashboard.history') }}
-          </span>
+          <span class="font-weight-black">{{
+            $t('vehicle_dashboard.maintenance')
+          }}</span>
+          <span class="font-weight-thin">{{
+            $t('vehicle_dashboard.history')
+          }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -58,6 +58,12 @@
           :no-data-text="errorMessage || 'No Data Found'"
           dense
         >
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
           <template v-slot:item.in_network="{ item }">
             <v-icon :color="getColor(item.in_network)">
               {{ item.value ? 'check_circle' : 'remove_circle' }}
@@ -98,42 +104,42 @@ export default {
     ],
     headers: [
       {
-        text: 'Date',
+        key: 'common.date',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Odometer',
+        key: 'vehicle_dashboard.odometer',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'odometer'
       },
       {
-        text: 'Vendor',
+        key: 'vehicle_dashboard.vendor',
         width: '200px',
         align: 'left',
         sortable: true,
         value: 'vendor'
       },
       {
-        text: 'In Network',
+        key: 'vehicle_dashboard.in_network',
         width: '100px',
         align: 'left',
         sortable: true,
         value: 'in_network'
       },
       {
-        text: 'Service',
+        key: 'vehicle_dashboard.service',
         width: '200px',
         align: 'left',
         sortable: true,
         value: 'service'
       },
       {
-        text: 'Amount',
+        key: 'vehicle_dashboard.amount',
         width: '150px',
         align: 'left',
         sortable: true,

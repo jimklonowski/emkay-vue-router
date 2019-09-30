@@ -3,12 +3,12 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">
-            {{ $t('vehicle_dashboard.violation') }}
-          </span>
-          <span class="font-weight-thin">
-            {{ $t('vehicle_dashboard.history') }}
-          </span>
+          <span class="font-weight-black">{{
+            $t('vehicle_dashboard.violation')
+          }}</span>
+          <span class="font-weight-thin">{{
+            $t('vehicle_dashboard.history')
+          }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -48,7 +48,7 @@
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="violation_history"
           :items-per-page="10"
           :search="search"
           :sort-by="['date']"
@@ -56,7 +56,14 @@
           :loading="loading"
           :loading-text="`Loading...`"
           dense
-        />
+        >
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
+        </v-data-table>
       </v-card-text>
     </v-card>
   </article>
@@ -85,35 +92,35 @@ export default {
     ],
     headers: [
       {
-        text: 'Date',
+        key: 'common.date',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'Reason',
+        key: 'vehicle_dashboard.reason',
         width: '250px',
         align: 'left',
         sortable: true,
         value: 'reason'
       },
       {
-        text: 'Address',
+        key: 'vehicle_dashboard.address',
         width: '250px',
         align: 'left',
         sortable: true,
         value: 'address'
       },
       {
-        text: 'Amount',
+        key: 'vehicle_dashboard.amount',
         width: '150px',
         align: 'left',
         sortable: true,
         value: 'amount'
       }
     ],
-    items: []
+    violation_history: []
   })
 }
 </script>

@@ -3,7 +3,8 @@
     "search": "Search",
     "contents": "Contents",
     "date": "Date",
-    "export_to_excel": "Export to Excel"
+    "export_to_excel": "Export to Excel",
+    "description": "Description"
   },
   "navigation": {
     "tagline": "simple. better. different.",
@@ -63,6 +64,7 @@
     "selector_level": "Selector Level",
     "employee_id": "Employee ID",
     "contact_information": "Contact Information",
+    "address": "Address",
     "address_1": "Address 1",
     "address_2": "Address 2",
     "city": "City",
@@ -124,7 +126,7 @@
     "order_fuel_card": "Order Fuel Card",
     "reassign_auth_profile": "Reassign Authorization Profile",
     "evoucher": "eVoucher",
-
+    "vendor": "Vendor",
     "vehicle_description": "Vehicle Description",
     "factory_order_number": "Factory Order Number",
     "emkay_ordered_date": "EMKAY Ordered Date",
@@ -146,6 +148,33 @@
     "delivery_date": "Delivery Date",
     "ship_to_dealer_info": "Ship to Dealer Info",
     "priority_code": "Priority Code",
-    "comments": "Comments"
+    "comments": "Comments",
+
+    "in_network": "In Network",
+    "service": "Service",
+
+    "loss_date": "Loss Date",
+    "claim_number": "Claim Number",
+    "claim_type": "Claim Type",
+    "claim_amount": "Claim Amount",
+    "subrogation_amount": "Subrogation Amount",
+
+    "needs": "Needs",
+    "expiration_date": "Expiration Date",
+    "status": "Status",
+    "plate": "Plate",
+    "reason": "Reason",
+    "voucher": "Voucher",
+    "rental_rate": "Rental Rate",
+    "days": "Days",
+    "total_amount": "Total Amount",
+
+    "effective_date": "Effective Date",
+    "end_date": "End Date",
+    "subject": "Subject",
+    "add": "Add",
+    "note": "Note",
+    "add_note": "Add Note",
+    "change_plate": "Change Plate"
   }
 }

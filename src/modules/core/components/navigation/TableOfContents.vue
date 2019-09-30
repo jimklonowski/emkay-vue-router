@@ -52,7 +52,6 @@ export default {
   },
   mounted() {
     if (this.tocItems) {
-      //console.log('TOCItems: ' + JSON.stringify(this.tocItems))
       this.toc = this.tocItems
     }
   },
@@ -75,7 +74,6 @@ export default {
         if (!section) return false
         return section.offsetTop - 100 < this.currentOffset
       })
-      console.log('Index: ' + index)
       const lastIndex = list.length
       this.activeIndex = index > -1 ? lastIndex - 1 - index : lastIndex
     }

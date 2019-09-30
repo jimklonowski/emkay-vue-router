@@ -3,12 +3,12 @@
     <v-card>
       <v-toolbar :class="this.$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">
-            {{ $t('vehicle_dashboard.driver') }}
-          </span>
-          <span class="font-weight-thin">
-            {{ $t('vehicle_dashboard.history') }}
-          </span>
+          <span class="font-weight-black">{{
+            $t('vehicle_dashboard.driver')
+          }}</span>
+          <span class="font-weight-thin">{{
+            $t('vehicle_dashboard.history')
+          }}</span>
           <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
         </v-toolbar-title>
         <v-spacer />
@@ -48,7 +48,7 @@
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="driver_history"
           :items-per-page="10"
           :search="search"
           :sort-by="['date']"
@@ -56,7 +56,14 @@
           :loading="loading"
           :loading-text="`Loading...`"
           dense
-        />
+        >
+          <template
+            v-for="header in headers"
+            v-slot:[`header.${header.value}`]="{ header }"
+          >
+            {{ $t(header.key) }}
+          </template>
+        </v-data-table>
       </v-card-text>
     </v-card>
   </article>
@@ -90,28 +97,28 @@ export default {
     ],
     headers: [
       {
-        text: 'Effective Date',
+        key: 'vehicle_dashboard.effective_date',
         width: 'auto',
         align: 'left',
         sortable: true,
         value: 'date'
       },
       {
-        text: 'End Date',
+        key: 'vehicle_dashboard.end_date',
         width: 'auto',
         align: 'left',
         sortable: true,
         value: 'end_date'
       },
       {
-        text: 'Driver',
+        key: 'vehicle_dashboard.driver',
         width: 'auto',
         align: 'left',
         sortable: true,
         value: 'driver'
       }
     ],
-    items: []
+    driver_history: []
   })
 }
 </script>
