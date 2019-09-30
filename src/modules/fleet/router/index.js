@@ -1,7 +1,7 @@
 export default [
   {
-    path: '/fleet-dashboard',
+    path: '/fleet',
     name: 'fleet-dashboard',
-    component: () => import('@/views/FleetDashboard.vue')
+    component: () => import('@/modules/fleet/views/FleetDashboard.vue')
   }
 ]

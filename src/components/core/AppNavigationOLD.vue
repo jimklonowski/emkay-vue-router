@@ -50,7 +50,7 @@
         />
       </v-layout>
       <v-btn v-if="!authed" text class="hidden-sm-and-down" to="/login"
-        >SIGN IN</v-btn
+      >SIGN IN</v-btn
       >
     </v-app-bar>
 
@@ -91,7 +91,7 @@
 
 <script>
 import moment from 'moment'
-import { LOGOUT } from '@/store/actions.type'
+import { LOGOUT } from '@/modules/auth/store/actions.type'
 
 export default {
   name: 'AppNavigation',
@@ -111,27 +111,27 @@ export default {
         {
           text: 'Fleet Dashboard',
           icon: 'dashboard',
-          to: '/fleet-dashboard'
+          to: { name: 'fleet-dashboard' }
         },
         {
           text: 'Vehicle Dashboard',
           icon: 'table_chart',
-          to: '/vehicle'
+          to: { name: 'vehicle-dashboard' }
         },
         {
           text: 'Ordering',
           icon: 'pages',
-          to: '/ordering'
+          to: { name: 'ordering' }
         },
         {
           text: 'Reporting',
           icon: 'show_chart',
-          to: '/reporting'
+          to: { name: 'reporting' }
         },
         {
-          text: 'Account Management',
+          text: 'Fleet Management',
           icon: 'build',
-          to: '/account'
+          to: { name: 'fleet-management' }
         }
       ]
     }

@@ -123,6 +123,29 @@
     "add_new_driver": "Add New Driver",
     "order_fuel_card": "Order Fuel Card",
     "reassign_auth_profile": "Reassign Authorization Profile",
-    "evoucher": "eVoucher"
+    "evoucher": "eVoucher",
+
+    "vehicle_description": "Vehicle Description",
+    "factory_order_number": "Factory Order Number",
+    "emkay_ordered_date": "EMKAY Ordered Date",
+    "emkay_received_date": "EMKAY Received Date",
+    "zone_received_date": "Zone Received Date",
+    "serial_number": "Serial Number",
+    "ordered_dealer": "Ordered Dealer",
+    "sent_to_plant": "Sent to Plant",
+    "ship_to_dealer": "Ship to Dealer",
+    "production_scheduled": "Production Scheduled",
+    "build_date": "Build Date",
+    "shipped_to_body_co": "Shipped to Body Co",
+    "at_body_co": "At Body Co",
+    "shipped_from_body_co": "Shipped From Body Co",
+    "back_at_manufacturer": "Back at Manufacturer",
+    "shipped_to_dealer": "Shipped to Dealer",
+    "release_to_convoy": "Release to Convoy",
+    "delivery_to_dealer": "Delivery to Dealer",
+    "delivery_date": "Delivery Date",
+    "ship_to_dealer_info": "Ship to Dealer Info",
+    "priority_code": "Priority Code",
+    "comments": "Comments"
   }
 }

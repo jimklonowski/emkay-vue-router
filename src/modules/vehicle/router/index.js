@@ -13,32 +13,33 @@ export default [
   {
     path: '/vehicle/:vehicle?',
     name: 'vehicle-dashboard',
-    component: () => import('@/views/VehicleDashboard.vue'),
+    component: () =>
+      import('@/modules/vehicle/views/VehicleDashboardWrapper.vue'),
     children: [
       {
         path: '/vehicle/:vehicle/dashboard',
         name: 'dashboard',
-        component: () => import('@/views/VehicleDashboard/Dashboard.vue')
+        component: () => import('@/modules/vehicle/views/Dashboard.vue')
       },
       {
         path: '/vehicle/:vehicle/documents',
         name: 'documents',
-        component: () => import('@/views/VehicleDashboard/Documents.vue')
+        component: () => import('@/modules/vehicle/views/Documents.vue')
       },
       {
         path: '/vehicle/:vehicle/inspections',
         name: 'inspections',
-        component: () => import('@/views/VehicleDashboard/Inspections.vue')
+        component: () => import('@/modules/vehicle/views/Inspections.vue')
       },
       {
         path: '/vehicle/:vehicle/saferoads',
         name: 'saferoads',
-        component: () => import('@/views/VehicleDashboard/SafeRoads.vue')
+        component: () => import('@/modules/vehicle/views/SafeRoads.vue')
       },
       {
         path: '/vehicle/:vehicle/transport-storage',
         name: 'transport-storage',
-        component: () => import('@/views/VehicleDashboard/TransportStorage.vue')
+        component: () => import('@/modules/vehicle/views/TransportStorage.vue')
       }
     ]
   }

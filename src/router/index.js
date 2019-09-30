@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 
-import { LOGOUT } from '@/store/actions.type'
+import { LOGOUT } from '@/modules/auth/store/actions.type'
 
-import baseRoutes from '@/modules/base/router'
-import accountRoutes from '@/modules/account/router'
+import authRoutes from '@/modules/auth/router'
+import coreRoutes from '@/modules/core/router'
 import fleetRoutes from '@/modules/fleet/router'
+import managementRoutes from '@/modules/management/router'
 import messagingRoutes from '@/modules/messaging/router'
 import orderingRoutes from '@/modules/ordering/router'
 import reportingRoutes from '@/modules/reporting/router'
@@ -15,10 +16,11 @@ import vehicleRoutes from '@/modules/vehicle/router'
 Vue.use(Router)
 
 // Merge all the routes
-const routes = baseRoutes.concat(
-  accountRoutes,
+const routes = coreRoutes.concat(
+  authRoutes,
   fleetRoutes,
   vehicleRoutes,
+  managementRoutes,
   messagingRoutes,
   orderingRoutes,
   reportingRoutes
@@ -47,6 +49,8 @@ const router = new Router(options)
 
 // Global Router Navigation Guard: role-based protection on each route
 router.beforeEach((to, from, next) => {
+  console.log(store)
+
   if (to.matched.some(record => record.meta.guest)) {
     if (to.matched.some(record => record.meta.onlyWhenLoggedOut)) {
       if (store.getters.isAuthenticated) {
@@ -66,7 +70,8 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // user is not authenticated and trying to access auth route -> send to login
-      //console.log(`Not authed -> ${to.path}`)
+      console.log(`Not authed -> ${to.path}`)
+      // store.dispatch(LOGOUT).then(() => next('/login'))
       store.dispatch(LOGOUT).then(() => next('/login'))
     }
   }

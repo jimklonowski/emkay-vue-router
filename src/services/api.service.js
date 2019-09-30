@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '../store'
 import VueAxios from 'vue-axios'
 import JwtService from './jwt.service'
-import { REFRESH_TOKEN } from '../store/actions.type'
+import { REFRESH_TOKEN } from '@/modules/auth/store/actions.type'
 
 const API_URL = process.env.VUE_APP_ROOT_API
 //const API_URL = '//dev2.emkay.com/dev2/'
@@ -40,6 +40,7 @@ const ApiService = {
   },
 
   get(resource, slug = '') {
+    // return Axios.get(`${resource}/${slug}`)
     return Vue.axios.get(`${resource}/${slug}`).catch(error => {
       throw new Error(`[EMKAY] ApiService GET ${error}`)
     })

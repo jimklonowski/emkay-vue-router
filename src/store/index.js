@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import auth from './auth.module'
+
+import auth from '../modules/auth/store/auth.module'
+import core from '../modules/core/store/core.module'
+import vehicle from '../modules/vehicle/store/vehicle.module.js'
+
+//import auth from './auth.module'
 
 // save vuex state between browser refreshes
 import createPersistedState from 'vuex-persistedstate'
@@ -17,7 +22,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    auth
+    auth,
+    core,
+    vehicle
   },
   plugins: [
     createPersistedState({

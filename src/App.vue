@@ -13,7 +13,7 @@
 
 <script>
 import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
-import AppNavigation from '@/components/core/navigation/AppNavigation'
+import AppNavigation from '@/modules/core/components/navigation/AppNavigation'
 import FooterNavigation from '@/components/core/navigation/FooterNavigation'
 export default {
   name: 'App',

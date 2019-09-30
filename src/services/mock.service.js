@@ -2,7 +2,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 // delay all requests by 2sec
-let mock = new MockAdapter(axios, { delayResponse: 2000 })
+let mock = new MockAdapter(axios, { delayResponse: 2500 })
 
 const MockService = {
   init() {
@@ -39,6 +39,379 @@ const MockService = {
       // .replyOnce(401)
       // .onPost('/reportAccident')
       // .reply(403, { error: 'oops' })
+
+      // mock fuel history
+      .onGet('/vehicle/fuel/123456')
+      .reply(200, [
+        {
+          date: '2019-06-19',
+          odometer: '18118',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '22.28',
+          unit_cost: '$2.998',
+          amount: '$66.80'
+        },
+        {
+          date: '2019-06-13',
+          odometer: '17690',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '21.23',
+          unit_cost: '$2.798',
+          amount: '$59.41'
+        },
+        {
+          date: '2019-06-12',
+          odometer: '17541',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'WASH',
+          quantity: '1',
+          unit_cost: '$19.00',
+          amount: '$19.00'
+        },
+        {
+          date: '2019-05-31',
+          odometer: '17281',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20.85',
+          unit_cost: '$3.095',
+          amount: '$64.53'
+        },
+        {
+          date: '2019-05-26',
+          odometer: '16897',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.42',
+          unit_cost: '$3.259',
+          amount: '$72.80'
+        },
+        {
+          date: '2019-05-24',
+          odometer: '16612',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'WASH',
+          quantity: '1',
+          unit_cost: '$9.00',
+          amount: '$9.00'
+        },
+        {
+          date: '2019-05-21',
+          odometer: '16516',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-05-20',
+          odometer: '16512',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20',
+          unit_cost: '$3.000',
+          amount: '$60.00'
+        },
+        {
+          date: '2019-04-20',
+          odometer: '16420',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '14.20',
+          unit_cost: '$4.200',
+          amount: '$69.69'
+        },
+        {
+          date: '2019-03-19',
+          odometer: '16319',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-02-20',
+          odometer: '16220',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '15.20',
+          unit_cost: '$4.700',
+          amount: '$69.42'
+        },
+        {
+          date: '2019-01-19',
+          odometer: '16119',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.89',
+          unit_cost: '$3.699',
+          amount: '$60.21'
+        },
+        {
+          date: '2019-06-19',
+          odometer: '18118',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '22.28',
+          unit_cost: '$2.998',
+          amount: '$66.80'
+        },
+        {
+          date: '2019-06-13',
+          odometer: '17690',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '21.23',
+          unit_cost: '$2.798',
+          amount: '$59.41'
+        },
+        {
+          date: '2019-05-31',
+          odometer: '17281',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20.85',
+          unit_cost: '$3.095',
+          amount: '$64.53'
+        },
+        {
+          date: '2019-05-26',
+          odometer: '16897',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.42',
+          unit_cost: '$3.259',
+          amount: '$72.80'
+        },
+        {
+          date: '2019-05-24',
+          odometer: '16612',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'WASH',
+          quantity: '1',
+          unit_cost: '$9.00',
+          amount: '$9.00'
+        },
+        {
+          date: '2019-05-21',
+          odometer: '16516',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-05-20',
+          odometer: '16512',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20',
+          unit_cost: '$3.000',
+          amount: '$60.00'
+        },
+        {
+          date: '2019-04-20',
+          odometer: '16420',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '14.20',
+          unit_cost: '$4.200',
+          amount: '$69.69'
+        },
+        {
+          date: '2019-03-19',
+          odometer: '16319',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-02-20',
+          odometer: '16220',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '15.20',
+          unit_cost: '$4.700',
+          amount: '$69.42'
+        },
+        {
+          date: '2019-01-19',
+          odometer: '16119',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.89',
+          unit_cost: '$3.699',
+          amount: '$60.21'
+        },
+        {
+          date: '2019-06-19',
+          odometer: '18118',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '22.28',
+          unit_cost: '$2.998',
+          amount: '$66.80'
+        },
+        {
+          date: '2019-06-13',
+          odometer: '17690',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '21.23',
+          unit_cost: '$2.798',
+          amount: '$59.41'
+        },
+        {
+          date: '2019-05-31',
+          odometer: '17281',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20.85',
+          unit_cost: '$3.095',
+          amount: '$64.53'
+        },
+        {
+          date: '2019-05-26',
+          odometer: '16897',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.42',
+          unit_cost: '$3.259',
+          amount: '$72.80'
+        },
+        {
+          date: '2019-05-24',
+          odometer: '16612',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'WASH',
+          quantity: '1',
+          unit_cost: '$9.00',
+          amount: '$9.00'
+        },
+        {
+          date: '2019-05-21',
+          odometer: '16516',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-05-20',
+          odometer: '16512',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '20',
+          unit_cost: '$3.000',
+          amount: '$60.00'
+        },
+        {
+          date: '2019-04-20',
+          odometer: '16420',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '14.20',
+          unit_cost: '$4.200',
+          amount: '$69.69'
+        },
+        {
+          date: '2019-03-19',
+          odometer: '16319',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '18.81',
+          unit_cost: '$3.099',
+          amount: '$58.29'
+        },
+        {
+          date: '2019-02-20',
+          odometer: '16220',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '15.20',
+          unit_cost: '$4.700',
+          amount: '$69.42'
+        },
+        {
+          date: '2019-01-19',
+          odometer: '16119',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.89',
+          unit_cost: '$3.699',
+          amount: '$60.21'
+        }
+      ])
+      // mock maintenance history
+      .onGet('/vehicle/maintenance/123456')
+      .reply(200, [
+        {
+          date: '2019-08-20',
+          odometer: '12345',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$24.00'
+        },
+        {
+          date: '2019-06-13',
+          odometer: '11323',
+          vendor: 'EMKAY Motors',
+          in_network: false,
+          service: 'Wash & Detail (Fee)',
+          amount: '$19.00'
+        },
+        {
+          date: '2019-04-01',
+          odometer: '10901',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$750.00'
+        }
+      ])
       .onAny()
       .passThrough()
 

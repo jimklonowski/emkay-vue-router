@@ -2,7 +2,8 @@
   <v-menu bottom left offset-y max-height="calc(100% - 16px)">
     <template #activator="{ on: menu }">
       <v-btn text style="min-width:48px" v-on="menu">
-        <country-flag :country="currentLanguage.country" />
+        <v-icon size="24px">language</v-icon>
+        <!-- <country-flag :country="currentLanguage.country" /> -->
       </v-btn>
     </template>
     <v-list dense nav>
@@ -50,7 +51,9 @@ export default {
   computed: {
     currentLanguage() {
       const locale = this.$i18n.locale
-      return this.languages.find(l => l.alternate === locale || l.locale === locale)
+      return this.languages.find(
+        l => l.alternate === locale || l.locale === locale
+      )
     }
   },
   methods: {

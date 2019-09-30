@@ -123,6 +123,29 @@
     "add_new_driver": "Ajouter un nouveau pilote",
     "order_fuel_card": "Commander une carte de carburant",
     "reassign_auth_profile": "Réaffecter le profil d'autorisation",
-    "evoucher": "eVoucher"
+    "evoucher": "eVoucher",
+
+    "vehicle_description": "Description du Véhicule",
+    "factory_order_number": "Numéro de commande d'usine",
+    "emkay_ordered_date": "Date de commande EMKAY",
+    "emkay_received_date": "Date de réception EMKAY",
+    "zone_received_date": "Date de réception Zone",
+    "serial_number": "Numéro de série",
+    "ordered_dealer": "Revendeur Commandé",
+    "sent_to_plant": "Envoyé à l'usine",
+    "ship_to_dealer": "Expédier au concessionnaire",
+    "production_scheduled": "Production prévue",
+    "build_date": "Date de construction",
+    "shipped_to_body_co": "Expédié à Body Co",
+    "at_body_co": "Au Body Co",
+    "shipped_from_body_co": "Expédié de Body Co",
+    "back_at_manufacturer": "Retour chez le fabricant",
+    "shipped_to_dealer": "Expédié chez le revendeur",
+    "release_to_convoy": "Libérer le convoi",
+    "delivery_to_dealer": "Livraison au concessionnaire",
+    "delivery_date": "Date de livraison",
+    "ship_to_dealer_info": "Expédier à l'information de marchand",
+    "priority_code": "Code de priorité",
+    "comments": "Commentaires"
   }
 }

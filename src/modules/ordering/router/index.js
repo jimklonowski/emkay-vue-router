@@ -2,6 +2,6 @@ export default [
   {
     path: '/ordering',
     name: 'ordering',
-    component: () => import('@/views/Ordering.vue')
+    component: () => import('@/modules/ordering/views/Ordering.vue')
   }
 ]
