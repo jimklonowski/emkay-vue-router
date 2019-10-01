@@ -13,29 +13,32 @@
             <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
           </v-toolbar-title>
           <v-spacer />
-          <v-menu transition="slide-y-transition" z-index="3" left>
+          <v-menu
+            v-model="menuOpen"
+            :close-on-content-click="false"
+            transition="slide-y-transition"
+            z-index="3"
+            left
+          >
             <template v-slot:activator="{ on }">
               <v-btn dark icon v-on="on">
                 <v-icon>more_vert</v-icon>
               </v-btn>
             </template>
-            <v-list flat nav dense>
-              <v-list-item
-                v-for="(item, i) in actions"
-                :key="i"
-                :color="item.color"
-                @click="item.action"
-              >
-                <component :is="item.component" v-if="item.component" />
-                <template v-else>
+            <v-list nav dense>
+              <template v-for="(item, i) in actions">
+                <v-list-item :key="i" :color="item.color" @click="item.action">
                   <v-list-item-icon>
                     <v-icon v-text="item.icon" />
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
                   </v-list-item-content>
-                </template>
-              </v-list-item>
+                </v-list-item>
+                <v-divider v-if="item.divider" class="mb-1" />
+              </template>
+              <!-- Additional Actions -->
+              <order-status />
             </v-list>
           </v-menu>
         </v-toolbar>
@@ -134,17 +137,13 @@ export default {
     }
   },
   data: self => ({
+    menuOpen: false,
     actions: [
       {
         key: 'vehicle_dashboard.edit_vehicle',
         icon: 'edit',
-        action: () => (self.isEditing = !self.isEditing)
-      },
-      {
-        key: 'vehicle_dashboard.order_status',
-        icon: 'av_timer',
-        action: () => {},
-        component: OrderStatus
+        action: () => self.toggleEdit(),
+        divider: true
       },
       {
         key: 'vehicle_dashboard.schedule_ac',
@@ -435,6 +434,7 @@ export default {
     toggleEdit() {
       console.log('toggle edit')
       this.isEditing = !this.isEditing
+      this.menuOpen = !this.menuOpen
     },
     orderStatus() {
       alert('pending order status')

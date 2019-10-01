@@ -21,18 +21,42 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" z-index="3" left>
+        <!-- close-on-content-click=false is REQUIRED for the download button to work -->
+        <v-menu
+          :close-on-content-click="false"
+          transition="slide-y-transition"
+          z-index="3"
+          left
+        >
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
               <v-icon>more_vert</v-icon>
             </v-btn>
           </template>
           <v-list nav dense>
+            <!-- download button -->
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon v-text="'cloud_download'" />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <json-excel
+                    :data="fuel_history"
+                    :fields="headerExport"
+                    :type="'xls'"
+                    :default-value="' -- '"
+                    :name="downloadName"
+                  >
+                    {{ $t('common.export_to_excel') }}
+                  </json-excel>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
             <v-list-item
               v-for="(item, i) in actions"
               :key="i"
               :color="item.color"
-              :data="fuel_history"
               @click="item.action"
             >
               <v-list-item-icon>
@@ -80,8 +104,14 @@
         </v-data-table>
       </v-card-text>
       <v-card-actions>
-        <json-excel :data="fuel_history">Download Excel!</json-excel>
-        <v-btn depressed dark @click="downloadCsv">Download CSV?</v-btn>
+        <!-- <json-excel
+          :data="fuel_history"
+          :fields="headerExport"
+          :type="'csv'"
+          :default-value="' -- '"
+        >
+          Download Excel
+        </json-excel> -->
       </v-card-actions>
     </v-card>
   </article>
@@ -89,7 +119,7 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
-import { csvDownload } from '@/util/helpers'
+import { headersForExport } from '@/util/helpers'
 import { mapActions } from 'vuex'
 import { FETCH_FUEL_HISTORY } from '@/modules/vehicle/store/actions.type'
 
@@ -110,11 +140,6 @@ export default {
     errorMessage: '',
     //goto: { name: 'fuel' },
     actions: [
-      {
-        key: 'common.export_to_excel',
-        icon: 'cloud_download',
-        action: () => alert('download')
-      },
       {
         key: 'vehicle_dashboard.order_fuel_card',
         icon: 'credit_card',
@@ -208,18 +233,6 @@ export default {
   },
   methods: {
     ...mapActions([FETCH_FUEL_HISTORY]),
-    downloadCsv() {
-      debugger
-      const rows = this.fuel_history
-        .map(item => this.headers.map(k => `"${item[k] || ''}"`).join(','))
-        .join('\n')
-      debugger
-      csvDownload(
-        //`${this.headers.map(s => this.$t(`item.${s}`)).join(',')}\n${rows}`
-        `${this.headers.map(column => this.$t(column.key)).join(',')}\n${rows}`
-        //`${this.headers.join(',')}\n${rows}`
-      )
-    },
     // color chips for transaction typeS
     getColor: type => {
       switch (true) {
@@ -237,6 +250,22 @@ export default {
           return 'secondary'
       }
     }
+  },
+  computed: {
+    headerExport() {
+      return headersForExport(this.headers)
+    },
+    downloadName() {
+      let today = new Date().toLocaleDateString()
+      return `fuel_history_${today}`
+    }
+    // convert
+    // let heads = this.headers.map(header => ({
+    //   [this.$t(header.key)]: header.value
+    // }))
+    // let heads2 = Object.assign({}, ...heads)
+    // debugger
+    // return heads2
   }
 }
 </script>

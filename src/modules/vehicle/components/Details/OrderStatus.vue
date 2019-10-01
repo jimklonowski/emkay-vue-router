@@ -1,10 +1,18 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000" persistent>
     <template v-slot:activator="{ on }">
-      <v-btn text tile color="primary" v-on="on" @click.stop.prevent>
+      <v-list-item link v-on="on" @click.stop.prevent>
+        <v-list-item-icon>
+          <v-icon v-text="icon" />
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title v-t="titlekey" />
+        </v-list-item-content>
+      </v-list-item>
+      <!-- <v-btn text tile color="primary" v-on="on" @click.stop.prevent>
         <v-icon left>av_timer</v-icon>
         {{ $t('vehicle_dashboard.order_status') }}
-      </v-btn>
+      </v-btn> -->
     </template>
 
     <v-card :loading="loading">
@@ -57,126 +65,128 @@ export default {
   data: () => ({
     dialog: false,
     loading: false,
+    icon: 'av_timer',
+    titlekey: 'vehicle_dashboard.order_status',
     fields: [
       {
         name: 'driver',
         key: 'vehicle_dashboard.driver',
-        value: ''
+        value: 'Klonowski, James'
       },
       {
         name: 'vehicle_number',
         key: 'vehicle_dashboard.vehicle_number',
-        value: ''
+        value: '123456'
       },
       {
         name: 'vehicle_description',
         key: 'vehicle_dashboard.vehicle_description',
-        value: ''
+        value: 'jeep compass'
       },
       {
         name: 'factory_order_number',
         key: 'vehicle_dashboard.factory_order_number',
-        value: ''
+        value: '111'
       },
       {
         name: 'emkay_ordered_date',
         key: 'vehicle_dashboard.emkay_ordered_date',
-        value: ''
+        value: '09-01-2019'
       },
       {
         name: 'emkay_received_date',
         key: 'vehicle_dashboard.emkay_received_date',
-        value: ''
+        value: '09-02-2019'
       },
       {
         name: 'zone_received_date',
         key: 'vehicle_dashboard.zone_received_date',
-        value: ''
+        value: '09-03-2019'
       },
       {
         name: 'serial_number',
         key: 'vehicle_dashboard.serial_number',
-        value: ''
+        value: '112'
       },
       {
         name: 'ordered_dealer',
         key: 'vehicle_dashboard.ordered_dealer',
-        value: ''
+        value: '09-04-2019'
       },
       {
         name: 'sent_to_plant',
         key: 'vehicle_dashboard.sent_to_plant',
-        value: ''
+        value: '09-05-2019'
       },
       {
         name: 'ship_to_dealer',
         key: 'vehicle_dashboard.ship_to_dealer',
-        value: ''
+        value: '09-06-2019'
       },
       {
         name: 'production_scheduled',
         key: 'vehicle_dashboard.production_scheduled',
-        value: ''
+        value: '09-07-2019'
       },
       {
         name: 'build_date',
         key: 'vehicle_dashboard.build_date',
-        value: ''
+        value: '09-08-2019'
       },
       {
         name: 'shipped_to_body_co',
         key: 'vehicle_dashboard.shipped_to_body_co',
-        value: ''
+        value: '09-09-2019'
       },
       {
         name: 'at_body_co',
         key: 'vehicle_dashboard.at_body_co',
-        value: ''
+        value: '09-10-2019'
       },
       {
         name: 'shipped_from_body_co',
         key: 'vehicle_dashboard.shipped_from_body_co',
-        value: ''
+        value: '09-11-2019'
       },
       {
         name: 'back_at_manufacturer',
         key: 'vehicle_dashboard.back_at_manufacturer',
-        value: ''
+        value: '09-12-2019'
       },
       {
         name: 'shipped_to_dealer',
         key: 'vehicle_dashboard.shipped_to_dealer',
-        value: ''
+        value: '09-13-2019'
       },
       {
         name: 'release_to_convoy',
         key: 'vehicle_dashboard.release_to_convoy',
-        value: ''
+        value: '09-14-2019'
       },
       {
         name: 'delivery_to_dealer',
         key: 'vehicle_dashboard.delivery_to_dealer',
-        value: ''
+        value: '09-15-2019'
       },
       {
         name: 'delivery_date',
         key: 'vehicle_dashboard.delivery_date',
-        value: ''
+        value: '09-16-2016'
       },
       {
         name: 'ship_to_dealer_info',
         key: 'vehicle_dashboard.ship_to_dealer_info',
-        value: ''
+        value: 'this is some info'
       },
       {
         name: 'priority_code',
         key: 'vehicle_dashboard.priority_code',
-        value: ''
+        value: '123'
       },
       {
         name: 'comments',
         key: 'vehicle_dashboard.comments',
-        value: ''
+        value: 'this is for comments'
       }
     ]
   })

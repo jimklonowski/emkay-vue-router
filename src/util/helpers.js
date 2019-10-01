@@ -1,3 +1,4 @@
+import i18n from '@/plugins/i18n'
 // Must be called in Vue context
 export function goTo(id) {
   this.$vuetify.goTo(id).then(() => {
@@ -12,16 +13,15 @@ export function goTo(id) {
   })
 }
 
-// Export CSV
-export const csvDownload = (csv, filename = 'export.csv') => {
-  const blob = new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], {
-    type: 'text/csv'
-  })
-  const a = document.createElement('a')
-  a.target = '_blank'
-  a.download = filename
-  a.href = window.URL.createObjectURL(blob)
-  const event = document.createEvent('MouseEvents')
-  event.initEvent('click', true, true)
-  a.dispatchEvent(event)
+/**
+ * Convert v-data-table headers object to {k1:v1,k2:v2,...} format required by vue-json-excel
+ * @param {Object[]} headers - An array of headers to be exported as columns.
+ */
+export const headersForExport = headers => {
+  // create array of {key:value} pairs objects for exporting as columns and use i18n translations
+  let headerColumns = headers.map(header => ({
+    [i18n.t(header.key)]: header.value
+  }))
+  // return a single object with all exported columns as fields
+  return Object.assign({}, ...headerColumns)
 }
