@@ -13,6 +13,11 @@ export function goTo(id) {
   })
 }
 
+export const exportName = (name, format) => {
+  let today = new Date().toLocaleDateString()
+  return `${name}_${today}.${format}`
+}
+
 /**
  * Convert v-data-table headers object to {k1:v1,k2:v2,...} format required by vue-json-excel
  * @param {Object[]} headers - An array of headers to be exported as columns.

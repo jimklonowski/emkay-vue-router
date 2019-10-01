@@ -1,15 +1,11 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
-        <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{
-            $t('vehicle_dashboard.fuel')
-          }}</span>
-          <span class="font-weight-thin">{{
-            $t('vehicle_dashboard.history')
-          }}</span>
-          <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.fuel'" />
+          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
         </v-toolbar-title>
         <v-spacer />
         <v-text-field
@@ -30,7 +26,7 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
-              <v-icon>more_vert</v-icon>
+              <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
           <v-list nav dense>
@@ -44,7 +40,7 @@
                   <json-excel
                     :data="fuel_history"
                     :fields="headerExport"
-                    :type="'xls'"
+                    :type="exportFormat"
                     :default-value="' -- '"
                     :name="downloadName"
                   >
@@ -53,6 +49,7 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <!-- other actions -->
             <v-list-item
               v-for="(item, i) in actions"
               :key="i"
@@ -63,7 +60,7 @@
                 <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
+                <v-list-item-title v-t="item.key" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -80,7 +77,7 @@
           :sort-desc="[true]"
           :loading="loading"
           :loading-text="`Loading...`"
-          :no-data-text="errorMessage || 'No Data Found'"
+          :no-data-text="$t('common.no_data_found')"
           dense
         >
           <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
@@ -103,23 +100,13 @@
           </template>
         </v-data-table>
       </v-card-text>
-      <v-card-actions>
-        <!-- <json-excel
-          :data="fuel_history"
-          :fields="headerExport"
-          :type="'csv'"
-          :default-value="' -- '"
-        >
-          Download Excel
-        </json-excel> -->
-      </v-card-actions>
     </v-card>
   </article>
 </template>
 
 <script>
 import JsonExcel from 'vue-json-excel'
-import { headersForExport } from '@/util/helpers'
+import { exportName, headersForExport } from '@/util/helpers'
 import { mapActions } from 'vuex'
 import { FETCH_FUEL_HISTORY } from '@/modules/vehicle/store/actions.type'
 
@@ -135,10 +122,12 @@ export default {
     }
   },
   data: () => ({
-    search: '',
-    loading: true,
     errorMessage: '',
-    //goto: { name: 'fuel' },
+    exportFormat: 'xls',
+    name: 'fuel_history',
+    //json_meta: [[{ key: 'charset', value: 'utf-8' }]],
+    loading: true,
+    search: '',
     actions: [
       {
         key: 'vehicle_dashboard.order_fuel_card',
@@ -218,6 +207,14 @@ export default {
     ],
     fuel_history: []
   }),
+  computed: {
+    headerExport() {
+      return headersForExport(this.headers)
+    },
+    downloadName() {
+      return exportName(this.name, this.exportFormat)
+    }
+  },
   created() {
     // fetch the data when the view is created and the data is already being observed.
     this.fetchFuelHistory(this.vehicle)
@@ -233,7 +230,7 @@ export default {
   },
   methods: {
     ...mapActions([FETCH_FUEL_HISTORY]),
-    // color chips for transaction typeS
+    // color chips for transaction types
     getColor: type => {
       switch (true) {
         case /wash/i.test(type):
@@ -250,22 +247,7 @@ export default {
           return 'secondary'
       }
     }
-  },
-  computed: {
-    headerExport() {
-      return headersForExport(this.headers)
-    },
-    downloadName() {
-      let today = new Date().toLocaleDateString()
-      return `fuel_history_${today}`
-    }
-    // convert
-    // let heads = this.headers.map(header => ({
-    //   [this.$t(header.key)]: header.value
-    // }))
-    // let heads2 = Object.assign({}, ...heads)
-    // debugger
-    // return heads2
   }
 }
 </script>
+<style></style>

@@ -1,7 +1,7 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase">
           <span class="font-weight-black">{{
             $t('vehicle_dashboard.licensing')

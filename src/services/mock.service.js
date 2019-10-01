@@ -412,6 +412,37 @@ const MockService = {
           amount: '$750.00'
         }
       ])
+      // mock invoice history
+      .onGet('/vehicle/invoice/123456')
+      .reply(200, [
+        {
+          date: '2019-10-02',
+          description: 'FMS Billing',
+          invoice: 'BF7716',
+          amount: '$234.56'
+        },
+        {
+          date: '2019-09-01',
+          description: 'FMS Billing',
+          invoice: 'BF7717',
+          amount: '$678.90'
+        },
+        {
+          date: '2019-08-01',
+          description: 'FMS Billing',
+          invoice: 'BF7718',
+          amount: '$123.45'
+        }
+      ])
+      // mock licensing history
+      .onGet('/vehicle/licensing/123456')
+      .reply(200, [])
+      // mock accident history
+      .onGet('/vehicle/accident/123456')
+      .reply(200, [])
+      // mock rental history
+      .onGet('/vehicle/rental/123456')
+      .reply(200, [])
       .onAny()
       .passThrough()
 

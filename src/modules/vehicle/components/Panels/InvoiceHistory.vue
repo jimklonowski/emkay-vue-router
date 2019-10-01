@@ -1,15 +1,11 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
-        <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{
-            $t('vehicle_dashboard.invoice')
-          }}</span>
-          <span class="font-weight-thin">{{
-            $t('vehicle_dashboard.history')
-          }}</span>
-          <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.invoice'" />
+          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
         </v-toolbar-title>
         <v-spacer />
         <v-text-field
@@ -21,13 +17,39 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" z-index="3" left>
+        <!-- close-on-content-click=false is REQUIRED for the download button to work -->
+        <v-menu
+          :close-on-content-click="false"
+          transition="slide-y-transition"
+          z-index="3"
+          left
+        >
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
-              <v-icon>more_vert</v-icon>
+              <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
           <v-list nav dense>
+            <!-- download button -->
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon v-text="'cloud_download'" />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <json-excel
+                    :data="invoice_history"
+                    :fields="headerExport"
+                    :type="exportFormat"
+                    :default-value="' -- '"
+                    :name="downloadName"
+                  >
+                    {{ $t('common.export_to_excel') }}
+                  </json-excel>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <!-- other actions -->
             <v-list-item
               v-for="(item, i) in actions"
               :key="i"
@@ -38,7 +60,7 @@
                 <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
+                <v-list-item-title v-t="item.key" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -55,6 +77,7 @@
           :sort-desc="[true]"
           :loading="loading"
           :loading-text="`Loading...`"
+          :no-data-text="$t('common.no_data_found')"
           dense
         >
           <template
@@ -70,8 +93,16 @@
 </template>
 
 <script>
+import JsonExcel from 'vue-json-excel'
+import { exportName, headersForExport } from '@/util/helpers'
+import { mapActions } from 'vuex'
+import { FETCH_INVOICE_HISTORY } from '@/modules/vehicle/store/actions.type'
+
 export default {
   name: 'InvoiceHistory',
+  components: {
+    JsonExcel
+  },
   props: {
     vehicle: {
       type: String,
@@ -79,16 +110,17 @@ export default {
     }
   },
   data: () => ({
-    title: 'Invoice',
-    subtitle: 'History',
+    errorMessage: null,
+    exportFormat: 'xls',
+    name: 'invoice_history',
+    loading: true,
     search: '',
-    loading: false,
     actions: [
-      {
-        key: 'common.export_to_excel',
-        icon: 'cloud_download',
-        action: () => alert('download')
-      }
+      // {
+      //   key: 'common.export_to_excel',
+      //   icon: 'cloud_download',
+      //   action: () => alert('download')
+      // }
     ],
     headers: [
       {
@@ -120,15 +152,32 @@ export default {
         value: 'amount'
       }
     ],
-    invoice_history: [
-      {
-        date: '2019-08-01',
-        description: 'FMS Billing',
-        invoice: 'BF7718',
-        amount: '$604.44'
-      }
-    ]
-  })
+    invoice_history: []
+  }),
+  computed: {
+    headerExport() {
+      return headersForExport(this.headers)
+    },
+    downloadName() {
+      return exportName(this.name, this.exportFormat)
+    }
+  },
+  created() {
+    // fetch the data when the view is created and data is being observed
+    this.fetchInvoiceHistory(this.vehicle)
+      .then(response => {
+        this.invoice_history = response.data
+      })
+      .catch(error => {
+        this.errorMessage = error.message
+      })
+      .finally(() => {
+        this.loading = false
+      })
+  },
+  methods: {
+    ...mapActions([FETCH_INVOICE_HISTORY])
+  }
 }
 </script>
 

@@ -2,33 +2,41 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+        <v-toolbar :class="$config.TOOLBAR_CLASS">
           <v-toolbar-title class="text-uppercase">
-            <span class="font-weight-black">{{ $t('vehicle_dashboard.driver') }}</span>
-            <span class="font-weight-thin">{{ $t('vehicle_dashboard.details') }}</span>
-            <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+            <span v-t="'vehicle_dashboard.driver'" class="font-weight-black" />
+            <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
+            <v-subheader class="d-inline" dark v-text="vehicle" />
           </v-toolbar-title>
           <v-spacer />
-          <v-menu transition="slide-y-transition" z-index="3" left>
+          <v-menu
+            v-model="menuOpen"
+            :close-on-content-click="false"
+            transition="slide-y-transition"
+            z-index="3"
+            left
+          >
             <template v-slot:activator="{ on }">
               <v-btn dark icon v-on="on">
-                <v-icon>more_vert</v-icon>
+                <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
             <v-list nav dense>
-              <v-list-item
-                v-for="(item, i) in actions"
-                :key="i"
-                :color="item.color"
-                @click="item.action"
-              >
-                <v-list-item-icon>
-                  <v-icon v-text="item.icon" />
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+              <template v-for="(item, i) in actions">
+                <v-list-item :key="i" :color="item.color" @click="item.action">
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon" />
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-t="item.key" />
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider
+                  v-if="item.divider"
+                  :key="`${i}-divider`"
+                  class="mb-1"
+                />
+              </template>
             </v-list>
           </v-menu>
         </v-toolbar>
@@ -41,9 +49,7 @@
             subheader
             dense
           >
-            <v-subheader class="col-12 overline blue-grey lighten-5">
-              {{ $t(section.key) }}
-            </v-subheader>
+            <v-subheader v-t="section.key" :class="$config.SUBHEADER_CLASS" />
             <div class="px-3">
               <v-row dense>
                 <v-list-item
@@ -54,24 +60,22 @@
                 >
                   <v-list-item-content v-if="isEditing" class="py-0">
                     <v-text-field
-                      :label="$t(field.key)"
                       :v-model="field"
                       :value="field.value"
-                      :rules="editorRules.required"
+                      :label="$t(field.key)"
+                      :rules="rules.required"
                       :disabled="!field.editable"
-                    >
-                      {{ field.value }}
-                    </v-text-field>
+                    />
                   </v-list-item-content>
                   <v-list-item-content v-else class="pt-0 pb-4">
-                    <v-list-item-subtitle class="details-label">
-                      {{ $t(field.key) }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      :class="$config.LABEL_CLASS"
+                      v-text="$t(field.key)"
+                    />
                     <v-list-item-title
-                      class="text-label blue-grey--text text--darken-2"
-                    >
-                      {{ field.value }}
-                    </v-list-item-title>
+                      :class="$config.FIELD_CLASS"
+                      v-text="field.value"
+                    />
                   </v-list-item-content>
                 </v-list-item>
               </v-row>
@@ -79,23 +83,25 @@
           </v-list>
         </v-card-text>
         <v-card-actions v-if="isEditing">
-          <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
-            {{ errorMessage }}
-          </v-alert>
+          <v-alert
+            v-if="errorMessage"
+            outlined
+            dense
+            class="mb-0"
+            type="error"
+            v-text="errorMessage"
+          />
           <v-spacer />
           <v-btn
+            v-t="'common.cancel'"
             type="button"
             color="error"
             text
-            @click.prevent="
-              isEditing = !isEditing
-              errorMessage = null
-            "
-          >
-            Cancel
-          </v-btn>
+            @click.prevent="toggleEdit"
+          />
           <v-btn type="submit" dark outlined color="primary">
-            <v-icon dark> save </v-icon>&nbsp;Save Changes
+            <v-icon dark v-text="'save'" />
+            {{ $t('common.save_changes') }}
           </v-btn>
         </v-card-actions>
         <v-progress-linear
@@ -121,17 +127,13 @@ export default {
     }
   },
   data: self => ({
-    editorRules: {
-      required: [v => !!v || 'Field is required']
-    },
     errorMessage: null,
-    labelClass: 'details-label',
-    fieldClass: 'blue-grey--text text--darken-2',
-    headerClass: '',
-    inputClass: 'blue-grey--text text--darken-2',
     isEditing: false,
     loading: false,
-
+    menuOpen: false,
+    rules: {
+      required: [v => !!v || 'Field is required']
+    },
     actions: [
       {
         key: 'vehicle_dashboard.edit_driver',
@@ -282,15 +284,16 @@ export default {
             editable: true,
             class: 'col-6',
             value: 'asdf'
-          },
+          }
         ]
       }
     ]
   }),
-  created() {
-    this.headerClass = this.$config.COMPONENT_HEADER_CLASS
-  },
   methods: {
+    toggleEdit() {
+      this.isEditing = !this.isEditing
+      this.menuOpen = !this.menuOpen
+    },
     onSubmit() {
       this.loading = true
       const url = '/test/error'

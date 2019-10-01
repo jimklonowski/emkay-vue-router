@@ -6,7 +6,6 @@ Vue.use(Vuetify)
 
 import { en, fr } from 'vuetify/lib/locale'
 
-
 export default new Vuetify({
   lang: {
     locales: { en, fr },

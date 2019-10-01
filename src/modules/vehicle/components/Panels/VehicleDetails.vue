@@ -2,15 +2,11 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="this.$config.TOOLBAR_CLASS">
+        <v-toolbar :class="$config.TOOLBAR_CLASS">
           <v-toolbar-title class="text-uppercase">
-            <span class="font-weight-black">{{
-              $t('vehicle_dashboard.vehicle')
-            }}</span>
-            <span class="font-weight-thin">{{
-              $t('vehicle_dashboard.details')
-            }}</span>
-            <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+            <span v-t="'vehicle_dashboard.vehicle'" class="font-weight-black" />
+            <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
+            <v-subheader class="d-inline" dark v-text="vehicle" />
           </v-toolbar-title>
           <v-spacer />
           <v-menu
@@ -22,7 +18,7 @@
           >
             <template v-slot:activator="{ on }">
               <v-btn dark icon v-on="on">
-                <v-icon>more_vert</v-icon>
+                <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
             <v-list nav dense>
@@ -32,10 +28,14 @@
                     <v-icon v-text="item.icon" />
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>{{ $t(item.key) }}</v-list-item-title>
+                    <v-list-item-title v-t="item.key" />
                   </v-list-item-content>
                 </v-list-item>
-                <v-divider v-if="item.divider" class="mb-1" />
+                <v-divider
+                  v-if="item.divider"
+                  :key="`${i}-divider`"
+                  class="mb-1"
+                />
               </template>
               <!-- Additional Actions -->
               <order-status />
@@ -51,9 +51,7 @@
             subheader
             dense
           >
-            <v-subheader class="col-12 overline blue-grey lighten-5">
-              {{ $t(section.key) }}
-            </v-subheader>
+            <v-subheader v-t="section.key" :class="$config.SUBHEADER_CLASS" />
             <div class="px-3">
               <v-row dense>
                 <v-list-item
@@ -64,24 +62,22 @@
                 >
                   <v-list-item-content v-if="isEditing" class="py-0">
                     <v-text-field
-                      :label="$t(field.key)"
                       :v-model="field"
                       :value="field.value"
-                      :rules="editorRules.required"
+                      :label="$t(field.key)"
+                      :rules="rules.required"
                       :disabled="!field.editable"
-                    >
-                      {{ field.value }}
-                    </v-text-field>
+                    />
                   </v-list-item-content>
                   <v-list-item-content v-else class="pt-0 pb-4">
-                    <v-list-item-subtitle class="details-label">
-                      {{ $t(field.key) }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      :class="$config.LABEL_CLASS"
+                      v-text="$t(field.key)"
+                    />
                     <v-list-item-title
-                      class="text-label blue-grey--text text--darken-2"
-                    >
-                      {{ field.value }}
-                    </v-list-item-title>
+                      :class="$config.FIELD_CLASS"
+                      v-text="field.value"
+                    />
                   </v-list-item-content>
                 </v-list-item>
               </v-row>
@@ -90,23 +86,25 @@
         </v-card-text>
 
         <v-card-actions v-if="isEditing">
-          <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
-            {{ errorMessage }}
-          </v-alert>
+          <v-alert
+            v-if="errorMessage"
+            outlined
+            dense
+            class="mb-0"
+            type="error"
+            v-text="errorMessage"
+          />
           <v-spacer />
           <v-btn
+            v-t="'common.cancel'"
             type="button"
             color="error"
             text
-            @click.prevent="
-              isEditing = !isEditing
-              errorMessage = null
-            "
-          >
-            Cancel
-          </v-btn>
+            @click.prevent="toggleEdit"
+          />
           <v-btn type="submit" dark outlined color="primary">
-            <v-icon dark> save </v-icon>&nbsp;Save Changes
+            <v-icon dark v-text="'save'" />
+            {{ $t('common.save_changes') }}
           </v-btn>
         </v-card-actions>
         <v-progress-linear
@@ -137,7 +135,13 @@ export default {
     }
   },
   data: self => ({
+    errorMessage: null,
+    isEditing: false,
+    loading: false,
     menuOpen: false,
+    rules: {
+      required: [v => !!v || 'Field is required']
+    },
     actions: [
       {
         key: 'vehicle_dashboard.edit_vehicle',
@@ -166,14 +170,6 @@ export default {
         action: () => alert('Terminate Vehicle')
       }
     ],
-    pendingOrder: true,
-    errorMessage: null,
-    isEditing: false,
-    loading: false,
-    editorRules: {
-      required: [v => !!v || 'Field is required']
-    },
-
     vehicleSections: [
       {
         key: 'vehicle_dashboard.account_information',
@@ -303,141 +299,13 @@ export default {
           }
         ]
       }
-    ],
-
-    vehicleInfo: [
-      {
-        index: 0,
-        key: 'account',
-        name: 'Account',
-        value: 'EM102',
-        editable: false
-      },
-      {
-        index: 1,
-        key: 'billing_sort',
-        name: 'Billing Sort',
-        value: '1234567890-WOW',
-        editable: true
-      },
-      {
-        index: 2,
-        key: 'vin',
-        name: 'VIN',
-        value: '987654321QWERTY',
-        editable: false
-      },
-      {
-        index: 3,
-        key: 'vehicle_number',
-        name: 'Vehicle Number',
-        value: '123456',
-        editable: false
-      },
-      {
-        index: 4,
-        key: 'center',
-        name: 'Center',
-        value: '001',
-        editable: true
-      },
-      {
-        index: 5,
-        key: 'center_description',
-        name: 'Center Description',
-        value: 'Executive',
-        editable: true
-      },
-      {
-        index: 6,
-        key: 'client_vehicle_number',
-        name: 'Client Vehicle Number',
-        value: '987654',
-        editable: true
-      },
-      {
-        index: 7,
-        key: 'vehicle_year',
-        name: 'Year',
-        value: '2019',
-        editable: false
-      },
-      {
-        index: 8,
-        key: 'vehicle_make',
-        name: 'Make',
-        value: 'DODGE',
-        editable: false
-      },
-      {
-        index: 9,
-        key: 'vehicle_model',
-        name: 'Model',
-        value: 'DURANGO',
-        editable: false
-      },
-      {
-        index: 10,
-        key: 'vehicle_classification',
-        name: 'Category',
-        value: 'Sport Utility - Medium',
-        editable: false
-      },
-      {
-        index: 11,
-        key: 'vehicle_status',
-        name: 'Status',
-        value: 'ON BILLING',
-        editable: false
-      },
-      {
-        index: 12,
-        key: 'customer_use_1',
-        name: 'Client Use 1',
-        value: 'asdf',
-        editable: true
-      },
-      {
-        index: 13,
-        key: 'customer_use_2',
-        name: 'Client Use 2',
-        value: 'qwer',
-        editable: true
-      },
-      {
-        index: 14,
-        key: 'customer_use_3',
-        name: 'Client Use 3',
-        value: '1234',
-        editable: true
-      },
-      {
-        index: 15,
-        key: 'customer_use_4',
-        name: 'Client Use 4',
-        value: 'jklo',
-        editable: true
-      },
-      {
-        index: 16,
-        key: 'customer_use_5',
-        name: 'Client Use 5',
-        value: 'test',
-        editable: true
-      }
     ]
   }),
-  created() {
-    //this.headerClass = this.$config.COMPONENT_HEADER_CLASS
-  },
   methods: {
     toggleEdit() {
-      console.log('toggle edit')
       this.isEditing = !this.isEditing
-      this.menuOpen = !this.menuOpen
-    },
-    orderStatus() {
-      alert('pending order status')
+      this.menuOpen = false
+      this.errorMessage = null
     },
     onSubmit() {
       this.errorMessage = null

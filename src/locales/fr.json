@@ -1,9 +1,13 @@
 {
   "common": {
+    "no_data_found": "Aucun résultat trouvé",
+    "save_changes": "Sauvegarder les modifications",
+    "cancel": "Annuler",
     "search": "Chercher",
     "contents": "Contenu",
     "date": "Date",
     "export_to_excel": "Exporter en Excel",
+    "export_to_csv": "Exporter en CSV",
     "description": "La description"
   },
   "navigation": {

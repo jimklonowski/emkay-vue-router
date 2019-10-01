@@ -357,6 +357,9 @@ export default {
   methods: {
     logout() {
       console.log('logout!')
+      this.$store.dispatch(LOGOUT).then(() => {
+        this.$router.push({ name: 'login' })
+      })
       // this.$store.dispatch(LOGOUT).then(() => {
       //   this.$router.push({ name: 'login' })
       // })

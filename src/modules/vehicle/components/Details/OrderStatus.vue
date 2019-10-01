@@ -35,13 +35,10 @@
               class="col-md-6"
             >
               <v-list-item-content>
-                <v-list-item-subtitle
-                  class="details-label"
-                  v-text="$t(field.key)"
-                />
+                <v-list-item-subtitle v-t="field.key" class="details-label" />
                 <v-list-item-title
                   class="text-label blue-grey--text text--darken-2"
-                  v-text="$t(field.value)"
+                  v-text="field.value"
                 />
               </v-list-item-content>
             </v-list-item>
