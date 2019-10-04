@@ -121,9 +121,9 @@ export default {
         divider: true
       },
       {
-        key: 'vehicle_dashboard.report_mileage',
+        key: 'vehicle_dashboard.report_odometer',
         icon: 'speed',
-        action: () => alert('report mileage')
+        action: () => alert('report odometer')
       }
     ],
     headers: [

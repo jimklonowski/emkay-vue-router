@@ -57,39 +57,6 @@
       dark
     />
   </v-app-bar>
-  <!-- <v-navigation-drawer
-      v-model="drawer.isOpen"
-      class="hidden-lg-and-up"
-      :app="drawer.app"
-      :bottom="drawer.bottom"
-      :clipped="drawer.clipped"
-      :height="drawer.height"
-      mobile-break-point="9999"
-    >
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.text" :to="item.to">
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <template v-slot:append>
-        <v-divider />
-        <v-list dense nav>
-          <v-list-item link @click="logout">
-            <v-list-item-action>
-              <v-icon>domain_disabled</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Log Off</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </template>
-    </v-navigation-drawer> -->
 </template>
 
 <script>
@@ -120,11 +87,6 @@ export default {
     }
   }),
   methods: {
-    // logout() {
-    //   this.$store.dispatch(LOGOUT).then(() => {
-    //     this.$router.push({ name: 'login' })
-    //   })
-    // },
     toggleDrawer() {
       console.log(this.$store)
       this.$store.dispatch(TOGGLE_DRAWER)

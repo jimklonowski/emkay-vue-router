@@ -24,325 +24,148 @@ export default {
     title: 'EMKAY',
     // array of menu items. this is passed to the main bar AND the mobile bottom drawer
     items: [
+      { key: 'navigation.home', icon: 'home', to: '/' },
+      { key: 'navigation.fleet_dashboard', icon: 'dashboard', to: '/fleet' },
+      { key: 'navigation.vehicle_dashboard', icon: 'table_chart', to: '/vehicle' },
       {
-        text: 'Home',
-        key: 'navigation.home',
-        icon: 'home',
-        to: '/'
-      },
-      {
-        text: 'Fleet Dashboard',
-        key: 'navigation.fleet_dashboard',
-        icon: 'dashboard',
-        to: { name: 'fleet-dashboard' }
-      },
-      {
-        text: 'Vehicle Dashboard',
-        key: 'navigation.vehicle_dashboard',
-        icon: 'table_chart',
-        to: { name: 'vehicle-dashboard' }
-      },
-      {
-        text: 'Ordering',
         key: 'navigation.ordering',
         icon: 'pages',
-        to: { name: 'ordering' },
+        to: '/ordering',
         hasMegaMenu: true,
         ref: 'ordering',
         visible: false,
         categories: [
           {
-            text: 'Orders',
+            key: 'navigation.orders',
             items: [
-              {
-                text: 'Place Factory Orders',
-                to: '/todo'
-              },
-              {
-                text: 'Place Stock Orders',
-                to: '/todo'
-              },
-              {
-                text: 'View Order Requests',
-                to: '/todo'
-              }
+              { key: 'navigation.place_factory_orders', to: '/todo' },
+              { key: 'navigation.place_stock_orders', to: '/todo' },
+              { key: 'navigation.view_order_requests', to: '/todo' }
             ]
           },
           {
-            text: 'Driver Orders',
+            key: 'navigation.driver_orders',
             items: [
-              {
-                text: 'Manage Driver Order Settings',
-                to: '/todo'
-              },
-              {
-                text: 'Allow Drivers To Order',
-                to: '/todo'
-              },
-              {
-                text: 'Approve Driver Orders',
-                to: '/todo'
-              }
+              { key: 'navigation.manage_driver_order_settings', to: '/todo' },
+              { key: 'navigation.allow_drivers_to_order', to: '/todo' },
+              { key: 'navigation.approve_driver_orders', to: '/todo' }
             ]
           },
           {
-            text: 'Selectors',
+            key: 'navigation.selectors',
             items: [
-              {
-                text: 'Manage Your Selectors',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your Selector Groups',
-                to: '/todo'
-              }
+              { key: 'navigation.manage_your_selectors', to: '/todo' },
+              { key: 'navigation.manage_your_selector_groups', to: '/todo' }
             ]
           }
         ]
       },
       {
-        text: 'Reporting',
         key: 'navigation.reporting',
         icon: 'show_chart',
-        to: { name: 'reporting' },
+        to: '/reporting',
         hasMegaMenu: true,
         ref: 'reporting',
         visible: false,
         categories: [
           {
-            text: 'Fleet',
+            key: 'navigation.fleet',
             items: [
-              {
-                text: 'Inventory',
-                to: '/todo'
-              },
-              {
-                text: 'Order Status',
-                to: '/todo'
-              },
-              {
-                text: 'Replacement Analysis',
-                to: '/todo'
-              },
-              {
-                text: 'Sold Vehicle Analysis',
-                to: '/todo'
-              },
-              {
-                text: 'Driver Performance',
-                to: '/todo'
-              },
-              {
-                text: 'Vehicle Inspection',
-                to: '/todo'
-              },
-              {
-                text: 'MPG / KPL Analysis',
-                to: '/todo'
-              }
+              { key: 'navigation.inventory', to: '/todo' },
+              { key: 'vehicle_dashboard.order_status', to: '/todo' },
+              { key: 'navigation.replacement_analysis', to: '/todo' },
+              { key: 'navigation.sold_vehicle_analysis', to: '/todo' },
+              { key: 'navigation.driver_performance', to: '/todo' },
+              { key: 'navigation.vehicle_inspection', to: '/todo' },
+              { key: 'navigation.fuel_efficiency', to: '/todo' }
             ]
           },
           {
-            text: 'Expense',
+            key: 'navigation.expenses',
             items: [
-              {
-                text: 'Maintenance Detail',
-                to: '/todo'
-              },
-              {
-                text: 'Fuel Detail',
-                to: '/todo'
-              },
-              {
-                text: 'Expense Summary',
-                to: '/todo'
-              },
-              {
-                text: 'Short Term Rental Detail',
-                to: '/todo'
-              },
-              {
-                text: 'Toll Detail',
-                to: '/todo'
-              }
+              { key: 'navigation.maintenance_detail', to: '/todo' },
+              { key: 'navigation.fuel_detail', to: '/todo' },
+              { key: 'navigation.expense_summary', to: '/todo' },
+              { key: 'navigation.short_term_rental_detail', to: '/todo' },
+              { key: 'navigation.toll_detail', to: '/todo' }
             ]
           },
           {
-            text: 'Custom',
+            key: 'navigation.custom',
             items: [
-              {
-                text: 'Vehicle and Driver',
-                to: '/todo'
-              },
-              {
-                text: 'Maintenance',
-                to: '/todo'
-              },
-              {
-                text: 'Fuel',
-                to: '/todo'
-              },
-              {
-                text: 'Invoice',
-                to: '/todo'
-              },
-              {
-                text: 'Expense Summary',
-                to: '/todo'
-              },
-              {
-                text: 'Insurance Claim',
-                to: '/todo'
-              },
-              {
-                text: 'Violation',
-                to: '/todo'
-              }
+              { key: 'navigation.vehicle_and_driver', to: '/todo' },
+              { key: 'navigation.maintenance', to: '/todo' },
+              { key: 'navigation.fuel', to: '/todo' },
+              { key: 'navigation.invoice', to: '/todo' },
+              { key: 'navigation.expense_summary', to: '/todo' },
+              { key: 'navigation.insurance_claim', to: '/todo' },
+              { key: 'navigation.violation', to: '/todo' }
             ]
           },
           {
-            text: 'Invoicing',
+            key: 'navigation.invoicing',
             items: [
-              {
-                text: 'Invoice History',
-                to: '/todo'
-              },
-              {
-                text: 'Custom Invoicing',
-                to: '/todo'
-              }
+              { key: 'vehicle_dashboard.invoice_history', to: '/todo' },
+              { key: 'navigation.custom_invoicing', to: '/todo' }
             ]
           },
           {
-            text: 'Services',
+            key: 'navigation.services',
             items: [
-              {
-                text: 'eVoucher',
-                to: '/todo'
-              },
-              {
-                text: 'License Renewal',
-                to: '/todo'
-              },
-              {
-                text: 'Driver 360 Mileage',
-                to: '/todo'
-              },
-              {
-                text: 'Accident Claim',
-                to: '/todo'
-              }
+              { key: 'navigation.evoucher', to: '/todo' },
+              { key: 'navigation.license_renewal', to: '/todo' },
+              { key: 'navigation.driver_360_mileage', to: '/todo' },
+              { key: 'navigation.accident_claim', to: '/todo' }
             ]
           },
           {
-            text: 'Safety and Telematics',
+            key: 'navigation.safety_and_telematics',
             items: [
-              {
-                text: 'SafeRoads Fleet Summary',
-                to: '/todo'
-              },
-              {
-                text: 'SafeRoads Trip Detail',
-                to: '/todo'
-              },
-              {
-                text: 'Engine Faults',
-                to: '/todo'
-              },
-              {
-                text: 'Driver Safety',
-                to: '/todo'
-              },
-              {
-                text: 'Driver Record',
-                to: '/todo'
-              }
+              { key: 'navigation.saferoads_fleet_summary', to: '/todo' },
+              { key: 'navigation.saferoads_trip_detail', to: '/todo' },
+              { key: 'navigation.engine_faults', to: '/todo' },
+              { key: 'navigation.driver_safety', to: '/todo' },
+              { key: 'navigation.driver_record', to: '/todo' }
             ]
           }
         ]
       },
       {
-        text: 'Fleet Management',
         key: 'navigation.fleet_management',
         icon: 'build',
-        to: { name: 'fleet-management' },
+        to: '/fleet-management',
         hasMegaMenu: true,
         ref: 'fleetmanagement',
         visible: false,
         categories: [
           {
-            text: 'Category X',
+            key: 'navigation.category',
             items: [
-              {
-                text: 'Manage Your Online Users',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your Fleet Policies',
-                to: '/todo'
-              },
-              {
-                text: 'Customize Your Fleet Labels',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your Drivers',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your Driver Fuel PINs',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your eNotifications',
-                to: '/todo'
-              },
-              {
-                text: 'Manage Your Cases',
-                to: '/todo'
-              },
-              {
-                text: 'View Your Fuel Auth Profiles',
-                to: '/todo'
-              }
+              { key: 'navigation.manage_your_online_users', to: '/todo' },
+              { key: 'navigation.manage_your_fleet_policies', to: '/todo' },
+              { key: 'navigation.customize_your_fleet_labels', to: '/todo' },
+              { key: 'navigation.manage_your_drivers', to: '/todo' },
+              { key: 'navigation.manage_your_driver_fuel_pins', to: '/todo' },
+              { key: 'navigation.manage_your_enotifications', to: '/todo' },
+              { key: 'navigation.manage_your_cases', to: '/todo' },
+              { key: 'navigation.view_your_fuel_auth_profiles', to: '/todo' }
             ]
           },
           {
-            text: 'Category Y',
+            key: 'navigation.category',
             items: [
-              {
-                text: 'Approve Your Maintenance Repairs',
-                to: '/todo'
-              },
-              {
-                text: 'Approve Your Driver Prders',
-                to: '/todo'
-              },
-              {
-                text: 'Request an MVR',
-                to: '/todo'
-              },
-              {
-                text: 'Upload Your Odometers',
-                to: '/todo'
-              }
+              { key: 'navigation.approve_your_maintenance_repairs', to: '/todo' },
+              { key: 'navigation.approve_your_driver_orders', to: '/todo' },
+              { key: 'navigation.request_an_mvr', to: '/todo' },
+              { key: 'navigation.upload_your_odometers', to: '/todo' }
             ]
           },
           {
-            text: 'Tools',
+            key: 'navigation.tools',
             items: [
-              {
-                text: 'Locate Preferred Shops',
-                to: '/todo'
-              },
-              {
-                text: 'Quote a Transport',
-                to: '/todo'
-              },
-              {
-                text: 'LCCA',
-                to: '/todo'
-              }
+              { key: 'navigation.locate_preferred_shops', to: '/todo' },
+              { key: 'navigation.quote_a_transport', to: '/todo' },
+              { key: 'navigation.lcca', to: '/todo' }
             ]
           }
         ]

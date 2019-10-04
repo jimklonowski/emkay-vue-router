@@ -10,28 +10,24 @@
     >
       <v-container fluid>
         <v-row>
-          <v-col
-            v-for="category in categories"
-            :key="category.text"
-            sm="4"
-            xl="2"
-          >
-            <v-subheader class="font-weight-medium" dark>
-              {{ category.text }}
-            </v-subheader>
+          <v-col v-for="(category, i) in categories" :key="i" sm="4" xl="2">
+            <v-subheader
+              class="font-weight-medium"
+              :dark="dark"
+              v-text="$t(category.key)"
+            />
             <v-divider :dark="dark" />
             <v-list :dark="dark" color="transparent">
               <v-list-item
-                v-for="item in category.items"
-                :key="item.text"
+                v-for="(item, j) in category.items"
+                :key="j"
                 :to="item.to"
                 class="text-capitalize caption"
                 style="min-height:24px"
                 dense
                 link
-              >
-                {{ item.text }}
-              </v-list-item>
+                v-text="$t(item.key)"
+              />
             </v-list>
           </v-col>
         </v-row>

@@ -44,7 +44,7 @@ import AccidentHistory from '@/modules/vehicle/components/Panels/AccidentHistory
 import RentalHistory from '@/modules/vehicle/components/Panels/RentalHistory'
 import TollHistory from '@/modules/vehicle/components/Panels/TollHistory'
 import ViolationHistory from '@/modules/vehicle/components/Panels/ViolationHistory'
-import ReportedOdometers from '@/modules/vehicle/components/Panels/ReportedOdometers'
+import OdometerHistory from '@/modules/vehicle/components/Panels/OdometerHistory'
 import VehicleNotes from '@/modules/vehicle/components/Panels/VehicleNotes'
 import DriverHistory from '@/modules/vehicle/components/Panels/DriverHistory'
 
@@ -62,7 +62,7 @@ export default {
     RentalHistory,
     TollHistory,
     ViolationHistory,
-    ReportedOdometers,
+    OdometerHistory,
     DriverHistory,
     VehicleNotes
   },
@@ -120,9 +120,9 @@ export default {
         component: ViolationHistory
       },
       {
-        key: 'vehicle_dashboard.reported_odometers',
+        key: 'vehicle_dashboard.odometer_history',
         class: 'pa-5 col-lg-6',
-        component: ReportedOdometers
+        component: OdometerHistory
       },
       {
         key: 'vehicle_dashboard.driver_history',

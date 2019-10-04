@@ -6,6 +6,7 @@
     :open.sync="open"
     open-on-click
     transition
+    dense
   >
     <template #prepend="{ item, active }">
       <v-icon v-if="!item.children" v-text="'group'" />

@@ -16,11 +16,12 @@
             z-index="3"
             left
           >
-            <template v-slot:activator="{ on }">
+            <template #activator="{ on }">
               <v-btn dark icon v-on="on">
                 <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
+            <!-- menu actions -->
             <v-list nav dense>
               <template v-for="(item, i) in actions">
                 <v-list-item :key="i" :color="item.color" @click="item.action">
@@ -28,7 +29,15 @@
                     <v-icon v-text="item.icon" />
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-t="item.key" />
+                    <v-list-item-title v-if="item.component">
+                      <component
+                        :is="item.component.is"
+                        :key="item.key"
+                        :vehicle="vehicle"
+                      />
+                    </v-list-item-title>
+                    <!-- other actions -->
+                    <v-list-item-title v-else v-t="item.key" />
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider
@@ -37,8 +46,8 @@
                   class="mb-1"
                 />
               </template>
-              <!-- Additional Actions -->
-              <order-status />
+              <!-- Additional Actions
+              <order-status /> -->
             </v-list>
           </v-menu>
         </v-toolbar>
@@ -62,7 +71,7 @@
                 >
                   <v-list-item-content
                     v-if="isEditing"
-                    class="pt-4"
+                    :class="{ 'pt-4': field.component ? false : true }"
                     :style="{ height: field.component ? 'auto' : '72px' }"
                   >
                     <v-list-item-subtitle
@@ -77,6 +86,7 @@
                       :label="$t(field.key)"
                       :rules="rules.required"
                       :disabled="!field.editable"
+                      outlined
                       dense
                     />
                     <!-- <v-text-field
@@ -91,7 +101,7 @@
                   </v-list-item-content>
                   <v-list-item-content
                     v-else
-                    class="pt-2 pb-6"
+                    class="pt-1 pb-6"
                     style="height:72px"
                   >
                     <v-list-item-subtitle
@@ -109,36 +119,39 @@
           </v-list>
         </v-card-text>
 
-        <v-card-actions v-if="isEditing">
-          <v-alert
-            v-if="errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-            v-text="errorMessage"
+        <template v-if="isEditing">
+          <v-divider />
+          <v-card-actions>
+            <v-alert
+              v-if="errorMessage"
+              outlined
+              dense
+              class="mb-0"
+              type="error"
+              v-text="errorMessage"
+            />
+            <v-spacer />
+            <v-btn
+              v-t="'common.cancel'"
+              type="button"
+              color="error"
+              text
+              @click.prevent="toggleEdit"
+            />
+            <v-btn type="submit" dark outlined color="primary">
+              <v-icon dark v-text="'save'" />
+              {{ $t('common.save_changes') }}
+            </v-btn>
+          </v-card-actions>
+          <v-progress-linear
+            slot="progress"
+            absolute
+            bottom
+            color="primary"
+            :height="4"
+            indeterminate
           />
-          <v-spacer />
-          <v-btn
-            v-t="'common.cancel'"
-            type="button"
-            color="error"
-            text
-            @click.prevent="toggleEdit"
-          />
-          <v-btn type="submit" dark outlined color="primary">
-            <v-icon dark v-text="'save'" />
-            {{ $t('common.save_changes') }}
-          </v-btn>
-        </v-card-actions>
-        <v-progress-linear
-          slot="progress"
-          absolute
-          bottom
-          color="primary"
-          :height="4"
-          indeterminate
-        />
+        </template>
       </v-card>
     </v-form>
   </article>
@@ -176,6 +189,14 @@ export default {
         icon: 'edit',
         action: () => self.toggleEdit(),
         divider: true
+      },
+      {
+        key: 'vehicle_dashboard.order_status',
+        icon: 'av_timer',
+        action: () => {},
+        component: {
+          is: OrderStatus
+        }
       },
       {
         key: 'vehicle_dashboard.schedule_ac',

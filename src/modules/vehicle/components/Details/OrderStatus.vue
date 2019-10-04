@@ -1,32 +1,23 @@
 <template>
-  <v-dialog v-model="dialog" max-width="1000" persistent>
-    <template v-slot:activator="{ on }">
-      <v-list-item link v-on="on" @click.stop.prevent>
-        <v-list-item-icon>
-          <v-icon v-text="icon" />
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title v-t="titlekey" />
-        </v-list-item-content>
-      </v-list-item>
-      <!-- <v-btn text tile color="primary" v-on="on" @click.stop.prevent>
-        <v-icon left>av_timer</v-icon>
-        {{ $t('vehicle_dashboard.order_status') }}
-      </v-btn> -->
+  <v-dialog v-model="dialog" max-width="1000">
+    <template #activator="{ on }">
+      <div v-t="key" v-on="on" @click.stop.prevent />
     </template>
 
     <v-card :loading="loading">
-      <v-card-title :class="this.$config.TOOLBAR_CLASS">
-        <header class="text-uppercase">
-          <span class="font-weight-black">ORDER</span>
-          <span class="font-weight-thin">STATUS!</span>
-        </header>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.order'" />
+          <span v-t="'vehicle_dashboard.status'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
+        </v-toolbar-title>
         <v-spacer />
         <v-btn large icon tile dark @click.prevent="dialog = false">
-          <v-icon>close</v-icon>
+          <v-icon v-text="'close'" />
         </v-btn>
-      </v-card-title>
-      <v-card-text>
+      </v-toolbar>
+      <v-divider />
+      <v-card-text class="py-0">
         <v-list dense>
           <v-row dense>
             <v-list-item
@@ -61,9 +52,10 @@ export default {
   },
   data: () => ({
     dialog: false,
+    errorMessage: null,
     loading: false,
     icon: 'av_timer',
-    titlekey: 'vehicle_dashboard.order_status',
+    key: 'vehicle_dashboard.order_status',
     fields: [
       {
         name: 'driver',

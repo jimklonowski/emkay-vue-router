@@ -16,7 +16,7 @@
             z-index="3"
             left
           >
-            <template v-slot:activator="{ on }">
+            <template #activator="{ on }">
               <v-btn dark icon v-on="on">
                 <v-icon v-text="'more_vert'" />
               </v-btn>
@@ -84,36 +84,39 @@
             </div>
           </v-list>
         </v-card-text>
-        <v-card-actions v-if="isEditing">
-          <v-alert
-            v-if="errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-            v-text="errorMessage"
+        <template v-if="isEditing">
+          <v-divider />
+          <v-card-actions>
+            <v-alert
+              v-if="errorMessage"
+              outlined
+              dense
+              class="mb-0"
+              type="error"
+              v-text="errorMessage"
+            />
+            <v-spacer />
+            <v-btn
+              v-t="'common.cancel'"
+              type="button"
+              color="error"
+              text
+              @click.prevent="toggleEdit"
+            />
+            <v-btn type="submit" dark outlined color="primary">
+              <v-icon dark v-text="'save'" />
+              {{ $t('common.save_changes') }}
+            </v-btn>
+          </v-card-actions>
+          <v-progress-linear
+            slot="progress"
+            absolute
+            bottom
+            color="primary"
+            :height="4"
+            indeterminate
           />
-          <v-spacer />
-          <v-btn
-            v-t="'common.cancel'"
-            type="button"
-            color="error"
-            text
-            @click.prevent="toggleEdit"
-          />
-          <v-btn type="submit" dark outlined color="primary">
-            <v-icon dark v-text="'save'" />
-            {{ $t('common.save_changes') }}
-          </v-btn>
-        </v-card-actions>
-        <v-progress-linear
-          slot="progress"
-          absolute
-          bottom
-          color="primary"
-          :height="4"
-          indeterminate
-        />
+        </template>
       </v-card>
     </v-form>
   </article>
