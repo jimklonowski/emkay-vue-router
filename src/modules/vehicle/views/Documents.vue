@@ -4,9 +4,7 @@
       <header class="font-weight-thin display-2">
         {{ title2 }}
       </header>
-      <v-subheader class="pl-1"
-        >List of documents for viewing/downloading</v-subheader
-      >
+      <v-subheader class="pl-1" v-text="description" />
       <v-row>
         <v-col cols="12">
           <v-card>
@@ -65,6 +63,7 @@ export default {
   data: () => ({
     title1: 'Vehicle',
     title2: 'Documents',
+    description: 'List of documents for viewing/downloading',
     loading: false,
     search: '',
     vehicle: '',

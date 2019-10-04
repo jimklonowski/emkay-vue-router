@@ -29,40 +29,34 @@
               <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
+          <!-- menu actions -->
           <v-list nav dense>
-            <!-- download button -->
-            <v-list-item link>
-              <v-list-item-icon>
-                <v-icon v-text="'cloud_download'" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <json-excel
-                    :data="fuel_history"
-                    :fields="headerExport"
-                    :type="exportFormat"
-                    :default-value="' -- '"
-                    :name="downloadName"
-                  >
-                    {{ $t('common.export_to_excel') }}
-                  </json-excel>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <!-- other actions -->
-            <v-list-item
-              v-for="(item, i) in actions"
-              :key="i"
-              :color="item.color"
-              @click="item.action"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-t="item.key" />
-              </v-list-item-content>
-            </v-list-item>
+            <template v-for="(item, i) in actions">
+              <v-list-item :key="i" :color="item.color" @click="item.action">
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <!-- export as excel button -->
+                  <v-list-item-title v-if="item.isExport">
+                    <component
+                      :is="item.component.is"
+                      v-t="item.key"
+                      :fields="getHeaders"
+                      :data="fuel_history"
+                      :name="getName"
+                    />
+                  </v-list-item-title>
+                  <!-- other actions -->
+                  <v-list-item-title v-else v-t="item.key" />
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider
+                v-if="item.divider"
+                :key="`${i}-divider`"
+                class="mb-1"
+              />
+            </template>
           </v-list>
         </v-menu>
       </v-toolbar>
@@ -76,8 +70,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
-          :no-data-text="$t('common.no_data_found')"
           dense
         >
           <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
@@ -90,13 +82,7 @@
             {{ $t(header.key) }}
           </template>
           <template v-slot:item.type="{ item }">
-            <v-chip
-              :color="getColor(item.type)"
-              x-small
-              style="white-space:nowrap"
-            >
-              {{ item.type }}
-            </v-chip>
+            <v-chip :color="getColor(item.type)" x-small v-text="item.type" />
           </template>
         </v-data-table>
       </v-card-text>
@@ -106,8 +92,7 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
-import { exportName, headersForExport } from '@/util/helpers'
-import { mapActions } from 'vuex'
+import { nameForExport, headersForExport } from '@/util/helpers'
 import { FETCH_FUEL_HISTORY } from '@/modules/vehicle/store/actions.type'
 
 export default {
@@ -122,13 +107,23 @@ export default {
     }
   },
   data: () => ({
-    errorMessage: '',
+    errorMessage: null,
     exportFormat: 'xls',
     name: 'fuel_history',
     //json_meta: [[{ key: 'charset', value: 'utf-8' }]],
     loading: true,
     search: '',
     actions: [
+      {
+        key: 'common.export_to_excel',
+        icon: 'cloud_download',
+        action: () => {},
+        isExport: true,
+        component: {
+          is: JsonExcel
+        },
+        divider: true
+      },
       {
         key: 'vehicle_dashboard.order_fuel_card',
         icon: 'credit_card',
@@ -208,16 +203,17 @@ export default {
     fuel_history: []
   }),
   computed: {
-    headerExport() {
+    getHeaders() {
       return headersForExport(this.headers)
     },
-    downloadName() {
-      return exportName(this.name, this.exportFormat)
+    getName() {
+      return nameForExport(this.name, this.exportFormat)
     }
   },
   created() {
     // fetch the data when the view is created and the data is already being observed.
-    this.fetchFuelHistory(this.vehicle)
+    this.$store
+      .dispatch(FETCH_FUEL_HISTORY, this.vehicle)
       .then(response => {
         this.fuel_history = response.data
       })
@@ -229,7 +225,6 @@ export default {
       })
   },
   methods: {
-    ...mapActions([FETCH_FUEL_HISTORY]),
     // color chips for transaction types
     getColor: type => {
       switch (true) {

@@ -1,15 +1,11 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
-        <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{
-            $t('vehicle_dashboard.vehicle')
-          }}</span>
-          <span class="font-weight-thin">{{
-            $t('vehicle_dashboard.notes')
-          }}</span>
-          <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.vehicle'" />
+          <span v-t="'vehicle_dashboard.notes'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
         </v-toolbar-title>
         <v-spacer />
         <v-text-field
@@ -21,29 +17,54 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" z-index="3" left>
+        <!-- close-on-content-click=false is REQUIRED for the download button to work -->
+        <v-menu
+          :close-on-content-click="false"
+          transition="slide-y-transition"
+          z-index="3"
+          left
+        >
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
-              <v-icon>more_vert</v-icon>
+              <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
+          <!-- menu actions -->
           <v-list nav dense>
-            <v-list-item
-              v-for="(item, i) in actions"
-              :key="i"
-              :color="item.color"
-              @click="item.action"
-            >
-              <component :is="item.component" v-if="item.component" />
-              <template v-else>
+            <template v-for="(item, i) in actions">
+              <v-list-item :key="i" :color="item.color" @click="item.action">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon" />
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                  <!-- export as excel button -->
+                  <v-list-item-title v-if="item.isExport">
+                    <component
+                      :is="item.component.is"
+                      v-t="item.key"
+                      :fields="getHeaders"
+                      :data="vehicle_notes"
+                      :name="getName"
+                    />
+                  </v-list-item-title>
+                  <!-- add note button -->
+                  <v-list-item-title v-else-if="item.component.is">
+                    <component
+                      :is="item.component.is"
+                      :key="item.key"
+                      :vehicle="vehicle"
+                    />
+                  </v-list-item-title>
+                  <!-- other actions -->
+                  <v-list-item-title v-else v-t="item.key" />
                 </v-list-item-content>
-              </template>
-            </v-list-item>
+              </v-list-item>
+              <v-divider
+                v-if="item.divider"
+                :key="`${i}-divider`"
+                class="mb-1"
+              />
+            </template>
           </v-list>
         </v-menu>
       </v-toolbar>
@@ -51,7 +72,7 @@
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="vehicle_notes"
           :items-per-page="10"
           :search="search"
           :sort-by="['date']"
@@ -73,10 +94,15 @@
 
 <script>
 import AddNote from '@/modules/vehicle/components/Forms/AddNote'
+import JsonExcel from 'vue-json-excel'
+import { nameForExport, headersForExport } from '@/util/helpers'
+import { FETCH_VEHICLE_NOTES } from '@/modules/vehicle/store/actions.type'
+
 export default {
   name: 'VehicleNotes',
   components: {
-    AddNote
+    AddNote,
+    JsonExcel
   },
   props: {
     vehicle: {
@@ -85,21 +111,29 @@ export default {
     }
   },
   data: () => ({
-    title: 'Notes',
-    subtitle: 'History',
+    errorMessage: null,
+    exportFormat: 'xls',
+    name: 'vehicle_notes',
+    loading: true,
     search: '',
-    loading: false,
     actions: [
       {
-        text: 'Export to Excel',
+        key: 'common.export_to_excel',
         icon: 'cloud_download',
-        action: () => alert('download')
+        action: () => {},
+        isExport: true,
+        component: {
+          is: JsonExcel
+        },
+        divider: true
       },
       {
-        text: 'Add Note',
-        icon: 'note',
+        key: 'vehicle_dashboard.add_note',
+        icon: 'note_add',
         action: () => {},
-        component: AddNote
+        component: {
+          is: AddNote
+        }
       }
     ],
     headers: [
@@ -118,15 +152,44 @@ export default {
         value: 'subject'
       },
       {
-        key: 'vehicle_dashboard.notes',
-        width: '350px',
+        key: 'vehicle_dashboard.note',
+        width: 'auto',
         align: 'left',
         sortable: true,
-        value: 'notes'
+        value: 'note'
+      },
+      {
+        key: 'common.user',
+        width: '150px',
+        align: 'left',
+        sortable: true,
+        value: 'user'
       }
     ],
-    items: []
-  })
+    vehicle_notes: []
+  }),
+  computed: {
+    getHeaders() {
+      return headersForExport(this.headers)
+    },
+    getName() {
+      return nameForExport(this.name, this.exportFormat)
+    }
+  },
+  created() {
+    this.$store
+      .dispatch(FETCH_VEHICLE_NOTES, this.vehicle)
+      .then(response => {
+        this.vehicle_notes = response.data
+      })
+      .catch(error => {
+        this.errorMessage = error.message
+      })
+      .finally(() => {
+        this.loading = false
+      })
+  },
+  methods: {}
 }
 </script>
 

@@ -436,13 +436,278 @@ const MockService = {
       ])
       // mock licensing history
       .onGet('/vehicle/licensing/123456')
-      .reply(200, [])
+      .reply(200, [
+        {
+          expiration_date: '2018-06-07',
+          plate: 'ABCDEF',
+          status: 'ON BILLING',
+          needs: false
+        },
+        {
+          expiration_date: '2017-06-07',
+          plate: 'ABCDEF',
+          status: 'ON BILLING',
+          needs: false
+        },
+        {
+          expiration_date: '2016-06-07',
+          plate: 'ABCDEF',
+          status: 'ON ORDER',
+          needs: true
+        }
+      ])
       // mock accident history
       .onGet('/vehicle/accident/123456')
-      .reply(200, [])
+      .reply(200, [
+        {
+          loss_date: '2019-01-02',
+          claim_number: '123456A',
+          claim_type: 'TOTALED',
+          claim_amount: '$12,345.67',
+          subrogated_amount: '$420.69'
+        }
+      ])
       // mock rental history
       .onGet('/vehicle/rental/123456')
+      .reply(200, [
+        {
+          date: '2019-06-12',
+          reason: 'GLASS',
+          voucher: '2E17WK',
+          rate: '$60.98',
+          days: '7',
+          total: '$426.85'
+        },
+        {
+          date: '2019-05-19',
+          reason: 'DEAD BODY',
+          voucher: 'D34DB3EF',
+          rate: '$69.96',
+          days: '6',
+          total: '$420.69'
+        }
+      ])
+      // mock toll history
+      .onGet('/vehicle/toll/123456')
+      .reply(200, [
+        {
+          date: '2019-09-17',
+          description: 'Toll Event 455668694: Illinois Tollway Army Trail Rd',
+          amount: '$0.95'
+        },
+        {
+          date: '2019-09-16',
+          description: 'Toll Event 455668694: Illinois Tollway Eola Rd',
+          amount: '$0.55'
+        },
+        {
+          date: '2019-09-15',
+          description: 'Toll Event 455668694: Illinois Tollway Farnsworth Rd',
+          amount: '$0.55'
+        },
+        {
+          date: '2019-09-15',
+          description: 'Toll Event 455668694: Illinois Tollway Army Trail Rd',
+          amount: '$0.95'
+        },
+        {
+          date: '2019-09-12',
+          description:
+            'Toll Event 455668694: Illinois Tollway Boughton Rd (Main)',
+          amount: '$0.95'
+        }
+      ])
+      // mock violation history
+      .onGet('/vehicle/violation/123456')
+      .reply(200, [
+        {
+          date: '2018-08-14',
+          violation: '9193647098',
+          reason: 'PARKING',
+          paid_date: '2018-10-05',
+          location: 'IL',
+          amount: '$50.00'
+        },
+        {
+          date: '2018-07-05',
+          violation: '0069564060',
+          reason: 'MOVING',
+          paid_date: '2018-08-27',
+          location: 'IL',
+          amount: '$60.00'
+        },
+        {
+          date: '2018-05-10',
+          violation: '0069564061',
+          reason: 'PARKING',
+          paid_date: '2018-06-25',
+          location: 'IL',
+          amount: '$75.00'
+        },
+        {
+          date: '2018-05-10',
+          violation: '0069457033',
+          reason: 'PARKING',
+          paid_date: '2018-06-25',
+          location: 'IL',
+          amount: '$75.00'
+        }
+      ])
+      // mock odometer history
+      .onGet('/vehicle/odometer/123456')
+      .reply(200, [
+        {
+          date: '2019-09-24',
+          odometer: '43300',
+          type: 'FUEL'
+        },
+        {
+          date: '2019-09-18',
+          odometer: '42900',
+          type: 'FUEL'
+        },
+        {
+          date: '2019-09-16',
+          odometer: '42600',
+          type: 'FUEL'
+        },
+        {
+          date: '2019-09-12',
+          odometer: '42200',
+          type: 'FUEL'
+        },
+        {
+          date: '2019-07-06',
+          odometer: '40600',
+          type: 'MAINT'
+        }
+      ])
+      // mock driver history
+      .onGet('/vehicle/driver/123456')
+      .reply(200, [
+        {
+          date: '2016-09-15',
+          effective_date: '2016-09-15',
+          driver_reference_number: '210696',
+          driver: 'KLONOWSKI, JAMES'
+        }
+      ])
+      // mock vehicle notes
+      .onGet('/vehicle/notes/123456')
+      .reply(200, [
+        {
+          date: '2019-10-04',
+          subject: 'Wash your car',
+          note: 'It is an eyesore',
+          user: 'JCK'
+        },
+        {
+          date: '2019-09-11',
+          subject: 'Strange Smell',
+          note:
+            'Did something die in/around your vehicle?  The smell is ghastly...',
+          user: 'JCK'
+        }
+      ])
+      // mock childCenters
+      .onGet('/customer/centers/')
+      .reply(200, [
+        {
+          name: 'Emkay Inc',
+          id: 'A01',
+          children: []
+        },
+        {
+          name: 'Jessica Tepas',
+          id: 'A02'
+        },
+        {
+          name: 'Dan Corbett',
+          id: 'A03',
+          children: []
+        },
+        {
+          name: 'Greg Depace',
+          id: 'A04',
+          children: []
+        }
+      ])
+      .onGet('/customer/centers/A01')
+      .reply(200, [
+        {
+          name: 'Executive',
+          id: '001'
+        },
+        {
+          name: 'Sales',
+          id: 'B01',
+          children: []
+        }
+      ])
+      .onGet('/customer/centers/A02')
       .reply(200, [])
+      .onGet('/customer/centers/B02')
+      .reply(200, [
+        {
+          name: 'Jessica Tepas',
+          id: '007'
+        }
+      ])
+      .onGet('/customer/centers/A03')
+      .reply(200, [
+        {
+          name: 'Dan Corbett',
+          id: 'B03',
+          children: []
+        }
+      ])
+      .onGet('/customer/centers/B03')
+      .reply(200, [
+        {
+          name: 'Dan Corbett',
+          id: '008'
+        }
+      ])
+      .onGet('/customer/centers/A04')
+      .reply(200, [
+        {
+          name: 'Greg Depace',
+          id: 'B04',
+          children: []
+        }
+      ])
+      .onGet('/customer/centers/B04')
+      .reply(200, [
+        {
+          name: 'Greg Depace',
+          id: '009'
+        }
+      ])
+      .onGet('/customer/centers/001')
+      .reply(200, [])
+      .onGet('/customer/centers/B01')
+      .reply(200, [
+        {
+          name: 'Sales',
+          id: '002'
+        },
+        {
+          name: 'Account Managers',
+          id: '003'
+        },
+        {
+          name: 'Short Term & Unassigned Demos',
+          id: '004'
+        },
+        {
+          name: 'Sales/Canada',
+          id: '005'
+        },
+        {
+          name: 'Board of Directors',
+          id: '006'
+        }
+      ])
       .onAny()
       .passThrough()
 

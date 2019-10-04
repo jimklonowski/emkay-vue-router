@@ -1,15 +1,11 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="this.$config.TOOLBAR_CLASS">
-        <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-black">{{
-            $t('vehicle_dashboard.accident')
-          }}</span>
-          <span class="font-weight-thin">{{
-            $t('vehicle_dashboard.history')
-          }}</span>
-          <v-subheader class="d-inline" dark>{{ vehicle }}</v-subheader>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.accident'" />
+          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
         </v-toolbar-title>
         <v-spacer />
         <v-text-field
@@ -21,29 +17,54 @@
           hide-details
           dark
         />
-        <v-menu transition="slide-y-transition" z-index="3" left>
+        <!-- close-on-content-click=false is REQUIRED for the download button to work -->
+        <v-menu
+          :close-on-content-click="false"
+          transition="slide-y-transition"
+          z-index="3"
+          left
+        >
           <template v-slot:activator="{ on }">
             <v-btn dark icon v-on="on">
-              <v-icon>more_vert</v-icon>
+              <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
+          <!-- menu actions -->
           <v-list nav dense>
-            <v-list-item
-              v-for="(item, i) in actions"
-              :key="i"
-              :color="item.color"
-              @click="item.action"
-            >
-              <component :is="item.component" v-if="item.component" />
-              <template v-else>
+            <template v-for="(item, i) in actions">
+              <v-list-item :key="i" :color="item.color" @click="item.action">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon" />
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                  <!-- export as excel button -->
+                  <v-list-item-title v-if="item.isExport">
+                    <component
+                      :is="item.component.is"
+                      v-t="item.key"
+                      :fields="getHeaders"
+                      :data="accident_history"
+                      :name="getName"
+                    />
+                  </v-list-item-title>
+                  <!-- report accident button -->
+                  <v-list-item-title v-else-if="item.isReportAccident">
+                    <component
+                      :is="item.component.is"
+                      :key="item.key"
+                      :vehicle="vehicle"
+                    />
+                  </v-list-item-title>
+                  <!-- other actions -->
+                  <v-list-item-title v-else v-t="item.key" />
                 </v-list-item-content>
-              </template>
-            </v-list-item>
+              </v-list-item>
+              <v-divider
+                v-if="item.divider"
+                :key="`${i}-divider`"
+                class="mb-1"
+              />
+            </template>
           </v-list>
         </v-menu>
       </v-toolbar>
@@ -51,13 +72,12 @@
       <v-card-text class="pa-0">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="accident_history"
           :items-per-page="10"
           :search="search"
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
           dense
         >
           <template
@@ -68,21 +88,20 @@
           </template>
         </v-data-table>
       </v-card-text>
-      <!-- <v-divider />
-      <v-card-actions class="pa-4">
-        <v-spacer />
-        <report-accident />
-      </v-card-actions> -->
     </v-card>
   </article>
 </template>
 
 <script>
+import JsonExcel from 'vue-json-excel'
 import ReportAccident from '@/modules/vehicle/components/Forms/ReportAccident'
+import { nameForExport, headersForExport } from '@/util/helpers'
+import { FETCH_ACCIDENT_HISTORY } from '@/modules/vehicle/store/actions.type'
 
 export default {
   name: 'AccidentHistory',
   components: {
+    JsonExcel,
     ReportAccident
   },
   props: {
@@ -92,22 +111,30 @@ export default {
     }
   },
   data: () => ({
-    title: 'Accident',
-    subtitle: 'History',
-    loading: false,
+    errorMessage: null,
+    exportFormat: 'xls',
+    name: 'accident_history',
+    loading: true,
     search: '',
     actions: [
       {
-        text: 'Export to Excel',
+        key: 'common.export_to_excel',
         icon: 'cloud_download',
-        action: () => alert('download'),
-        component: null
+        action: () => {},
+        isExport: true,
+        component: {
+          is: JsonExcel
+        },
+        divider: true
       },
       {
-        text: 'Report Accident',
+        key: 'vehicle_dashboard.report_accident',
         icon: 'drive_eta',
         action: () => {},
-        component: ReportAccident
+        isReportAccident: true,
+        component: {
+          is: ReportAccident
+        }
       }
     ],
     headers: [
@@ -116,21 +143,21 @@ export default {
         width: '150px',
         align: 'left',
         sortable: true,
-        value: 'date'
+        value: 'loss_date'
       },
       {
         key: 'vehicle_dashboard.claim_number',
         width: '150px',
         align: 'left',
         sortable: true,
-        value: 'claim'
+        value: 'claim_number'
       },
       {
         key: 'vehicle_dashboard.claim_type',
         width: '200px',
         align: 'left',
         sortable: true,
-        value: 'type'
+        value: 'claim_type'
       },
       {
         key: 'vehicle_dashboard.claim_amount',
@@ -147,8 +174,34 @@ export default {
         value: 'subrogated_amount'
       }
     ],
-    items: []
-  })
+    accident_history: []
+  }),
+  computed: {
+    getHeaders() {
+      return headersForExport(this.headers)
+    },
+    getName() {
+      return nameForExport(this.name, this.exportFormat)
+    }
+  },
+  created() {
+    // fetch the data when the view is created and the data is already being observed
+    //this.fetchAccidentHistory(this.vehicle)
+    this.$store
+      .dispatch(FETCH_ACCIDENT_HISTORY, this.vehicle)
+      .then(response => {
+        this.accident_history = response.data
+      })
+      .catch(error => {
+        this.errorMessage = error.message
+      })
+      .finally(() => {
+        this.loading = false
+      })
+  },
+  methods: {
+    //...mapActions([FETCH_ACCIDENT_HISTORY])
+  }
 }
 </script>
 

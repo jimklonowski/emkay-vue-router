@@ -1,8 +1,10 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
+import Vuetify, { VTextField } from 'vuetify/lib'
 //import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  components: { VTextField }
+})
 
 import { en, fr } from 'vuetify/lib/locale'
 

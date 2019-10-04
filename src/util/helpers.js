@@ -13,7 +13,7 @@ export function goTo(id) {
   })
 }
 
-export const exportName = (name, format) => {
+export const nameForExport = (name, format) => {
   let today = new Date().toLocaleDateString()
   return `${name}_${today}.${format}`
 }

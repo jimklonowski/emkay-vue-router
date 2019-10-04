@@ -29,40 +29,33 @@
               <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
+          <!-- menu actions -->
           <v-list nav dense>
-            <!-- download button -->
-            <v-list-item link>
-              <v-list-item-icon>
-                <v-icon v-text="'cloud_download'" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <json-excel
-                    :data="invoice_history"
-                    :fields="headerExport"
-                    :type="exportFormat"
-                    :default-value="' -- '"
-                    :name="downloadName"
-                  >
-                    {{ $t('common.export_to_excel') }}
-                  </json-excel>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <!-- other actions -->
-            <v-list-item
-              v-for="(item, i) in actions"
-              :key="i"
-              :color="item.color"
-              @click="item.action"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-t="item.key" />
-              </v-list-item-content>
-            </v-list-item>
+            <template v-for="(item, i) in actions">
+              <v-list-item :key="i" :color="item.color" @click="item.action">
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <!-- export as excel action -->
+                  <v-list-item-title v-if="item.isExport">
+                    <component
+                      :is="item.component.is"
+                      v-t="item.key"
+                      :fields="getHeaders"
+                      :data="invoice_history"
+                      :name="getName"
+                    />
+                  </v-list-item-title>
+                  <v-list-item-title v-else v-t="item.key" />
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider
+                v-if="item.divider && actions.length > 1"
+                :key="`${i}-divider`"
+                class="mb-1"
+              />
+            </template>
           </v-list>
         </v-menu>
       </v-toolbar>
@@ -76,8 +69,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
-          :no-data-text="$t('common.no_data_found')"
           dense
         >
           <template
@@ -94,7 +85,7 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
-import { exportName, headersForExport } from '@/util/helpers'
+import { nameForExport, headersForExport } from '@/util/helpers'
 import { mapActions } from 'vuex'
 import { FETCH_INVOICE_HISTORY } from '@/modules/vehicle/store/actions.type'
 
@@ -116,11 +107,16 @@ export default {
     loading: true,
     search: '',
     actions: [
-      // {
-      //   key: 'common.export_to_excel',
-      //   icon: 'cloud_download',
-      //   action: () => alert('download')
-      // }
+      {
+        key: 'common.export_to_excel',
+        icon: 'cloud_download',
+        action: () => {},
+        isExport: true,
+        component: {
+          is: JsonExcel
+        },
+        divider: true
+      }
     ],
     headers: [
       {
@@ -155,11 +151,11 @@ export default {
     invoice_history: []
   }),
   computed: {
-    headerExport() {
+    getHeaders() {
       return headersForExport(this.headers)
     },
-    downloadName() {
-      return exportName(this.name, this.exportFormat)
+    getName() {
+      return nameForExport(this.name, this.exportFormat)
     }
   },
   created() {

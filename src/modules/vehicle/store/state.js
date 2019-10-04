@@ -6,5 +6,10 @@ export default {
   invoice_history: [],
   licensing_history: [],
   accident_history: [],
-  rental_history: []
+  rental_history: [],
+  toll_history: [],
+  violation_history: [],
+  odometer_history: [],
+  driver_history: [],
+  vehicle_notes: []
 }

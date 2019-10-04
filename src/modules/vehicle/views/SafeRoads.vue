@@ -166,8 +166,9 @@
                       <v-chip
                         x-small
                         :color="getColor(item.excessive_speeding)"
-                      >{{ item.excessive_speeding }}</v-chip
                       >
+                        {{ item.excessive_speeding }}
+                      </v-chip>
                     </template>
                     <template v-slot:item.hard_braking="{ item }">
                       <v-chip x-small :color="getColor(item.hard_braking)">{{

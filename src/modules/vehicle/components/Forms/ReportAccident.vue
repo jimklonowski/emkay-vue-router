@@ -1,631 +1,283 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000" persistent>
-    <template v-slot:activator="{ on }">
-      <v-btn outlined tile color="error" v-on="on" @click.stop.prevent>
-        <v-icon left>
-          drive_eta
-        </v-icon>
-        &nbsp;{{ title1 }} {{ title2 }}
-      </v-btn>
+    <template #activator="{ on }">
+      <div v-t="key" v-on="on" @click.stop.prevent />
     </template>
-
     <v-card :loading="loading">
-      <v-card-title class="blue-grey white--text">
-        <header class="text-uppercase">
-          <span class="font-weight-black">
-            {{ title1 }}
-          </span>
-          <span class="font-weight-thin">
-            {{ title2 }}
-          </span>
-        </header>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.report'" />
+          <span v-t="'vehicle_dashboard.accident'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
+        </v-toolbar-title>
         <v-spacer />
         <v-btn large icon tile dark @click.prevent="dialog = false">
-          <v-icon>close</v-icon>
+          <v-icon v-text="'close'" />
         </v-btn>
-      </v-card-title>
-
-      <v-stepper v-model="currentStep" class="elevation-0">
+      </v-toolbar>
+      <v-divider />
+      <v-stepper v-model="currentStep">
         <v-stepper-header>
-          <template v-for="formStep in steps">
+          <template v-for="(step, i) in steps">
             <v-stepper-step
-              :key="formStep.title"
-              :complete="currentStep > formStep.step"
-              :editable="false"
-              :step="formStep.step"
+              :key="`step${i}`"
+              :complete="currentStep > i"
+              :editable="true"
+              :step="i + 1"
             >
-              {{ formStep.title }}
+              {{ $t(step.key) }}
             </v-stepper-step>
-            <v-divider
-              v-if="formStep.step < steps.length"
-              :key="formStep.step"
-            />
+            <v-divider v-if="i < steps.length - 1" :key="`div${i}`" />
           </template>
         </v-stepper-header>
-
         <v-stepper-items>
-          <v-stepper-content :step="steps[0].step">
-            <v-form :ref="steps[0].ref">
+          <v-stepper-content
+            v-for="(step, i) in steps"
+            :key="`step-content${i}`"
+            :step="i + 1"
+          >
+            <v-form :ref="step.key">
               <v-container>
                 <v-row>
-                  <v-text-field
-                    v-model="steps[0].last_name.value"
-                    :label="steps[0].last_name.label"
-                    :rules="rules.required"
-                    class="col-sm-6"
-                  />
-                  <v-text-field
-                    v-model="steps[0].first_name.value"
-                    :label="steps[0].first_name.label"
-                    class="col-sm-6"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[0].address_1.value"
-                    :label="steps[0].address_1.label"
-                    class="col-sm-6"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[0].address_2.value"
-                    :label="steps[0].address_2.label"
-                    class="col-sm-6"
-                  />
-                  <v-text-field
-                    v-model="steps[0].city.value"
-                    :label="steps[0].city.label"
-                    class="col-sm-6"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[0].state.value"
-                    :label="steps[0].state.label"
-                    class="col-sm-2"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[0].zip.value"
-                    :label="steps[0].zip.label"
-                    class="col-sm-4"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[0].phone.value"
-                    :label="steps[0].phone.label"
-                    class="col-sm-6"
-                    :rules="rules.required"
-                  />
-                </v-row>
-              </v-container>
-            </v-form>
-          </v-stepper-content>
-
-          <v-stepper-content :step="steps[1].step">
-            <v-form :ref="steps[1].ref">
-              <v-container>
-                <v-row>
-                  <v-text-field
-                    v-model="steps[1].vin.value"
-                    :label="steps[1].vin.label"
-                    class="col-12"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[1].year.value"
-                    :label="steps[1].year.label"
-                    class="col-sm-3"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[1].make.value"
-                    :label="steps[1].make.label"
-                    class="col-sm-4"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[1].model.value"
-                    :label="steps[1].model.label"
-                    class="col-sm-5"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[1].license_plate.value"
-                    :label="steps[1].license_plate.label"
-                    class="col-sm-6"
-                    :rules="rules.required"
-                  />
-                  <v-text-field
-                    v-model="steps[1].license_state.value"
-                    :label="steps[1].license_state.label"
-                    class="col-sm-2"
-                    :rules="rules.required"
-                  />
-                </v-row>
-              </v-container>
-            </v-form>
-          </v-stepper-content>
-
-          <v-stepper-content :step="steps[2].step">
-            <v-form :ref="steps[2].ref">
-              <v-container>
-                <v-row>
-                  <v-col cols="12" md="4">
-                    <v-menu
-                      v-model="steps[2].date.menu"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      min-width="290px"
-                      max-width="290px"
-                      :nudge-right="40"
-                      offset-y
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="steps[2].date.value"
-                          :label="steps[2].date.label"
-                          prepend-icon="event"
-                          clearable
-                          readonly
-                          :rules="rules.required"
-                          v-on="on"
-                        />
-                      </template>
-                      <v-date-picker
-                        v-model="steps[2].date.value"
-                        no-title
-                        scrollable
-                        @change="steps[2].date.menu = false"
-                      />
-                    </v-menu>
-                  </v-col>
-
-                  <v-col cols="12" md="4">
-                    <v-menu
-                      v-model="steps[2].time.menu"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      max-width="290px"
-                      min-width="290px"
-                      :nudge-right="40"
-                      offset-y
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="steps[2].time.value"
-                          :label="steps[2].time.label"
-                          prepend-icon="access_time"
-                          clearable
-                          readonly
-                          :rules="rules.required"
-                          v-on="on"
-                        />
-                      </template>
-                      <v-time-picker
-                        v-model="steps[2].time.value"
-                        :ampm-in-title="true"
-                        format="ampm"
-                        @change="steps[2].time.menu = false"
-                      />
-                    </v-menu>
-                  </v-col>
-                  <v-col cols="12" md="4">
-                    <v-text-field
-                      v-model="steps[2].vehicles.value"
-                      :label="steps[2].vehicles.label"
-                      prepend-icon="directions_car"
+                  <!-- <div v-for="(field, j) in step.fields" :key="`field.${i}.${j}`" v-text="field.key" /> -->
+                  <v-col
+                    v-for="(field, j) in step.fields"
+                    :key="`col${i}${j}`"
+                    :cols="field.flex.cols"
+                    :sm="field.flex.sm"
+                  >
+                    <component
+                      :is="field.is"
+                      :key="`component${i}${j}`"
+                      :label="$t(field.key)"
+                      v-bind="field.props"
+                      dense
                     />
                   </v-col>
-                </v-row>
-                <v-row>
-                  <v-switch
-                    v-model="steps[2].injuries.value"
-                    :label="steps[2].injuries.label"
-                    class="col-4"
-                  />
-                  <v-switch
-                    v-if="steps[2].injuries.value"
-                    v-model="steps[2].others_injured.value"
-                    :label="steps[2].others_injured.label"
-                    class="col-4"
-                  />
-                  <v-switch
-                    v-if="steps[2].injuries.value"
-                    v-model="steps[2].you_injured.value"
-                    :label="steps[2].you_injured.label"
-                    class="col-4"
-                  />
-                  <v-textarea
-                    v-if="steps[2].injuries.value && steps[2].you_injured.value"
-                    v-model="steps[2].injured_extent.value"
-                    :label="steps[2].injured_extent.label"
-                    :rows="1"
-                    class="col-12"
-                  />
-                </v-row>
-                <v-row>
-                  <v-switch
-                    v-model="steps[2].police_contacted.value"
-                    :label="steps[2].police_contacted.label"
-                    class="col-12"
-                  />
-                  <v-text-field
-                    v-if="steps[2].police_contacted.value"
-                    v-model="steps[2].police_report.value"
-                    :label="steps[2].police_report.label"
-                    class="col-6"
-                  />
-                  <v-switch
-                    v-if="steps[2].police_contacted.value"
-                    v-model="steps[2].citations.value"
-                    :label="steps[2].citations.label"
-                    class="col-12"
-                  />
-                </v-row>
-                <v-row>
-                  <v-divider />
-                  <v-textarea
-                    v-model="steps[2].location.value"
-                    outlined
-                    :label="steps[2].location.label"
-                    class="col-12"
-                  />
-                  <v-textarea
-                    v-model="steps[2].description.value"
-                    outlined
-                    :label="steps[2].description.label"
-                    class="col-12"
-                  />
-                  <v-textarea
-                    v-model="steps[2].damages.value"
-                    outlined
-                    :label="steps[2].damages.label"
-                    class="col-12"
-                  />
-                </v-row>
-                <v-row>
-                  <v-file-input
-                    v-model="steps[2].files.value"
-                    :label="steps[2].files.label"
-                    class="col-12"
-                    multiple
-                    outlined
-                    :show-size="1000"
-                    prepend-icon="camera_alt"
-                    accept="image/*"
-                  >
-                    <template v-slot:selection="{ text }">
-                      <v-chip small label color="primary">
-                        {{ text }}
-                      </v-chip>
-                    </template>
-                  </v-file-input>
-                </v-row>
-              </v-container>
-            </v-form>
-          </v-stepper-content>
-
-          <v-stepper-content :step="steps[3].step">
-            <v-form :ref="steps[3].ref">
-              <v-container>
-                <v-row>
-                  <v-list two-line>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Name
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          fullName }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Address
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ fullAddress }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Vehicle
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ vehicleInfo }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          License
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ licenseInfo }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Accident
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ accidentTime }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Location
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ steps[2].location.value }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Description
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ steps[2].description.value }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-list-item-content>
-                        <v-list-item-subtitle :class="summaryLabelClass">
-                          Damages
-                        </v-list-item-subtitle>
-                        <v-list-item-title :class="summaryTextClass">
-                          {{ steps[2].damages.value }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
                 </v-row>
               </v-container>
             </v-form>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
-      <v-divider />
-      <v-progress-linear
-        slot="progress"
-        absolute
-        bottom
-        color="primary"
-        :height="5"
-        indeterminate
-      />
-      <v-card-actions>
-        <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
-          {{ errorMessage }}
-        </v-alert>
-        <v-spacer />
-        <v-btn
-          v-if="currentStep > 1"
-          text
-          color="secondary"
-          @click.prevent="currentStep--"
-        >
-          Back
-        </v-btn>
-        <v-btn
-          v-if="currentStep < steps.length"
-          color="primary"
-          @click.prevent="nextStep"
-        >
-          Next
-        </v-btn>
-        <v-btn v-else color="primary" @click.prevent="onSubmit">
-          Submit
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { VTextField, VDatePicker } from 'vuetify/lib'
 export default {
   name: 'ReportAccident',
-  data() {
-    return {
-      title1: 'Report',
-      title2: 'Accident',
-      currentStep: 1,
-      dialog: false,
-      errorMessage: null,
-      loading: false,
-      rules: {
-        required: [v => !!v || 'Field is required']
+  components: {
+    VTextField,
+    VDatePicker
+  },
+  props: {
+    vehicle: {
+      type: String,
+      default: ''
+    }
+  },
+  data: self => ({
+    currentStep: 1,
+    dialog: false,
+    loading: false,
+    key: 'vehicle_dashboard.report_accident',
+    steps: [
+      {
+        key: 'vehicle_dashboard.driver_information',
+        fields: [
+          {
+            key: 'vehicle_dashboard.last_name',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              value: 'Klonowski'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.first_name',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              value: 'James'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.address_1',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              value: 'EMKAY, Inc.'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.address_2',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [],
+              value: '805 W THORNDALE AVE'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.city',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              value: 'Itasca'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.state',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 2
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              value: 'IL'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.ZIP',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 4
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              value: '60143'
+            }
+          },
+          {
+            key: 'vehicle_dashboard.phone',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              type: 'tel',
+              value: '630-864-0965'
+            }
+          }
+        ]
       },
-      summaryLabelClass: 'details-label',
-      summaryTextClass: 'blue-grey--text text--darken-2',
-
-      steps: [
-        {
-          step: 1,
-          editable: true,
-          ref: 'formStep1',
-          title: 'Driver Information',
-          last_name: {
-            label: 'Last Name',
-            value: ''
+      {
+        key: 'vehicle_dashboard.vehicle_information',
+        fields: [
+          {
+            key: 'vehicle_dashboard.vin',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 10
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              value: '11223344556677889900'
+            }
           },
-          first_name: {
-            label: 'First Name',
-            value: ''
+          {
+            key: 'vehicle_dashboard.year',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 3
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              type: 'number',
+              value: 2019
+            }
           },
-          address_1: {
-            label: 'Address Line 1',
-            value: ''
+          {
+            key: 'vehicle_dashboard.make',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 4
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              value: 'Tesla'
+            }
           },
-          address_2: {
-            label: 'Address Line 2',
-            value: ''
-          },
-          city: {
-            label: 'City',
-            value: ''
-          },
-          state: {
-            label: 'State',
-            value: ''
-          },
-          zip: {
-            label: 'ZIP',
-            value: ''
-          },
-          phone: {
-            label: 'Phone',
-            value: ''
+          {
+            key: 'vehicle_dashboard.model',
+            is: VTextField,
+            flex: {
+              cols: 12,
+              sm: 5
+            },
+            props: {
+              rules: [v => !!v || self.$t('validation.required')],
+              disabled: true,
+              value: 'Model X P100D+'
+            }
           }
-        },
-        {
-          step: 2,
-          editable: true,
-          ref: 'formStep2',
-          title: 'Vehicle Information',
-          vin: {
-            label: 'VIN',
-            value: ''
-          },
-          year: {
-            label: 'Year',
-            value: ''
-          },
-          make: {
-            label: 'Make',
-            value: ''
-          },
-          model: {
-            label: 'Model',
-            value: ''
-          },
-          license_plate: {
-            label: 'License Plate',
-            value: ''
-          },
-          license_state: {
-            label: 'License State',
-            value: ''
+        ]
+      },
+      {
+        key: 'vehicle_dashboard.accident_information',
+        fields: [
+          {
+            key: 'vehicle_dashboard.accident_date',
+            is: VDatePicker,
+            flex: {
+              cols: 12,
+              sm: 6
+            },
+            props: {
+              rules: [],
+              readonly: true
+            }
           }
-        },
-        {
-          step: 3,
-          editable: true,
-          ref: 'formStep3',
-          title: 'Accident Information',
-          date: {
-            label: 'Date of Accident',
-            value: new Date().toISOString().substr(0, 10),
-            menu: false
-          },
-          time: {
-            label: 'Time of Accident',
-            value: '12:00',
-            menu: false
-          },
-          vehicles: {
-            label: 'Vehicles Involved',
-            value: '1'
-          },
-          location: {
-            label: 'Location of Accident',
-            value: ''
-          },
-          description: {
-            label: 'Description of Accident',
-            value: ''
-          },
-          damages: {
-            label: 'Damages',
-            value: ''
-          },
-          injuries: {
-            label: 'Injuries',
-            value: ''
-          },
-          you_injured: {
-            label: 'Were You Injured',
-            value: ''
-          },
-          injured_extent: {
-            label: 'Extent of Your Injuries',
-            value: ''
-          },
-          others_injured: {
-            label: 'Were Others Injured',
-            value: ''
-          },
-          police_contacted: {
-            label: 'Police Contacted',
-            value: ''
-          },
-          police_report: {
-            label: 'Report Number',
-            value: ''
-          },
-          citations: {
-            label: 'Violations/Citations Issued',
-            value: ''
-          },
-          files: {
-            label: 'Accident Photos',
-            value: []
-          }
-        },
-        {
-          step: 4,
-          editable: false,
-          ref: 'formStepSummary',
-          title: 'Summary'
-        }
-      ]
-      //1
-
-      //2
-
-      //3
-    }
-  },
-  computed: {
-    accidentTime() {
-      return `${this.steps[2].date.value} at ${this.steps[2].time.value}`
-    },
-    fullAddress() {
-      return `${this.steps[0].address_1.value} ${this.steps[0].address_2.value} ${this.steps[0].city.value}, ${this.steps[0].state.value} ${this.steps[0].zip.value}`
-    },
-    fullName() {
-      return `${this.steps[0].first_name.value} ${this.steps[0].last_name.value}`
-    },
-    licenseInfo() {
-      return `${this.steps[1].license_plate.value} (${this.steps[1].license_state.value})`
-    },
-    vehicleInfo() {
-      return `${this.steps[1].year.value} ${this.steps[1].make.value} ${this.steps[1].model.value} (${this.steps[1].vin.value})`
-    }
-  },
+        ]
+      },
+      {
+        key: 'common.summary',
+        fields: []
+      }
+    ]
+  }),
   methods: {
     nextStep() {
-      // console.log('CurrentStep: ' + this.currentStep)
-      // console.log('Total: ' + this.steps.length)
-      if (this.$refs[`formStep${this.currentStep}`].validate())
+      if (this.$refs[`step${this.currentStep}`][0].validate())
         this.currentStep += 1
     },
     onSubmit() {
       this.errorMessage = null
       this.loading = true
       const url = '/reportAccident'
-
       if (!this.$refs[`formStepSummary`].validate()) {
         //validate the last step
         this.errorMessage = 'Fix validation errors'

@@ -58,13 +58,15 @@
                   :class="field.class"
                   style="user-select:text !important;height:72px;"
                 >
-                  <v-list-item-content v-if="isEditing" class="py-0">
+                  <v-list-item-content v-if="isEditing" class="pt-8">
                     <v-text-field
                       :v-model="field"
                       :value="field.value"
                       :label="$t(field.key)"
                       :rules="rules.required"
                       :disabled="!field.editable"
+                      outlined
+                      dense
                     />
                   </v-list-item-content>
                   <v-list-item-content v-else class="pt-0 pb-4">
@@ -138,7 +140,8 @@ export default {
       {
         key: 'vehicle_dashboard.edit_driver',
         icon: 'edit',
-        action: () => (self.isEditing = !self.isEditing)
+        action: () => self.toggleEdit(),
+        divider: true
       },
       {
         key: 'vehicle_dashboard.reassign_driver',
@@ -292,10 +295,13 @@ export default {
   methods: {
     toggleEdit() {
       this.isEditing = !this.isEditing
-      this.menuOpen = !this.menuOpen
+      this.menuOpen = false
+      this.errorMessage = null
     },
     onSubmit() {
+      this.errorMessage = null
       this.loading = true
+
       const url = '/test/error'
       if (!this.$refs.form.validate()) {
         this.errorMessage = 'Fix validation errors'

@@ -6,7 +6,12 @@ import {
   SET_INVOICE_HISTORY,
   SET_LICENSING_HISTORY,
   SET_ACCIDENT_HISTORY,
-  SET_RENTAL_HISTORY
+  SET_RENTAL_HISTORY,
+  SET_TOLL_HISTORY,
+  SET_VIOLATION_HISTORY,
+  SET_ODOMETER_HISTORY,
+  SET_DRIVER_HISTORY,
+  SET_VEHICLE_NOTES
 } from './mutations.type'
 export default {
   [SET_DRIVER_DETAILS](state, driver_details) {
@@ -32,5 +37,20 @@ export default {
   },
   [SET_RENTAL_HISTORY](state, rental_history) {
     state.rental_history = rental_history
+  },
+  [SET_TOLL_HISTORY](state, toll_history) {
+    state.toll_history = toll_history
+  },
+  [SET_VIOLATION_HISTORY](state, violation_history) {
+    state.violation_history = violation_history
+  },
+  [SET_ODOMETER_HISTORY](state, odometer_history) {
+    state.odometer_history = odometer_history
+  },
+  [SET_DRIVER_HISTORY](state, driver_history) {
+    state.driver_history = driver_history
+  },
+  [SET_VEHICLE_NOTES](state, vehicle_notes) {
+    state.vehicle_notes = vehicle_notes
   }
 }

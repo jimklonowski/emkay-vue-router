@@ -1,6 +1,9 @@
 <template>
   <section>
-    <mega-menu :categories="categories" style="position:fixed;left:0;right:0;top:100px;" />
+    <mega-menu
+      :categories="categories"
+      style="position:fixed;left:0;right:0;top:100px;"
+    />
   </section>
 </template>
 

@@ -1,5 +1,7 @@
 {
   "common": {
+    "summary": "Sommaire",
+    "loading": "Chargement",
     "no_data_found": "Aucun résultat trouvé",
     "save_changes": "Sauvegarder les modifications",
     "cancel": "Annuler",
@@ -8,7 +10,11 @@
     "date": "Date",
     "export_to_excel": "Exporter en Excel",
     "export_to_csv": "Exporter en CSV",
-    "description": "La description"
+    "description": "La description",
+    "user": "Nom d'utilisateur"
+  },
+  "validation": {
+    "required": "Requis"
   },
   "navigation": {
     "tagline": "facile. mieux. différent.",
@@ -31,6 +37,9 @@
     "maintenance_approvals": "aucune approbation de maintenance | une approbation de maintenance | {n} approbations de maintenance"
   },
   "vehicle_dashboard": {
+    "year": "Année",
+    "make": "Marque",
+    "model": "Modèle",
     "search_placeholder": "Rechercher un véhicule...",
     "search_text": "Entrez un numéro de véhicule",
     "vehicle_details": "@:vehicle_dashboard.vehicle @:vehicle_dashboard.details",
@@ -99,6 +108,7 @@
     "maintenance": "Maintenance",
     "invoice": "Facture",
     "licensing": "Enregistrement",
+    "report": "Signaler",
     "accident": "Accident",
     "rental": "Voiture de Location",
     "toll": "Péage",
@@ -157,11 +167,16 @@
     "in_network": "En réseau",
     "service": "Un service",
 
+    "accident_date": "Date de accident",
+    "accident_information": "Information sur l'accident",
+    "report_accident": "Signaler un accident",
     "loss_date": "Date de perte",
     "claim_number": "Numéro de réclamation",
     "claim_type": "Type de réclamation",
     "claim_amount": "Montant de la réclamation",
     "subrogation_amount": "Montant subrogé",
+    "paid_date": "Date de paiement",
+    "location": "Emplacement",
     
     "needs": "Besoins",
     "expiration_date": "Date d'expiration",
@@ -179,6 +194,9 @@
     "add": "Ajouter",
     "note": "Note",
     "add_note": "Ajouter une note",
-    "change_plate": "Modifier la plaque"
+    "change_plate": "Modifier la plaque",
+
+    "change_driver_effective_date": "Changer la date d'effet du conducteur",
+    "driver_reference_number": "Numéro de référence du conducteur"
   }
 }

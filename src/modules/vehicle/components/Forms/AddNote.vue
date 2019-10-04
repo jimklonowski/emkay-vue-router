@@ -1,27 +1,23 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000">
-    <template v-slot:activator="{ on }">
-      <v-btn text tile color="primary" v-on="on" @click.stop="resetForm">
-        <v-icon left>note_add</v-icon>
-        {{ $t('vehicle_dashboard.add_note') }}
-      </v-btn>
+    <template #activator="{ on }">
+      <div v-t="key" v-on="on" @click.stop.prevent />
     </template>
-
     <v-card :loading="loading">
-      <v-card-title :class="this.$config.TOOLBAR_CLASS">
-        <header class="text-uppercase">
-          <span
-            class="font-weight-black"
-            v-text="$t('vehicle_dashboard.add')"
-          />
-          <span
-            class="font-weight-thin"
-            v-text="$t('vehicle_dashboard.note')"
-          />
-        </header>
-      </v-card-title>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
+        <v-toolbar-title class="text-uppercase font-weight-black">
+          <span v-t="'vehicle_dashboard.add'" />
+          <span v-t="'vehicle_dashboard.note'" class="font-weight-thin" />
+          <v-subheader class="d-inline" dark v-text="vehicle" />
+        </v-toolbar-title>
+        <v-spacer />
+        <v-btn large icon tile dark @click.prevent="dialog = false">
+          <v-icon v-text="'close'" />
+        </v-btn>
+      </v-toolbar>
+      <v-divider />
       <v-card-text class="py-0">
-        <v-form ref="add_note" class="pt-5">
+        <v-form ref="form" class="pt-5">
           <v-textarea
             v-model="note"
             outlined
@@ -30,6 +26,7 @@
           />
         </v-form>
       </v-card-text>
+      <v-divider />
       <v-card-actions>
         <v-alert v-if="errorMessage" outlined dense class="mb-0" type="error">
           {{ errorMessage }}
@@ -58,8 +55,8 @@ export default {
     dialog: false,
     errorMessage: null,
     loading: false,
-    title: 'Add Note',
-    note: 'test note'
+    key: 'vehicle_dashboard.add_note',
+    note: ''
   }),
   methods: {
     resetForm() {
@@ -70,7 +67,7 @@ export default {
     addNote() {
       this.loading = true
       const url = '/test/error'
-      if (!this.$refs['add_note'].validate()) {
+      if (!this.$refs.form.validate()) {
         this.errorMessage = 'Fix Validation Errors'
         this.loading = false
         return false

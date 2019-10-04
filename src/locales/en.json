@@ -1,5 +1,7 @@
 {
   "common": {
+    "summary": "Summary",
+    "loading": "Loading",
     "no_data_found": "No Data Found",
     "save_changes": "Save Changes",
     "cancel": "Cancel",
@@ -8,7 +10,11 @@
     "date": "Date",
     "export_to_excel": "Export to Excel",
     "export_to_csv": "Export to CSV",
-    "description": "Description"
+    "description": "Description",
+    "user": "User"
+  },
+  "validation": {
+    "required": "Required"
   },
   "navigation": {
     "tagline": "simple. better. different.",
@@ -31,6 +37,9 @@
     "maintenance_approvals": "no maintenance approvals | 1 maintenance approval | {count} maintenance approvals"
   },
   "vehicle_dashboard": {
+    "year": "Year",
+    "make": "Make",
+    "model": "Model",
     "search_placeholder": "Find a vehicle...",
     "search_text": "Enter a vehicle number",
     "vehicle_details": "@:vehicle_dashboard.vehicle @:vehicle_dashboard.details",
@@ -99,6 +108,7 @@
     "maintenance": "Maintenance",
     "invoice": "Invoice",
     "licensing": "Licensing",
+    "report": "Report",
     "accident": "Accident",
     "rental": "Rental",
     "toll": "Toll",
@@ -157,11 +167,16 @@
     "in_network": "In Network",
     "service": "Service",
 
+    "accident_date": "Accident Date",
+    "accident_information": "Accident Information",
+    "report_accident": "Report Accident",
     "loss_date": "Loss Date",
     "claim_number": "Claim Number",
     "claim_type": "Claim Type",
     "claim_amount": "Claim Amount",
     "subrogation_amount": "Subrogation Amount",
+    "paid_date": "Paid Date",
+    "location": "Location",
 
     "needs": "Needs",
     "expiration_date": "Expiration Date",
@@ -179,6 +194,9 @@
     "add": "Add",
     "note": "Note",
     "add_note": "Add Note",
-    "change_plate": "Change Plate"
+    "change_plate": "Change Plate",
+
+    "change_driver_effective_date": "Change Driver Effective Date",
+    "driver_reference_number": "Driver Reference Number"
   }
 }

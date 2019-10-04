@@ -29,39 +29,34 @@
               <v-icon v-text="'more_vert'" />
             </v-btn>
           </template>
+          <!-- menu actions -->
           <v-list nav dense>
-            <!-- download button -->
-            <v-list-item link>
-              <v-list-item-icon>
-                <v-icon v-text="'cloud_download'" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <json-excel
-                    :data="maintenance_history"
-                    :fields="headerExport"
-                    :type="exportFormat"
-                    :default-value="' -- '"
-                    :name="downloadName"
-                  >
-                    {{ $t('common.export_to_excel') }}
-                  </json-excel>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              v-for="(item, i) in actions"
-              :key="i"
-              :color="item.color"
-              @click="item.action"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon" />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-t="item.key" />
-              </v-list-item-content>
-            </v-list-item>
+            <template v-for="(item, i) in actions">
+              <v-list-item :key="i" :color="item.color" @click="item.action">
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <!-- export as excel action -->
+                  <v-list-item-title v-if="item.isExport">
+                    <component
+                      :is="item.component.is"
+                      v-t="item.key"
+                      :fields="getHeaders"
+                      :data="maintenance_history"
+                      :name="getName"
+                    />
+                  </v-list-item-title>
+                  <!-- other actions -->
+                  <v-list-item-title v-else v-t="item.key" />
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider
+                v-if="item.divider"
+                :key="`${i}-divider`"
+                class="mb-1"
+              />
+            </template>
           </v-list>
         </v-menu>
       </v-toolbar>
@@ -75,8 +70,6 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
-          :loading-text="`Loading...`"
-          :no-data-text="errorMessage || 'No Data Found'"
           dense
         >
           <template
@@ -98,8 +91,7 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
-import { exportName, headersForExport } from '@/util/helpers'
-import { mapActions } from 'vuex'
+import { nameForExport, headersForExport } from '@/util/helpers'
 import { FETCH_MAINTENANCE_HISTORY } from '@/modules/vehicle/store/actions.type'
 
 export default {
@@ -114,12 +106,22 @@ export default {
     }
   },
   data: () => ({
-    errorMessage: '',
+    errorMessage: null,
     exportFormat: 'xls',
     name: 'maintenance_history',
     loading: true,
     search: '',
     actions: [
+      {
+        key: 'common.export_to_excel',
+        icon: 'cloud_download',
+        action: () => {},
+        isExport: true,
+        component: {
+          is: JsonExcel
+        },
+        divider: true
+      },
       {
         key: 'vehicle_dashboard.evoucher',
         icon: 'local_play',
@@ -173,17 +175,17 @@ export default {
     maintenance_history: []
   }),
   computed: {
-    headerExport() {
+    getHeaders() {
       return headersForExport(this.headers)
     },
-    downloadName() {
-      return exportName(this.name, this.exportFormat)
-      //let today = new Date().toLocaleDateString()
-      //return `maintenance_history_${today}.${this.exportFormat}`
+    getName() {
+      return nameForExport(this.name, this.exportFormat)
     }
   },
   created() {
-    this.fetchMaintenanceHistory(this.vehicle)
+    //this.fetchMaintenanceHistory(this.vehicle)
+    this.$store
+      .dispatch(FETCH_MAINTENANCE_HISTORY, this.vehicle)
       .then(response => {
         this.maintenance_history = response.data
       })
@@ -195,7 +197,6 @@ export default {
       })
   },
   methods: {
-    ...mapActions([FETCH_MAINTENANCE_HISTORY]),
     // color chips green for in-network
     getColor: type => (type ? 'success' : 'error')
   }

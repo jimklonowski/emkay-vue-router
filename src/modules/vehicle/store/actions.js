@@ -6,7 +6,12 @@ import {
   FETCH_INVOICE_HISTORY,
   FETCH_LICENSING_HISTORY,
   FETCH_ACCIDENT_HISTORY,
-  FETCH_RENTAL_HISTORY
+  FETCH_RENTAL_HISTORY,
+  FETCH_TOLL_HISTORY,
+  FETCH_VIOLATION_HISTORY,
+  FETCH_ODOMETER_HISTORY,
+  FETCH_DRIVER_HISTORY,
+  FETCH_VEHICLE_NOTES
 } from './actions.type'
 import {
   SET_VEHICLE_DETAILS,
@@ -16,7 +21,12 @@ import {
   SET_INVOICE_HISTORY,
   SET_LICENSING_HISTORY,
   SET_ACCIDENT_HISTORY,
-  SET_RENTAL_HISTORY
+  SET_RENTAL_HISTORY,
+  SET_TOLL_HISTORY,
+  SET_VIOLATION_HISTORY,
+  SET_ODOMETER_HISTORY,
+  SET_DRIVER_HISTORY,
+  SET_VEHICLE_NOTES
 } from './mutations.type'
 import ApiService from '@/services/api.service'
 
@@ -104,6 +114,56 @@ export default {
     if (response) {
       // not sure if we need to store these arrays in vuex state
       context.commit(SET_RENTAL_HISTORY, response.data)
+      return response
+    } else {
+      debugger
+    }
+  },
+  // toll history
+  async [FETCH_TOLL_HISTORY](context, vehicleSlug) {
+    let response = await ApiService.get('/vehicle/toll', vehicleSlug)
+    if (response) {
+      context.commit(SET_TOLL_HISTORY, response.data)
+      return response
+    } else {
+      debugger
+    }
+  },
+  // violation history
+  async [FETCH_VIOLATION_HISTORY](context, vehicleSlug) {
+    let response = await ApiService.get('/vehicle/violation', vehicleSlug)
+    if (response) {
+      context.commit(SET_VIOLATION_HISTORY, response.data)
+      return response
+    } else {
+      debugger
+    }
+  },
+  // odometer history
+  async [FETCH_ODOMETER_HISTORY](context, vehicleSlug) {
+    let response = await ApiService.get('/vehicle/odometer', vehicleSlug)
+    if (response) {
+      context.commit(SET_ODOMETER_HISTORY, response.data)
+      return response
+    } else {
+      debugger
+    }
+  },
+  // driver history
+  async [FETCH_DRIVER_HISTORY](context, vehicleSlug) {
+    let response = await ApiService.get('/vehicle/driver', vehicleSlug)
+    if (response) {
+      context.commit(SET_DRIVER_HISTORY, response.data)
+      return response
+    } else {
+      debugger
+    }
+  },
+  // vehicle notes
+  async [FETCH_VEHICLE_NOTES](context, vehicleSlug) {
+    let response = await ApiService.get('/vehicle/notes', vehicleSlug)
+    if (response) {
+      context.commit(SET_VEHICLE_NOTES, response.data)
       return response
     } else {
       debugger

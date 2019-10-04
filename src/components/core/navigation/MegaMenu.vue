@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-card :color="color" style="z-index:5;" elevation="0" :dark="dark" tile min-height="350">
+    <v-card
+      :color="color"
+      style="z-index:5;"
+      elevation="0"
+      :dark="dark"
+      tile
+      min-height="350"
+    >
       <v-container fluid>
         <v-row>
           <v-col

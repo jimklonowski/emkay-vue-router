@@ -58,18 +58,42 @@
                   v-for="(field, j) in section.fields"
                   :key="j"
                   :class="field.class"
-                  style="user-select:text !important;height:72px;"
+                  style="user-select:text !important;"
                 >
-                  <v-list-item-content v-if="isEditing" class="py-0">
-                    <v-text-field
+                  <v-list-item-content
+                    v-if="isEditing"
+                    class="pt-4"
+                    :style="{ height: field.component ? 'auto' : '72px' }"
+                  >
+                    <v-list-item-subtitle
+                      :class="$config.LABEL_CLASS"
+                      v-text="$t(field.key)"
+                      v-if="field.component"
+                    />
+                    <component
+                      :is="field.component || 'v-text-field'"
                       :v-model="field"
                       :value="field.value"
                       :label="$t(field.key)"
                       :rules="rules.required"
                       :disabled="!field.editable"
+                      dense
                     />
+                    <!-- <v-text-field
+                      :v-model="field"
+                      :value="field.value"
+                      :label="$t(field.key)"
+                      :rules="rules.required"
+                      :disabled="!field.editable"
+                      outlined
+                      dense
+                    /> -->
                   </v-list-item-content>
-                  <v-list-item-content v-else class="pt-0 pb-4">
+                  <v-list-item-content
+                    v-else
+                    class="pt-2 pb-6"
+                    style="height:72px"
+                  >
                     <v-list-item-subtitle
                       :class="$config.LABEL_CLASS"
                       v-text="$t(field.key)"
@@ -121,12 +145,16 @@
 </template>
 
 <script>
+import { VTextField } from 'vuetify/lib'
+import CenterPicker from '@/modules/core/components/CenterPicker'
 import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
 
 export default {
   name: 'VehicleDetails',
   components: {
-    OrderStatus
+    VTextField,
+    OrderStatus,
+    CenterPicker
   },
   props: {
     vehicle: {
@@ -193,7 +221,7 @@ export default {
             label: 'Center',
             editable: true,
             class: 'col-12',
-            component: '',
+            component: CenterPicker,
             value: '001'
           }
         ]

@@ -1,12 +1,9 @@
 <template>
   <v-container fluid>
     <v-row justify="center" align="center">
-      <v-alert
-        prominent
-        type="error"
-      >
+      <v-alert prominent type="error">
         <v-row>
-          <v-col class="grow">The requested route has not been created yet.</v-col>
+          <v-col class="grow" v-text="errorMessage" />
           <v-col class="shrink">
             <v-btn :to="{ path: '/' }">Home</v-btn>
           </v-col>
@@ -18,10 +15,11 @@
 
 <script>
 export default {
-  name: 'Todo'
+  name: 'Todo',
+  data: () => ({
+    errorMessage: 'The requested route has not been created yet.'
+  })
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
