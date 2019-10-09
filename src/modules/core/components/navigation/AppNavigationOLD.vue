@@ -94,7 +94,7 @@ import moment from 'moment'
 import { LOGOUT } from '@/modules/auth/store/actions.type'
 
 export default {
-  name: 'AppNavigation',
+  name: 'AppNavigation2',
   data() {
     return {
       title: 'EMKAY',

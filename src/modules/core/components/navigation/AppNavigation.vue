@@ -1,23 +1,23 @@
 <template>
   <nav>
-    <system-bar v-if="authed" />
+    <system-bar :authed="authed" />
     <main-navbar v-if="authed" :items="items" />
-    <side-drawer v-if="authed" :items="items" />
+    <drawer v-if="authed" :items="items" />
   </nav>
 </template>
 
 <script>
 import SystemBar from '@/modules/core/components/navigation/SystemBar'
-import SideDrawer from '@/modules/core/components/navigation/SideDrawer'
+import Drawer from '@/modules/core/components/navigation/Drawer'
 import MainNavbar from '@/modules/core/components/navigation/MainNavbar'
 
 import { LOGOUT } from '@/modules/auth/store/actions.type'
 
 export default {
-  name: 'AppNavigation2',
+  name: 'AppNavigation',
   components: {
     SystemBar,
-    SideDrawer,
+    Drawer,
     MainNavbar
   },
   data: () => ({
@@ -26,7 +26,11 @@ export default {
     items: [
       { key: 'navigation.home', icon: 'home', to: '/' },
       { key: 'navigation.fleet_dashboard', icon: 'dashboard', to: '/fleet' },
-      { key: 'navigation.vehicle_dashboard', icon: 'table_chart', to: '/vehicle' },
+      {
+        key: 'navigation.vehicle_dashboard',
+        icon: 'table_chart',
+        to: '/vehicle'
+      },
       {
         key: 'navigation.ordering',
         icon: 'pages',
@@ -154,7 +158,10 @@ export default {
           {
             key: 'navigation.category',
             items: [
-              { key: 'navigation.approve_your_maintenance_repairs', to: '/todo' },
+              { 
+                key: 'navigation.approve_your_maintenance_repairs',
+                to: '/todo'
+              },
               { key: 'navigation.approve_your_driver_orders', to: '/todo' },
               { key: 'navigation.request_an_mvr', to: '/todo' },
               { key: 'navigation.upload_your_odometers', to: '/todo' }

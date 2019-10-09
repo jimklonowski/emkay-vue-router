@@ -8,6 +8,7 @@
   >
     <v-btn
       v-for="button in buttons"
+      v-if="authed"
       :key="button.text"
       :to="button.to"
       small
@@ -21,7 +22,7 @@
       </span>
     </v-btn>
     <div class="flex-grow-1" />
-    <v-btn to="/fleet-navigator" small text tile dark>
+    <v-btn v-if="authed" to="/fleet-navigator" small text tile dark>
       <v-icon>widgets</v-icon>
       <span class="system-bar-text">{{ $t('features.fleet_navigator') }}</span>
     </v-btn>
@@ -37,7 +38,7 @@
 
 <script>
 import moment from 'moment'
-import LocaleSwitch from '@/components/core/navigation/LocaleSwitch'
+import LocaleSwitch from '@/modules/core/components/navigation/LocaleSwitch'
 
 export default {
   name: 'SystemBar',
@@ -48,6 +49,10 @@ export default {
     height: {
       type: Number,
       default: 36
+    },
+    authed: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({

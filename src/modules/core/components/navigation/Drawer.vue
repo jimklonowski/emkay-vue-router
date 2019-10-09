@@ -12,10 +12,10 @@
     <v-list dense nav>
       <v-list-item v-for="item in items" :key="item.text" :to="item.to">
         <v-list-item-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon v-text="item.icon" />
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <v-list-item-title v-t="item.key" />
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -27,7 +27,7 @@
             <v-icon>domain_disabled</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Log Off</v-list-item-title>
+            <v-list-item-title v-t="'auth.logout'" />
           </v-list-item-content>
         </v-list-item>
       </v-list>

@@ -14,12 +14,12 @@
             )
           "
         >
-          <v-card-title class="blue-grey darken-1 white--text">
-            <header class="text-uppercase">
-              <span class="font-weight-black">{{ title1 }}</span>
-              <span class="font-weight-thin">{{ title2 }}</span>
+          <v-card-title :class="$config.TOOLBAR_CLASS">
+            <header class="text-uppercase font-weight-black">
+              <span v-t="'auth.login'" />
+              <span v-t="'common.client'" class="font-weight-thin" />
+              <v-subheader class="d-inline" dark v-text="subtitle" />
             </header>
-            <v-subheader dark>{{ subtitle }}</v-subheader>
           </v-card-title>
           <v-divider />
           <v-card-text>
@@ -33,7 +33,7 @@
 
             <v-text-field
               v-model="credentials.account"
-              label="Account"
+              :label="$t('auth.account')"
               name="account"
               append-icon="account_balance"
               type="text"
@@ -43,7 +43,7 @@
             />
             <v-text-field
               v-model="credentials.username"
-              label="Username"
+              :label="$t('auth.username')"
               name="username"
               append-icon="person"
               type="text"
@@ -53,7 +53,7 @@
             />
             <v-text-field
               v-model="credentials.password"
-              label="Password"
+              :label="$t('auth.password')"
               name="password"
               append-icon="lock"
               type="password"
@@ -64,15 +64,14 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text to="/login-help" tabindex="-1">Forgot Password</v-btn>
+            <v-btn text to="/login-help" tabindex="-1" v-t="'auth.forgot_password'" />
             <v-btn
               type="submit"
               color="primary"
               class="mr-4"
               :disabled="!valid"
-            >
-              Login
-            </v-btn>
+              v-t="'auth.login'"
+            />
           </v-card-actions>
         </v-form>
       </v-card>
@@ -100,9 +99,9 @@ export default {
         password: ''
       },
       rules: {
-        account: [v => !!v || 'Account is required'],
-        username: [v => !!v || 'Username is required'],
-        password: [v => !!v || 'Password is required']
+        account: [v => !!v || this.$t('validation.required')],
+        username: [v => !!v || this.$t('validation.required')],
+        password: [v => !!v || this.$t('validation.required')]
       }
     }
   },

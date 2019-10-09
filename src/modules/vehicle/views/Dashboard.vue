@@ -2,9 +2,10 @@
   <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right: 200px;' : ''">
     <v-container>
       <v-row tag="section">
-        <header class="col-12 font-weight-thin display-2 pa-3">
-          {{ $t('features.vehicle_dashboard') }}
-        </header>
+        <header
+          v-t="'features.vehicle_dashboard'"
+          class="col-12 font-weight-thin display-2 pa-3"
+        />
         <component
           :is="section.component"
           v-for="(section, index) in dashboardSections"

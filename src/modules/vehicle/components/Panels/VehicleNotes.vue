@@ -159,7 +159,7 @@ export default {
         value: 'note'
       },
       {
-        key: 'common.user',
+        key: 'auth.username',
         width: '150px',
         align: 'left',
         sortable: true,

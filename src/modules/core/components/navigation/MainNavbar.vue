@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import MegaMenu from '@/components/core/navigation/MegaMenu'
+import MegaMenu from '@/modules/core/components/navigation/MegaMenu'
 //import { LOGOUT } from '@/modules/auth/store/actions.type'
 import { TOGGLE_DRAWER } from '@/modules/core/store/actions.type'
 

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import MegaMenu from '@/components/core/navigation/MegaMenu'
+import MegaMenu from '@/modules/core/components/navigation/MegaMenu'
 export default {
   name: 'FleetManagement',
   components: {
