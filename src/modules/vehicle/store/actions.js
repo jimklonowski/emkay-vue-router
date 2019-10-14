@@ -33,22 +33,21 @@ import ApiService from '@/services/api.service'
 export default {
   // driver detail panel
   async [FETCH_DRIVER_DETAILS](context, vehicleSlug) {
-    let response = await ApiService.get('/vehicle/driver-details', {
-      vehicle: vehicleSlug
-    })
+    let response = await ApiService.get('/vehicle/driver-details', vehicleSlug)
     if (response) {
       context.commit(SET_DRIVER_DETAILS, response.data.driver_details)
+      // instead of returning the data, i think the dashboard should load the driver/vehicle details from vuex store
+      return response
     } else {
       throw new Error(response.data.errors)
     }
   },
   // vehicle detail panel
   async [FETCH_VEHICLE_DETAILS](context, vehicleSlug) {
-    let response = await ApiService.get('/vehicle/vehicle-details', {
-      vehicle: vehicleSlug
-    })
+    let response = await ApiService.get('/vehicle/vehicle-details', vehicleSlug)
     if (response) {
       context.commit(SET_VEHICLE_DETAILS, response.data.vehicle_details)
+      return response
     } else {
       throw new Error(response.data.errors)
     }

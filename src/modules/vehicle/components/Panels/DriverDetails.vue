@@ -21,6 +21,7 @@
                 <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
+            <!-- menu actions -->
             <v-list nav dense>
               <template v-for="(item, i) in actions">
                 <v-list-item :key="i" :color="item.color" @click="item.action">
@@ -28,7 +29,15 @@
                     <v-icon v-text="item.icon" />
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-t="item.key" />
+                    <v-list-item-title v-if="item.component">
+                      <component
+                        :is="item.component.is"
+                        :key="item.key"
+                        :vehicle="vehicle"
+                      />
+                    </v-list-item-title>
+                    <!-- other actions -->
+                    <v-list-item-title v-else v-t="item.key" />
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider
@@ -42,43 +51,193 @@
         </v-toolbar>
         <v-divider />
         <v-card-text class="pa-0">
-          <v-row class="no-gutters">
-            <v-list v-for="(section, i) in schema" :key="i" :class="section.class" subheader dense>
-              <v-subheader v-t="section.key" :class="$config.SUBHEADER_CLASS" />
-              <v-container>
+          <v-container class="py-0">
+            <v-row>
+              <!-- Driver Information -->
+              <header
+                v-t="'vehicle_dashboard.driver_information'"
+                :class="$config.SUBHEADER_CLASS"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.last_name"
+                :schema="schema.last_name"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.first_name"
+                :schema="schema.first_name"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model.sync="model.employee_id"
+                :schema="schema.employee_id"
+                :cols="12"
+                :sm="6"
+                @update="handleUpdate('employee_id', $event)"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.selector_level"
+                :schema="schema.selector_level"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model.sync="model.license_number"
+                :schema="schema.license_number"
+                :cols="12"
+                :sm="6"
+                @update="handleUpdate('license_number', $event)"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.license_state"
+                :schema="schema.license_state"
+                :cols="12"
+                :sm="6"
+              />
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6">
                 <v-row>
-                  <v-col
-                    v-for="(field, j) in section.fields"
-                    :key="j"
-                    :cols="field.cols"
-                    :sm="field.sm"
-                    :md="field.md"
-                    :lg="field.lg"
-                    style="height:72px;"
-                    tag="v-list-item"
-                    dense
-                  >
-                    <v-list-item-content v-if="isEditing" class="mt-10">
-                      <component
-                        :is="field.is"
-                        v-model="model[field.model]"
-                        :label="$t(field.key)"
-                        :disabled="isEditing && field.disabled"
-                        :outlined="isEditing"
-                        :readonly="!isEditing"
-                        v-bind="field.props"
-                        dense
-                      />
-                    </v-list-item-content>
-                    <v-list-item-content v-else class="px-3">
-                      <v-list-item-subtitle class="font-weight-regular" v-text="$t(field.key)" />
-                      <v-list-item-title class="font-weight-regular blue-grey--text text--darken-2" style="font-size:1rem;" v-text="model[field.model]" />
-                    </v-list-item-content>
-                  </v-col>
+                  <!-- Contact Information -->
+                  <header
+                    v-t="'vehicle_dashboard.contact_information'"
+                    :class="$config.SUBHEADER_CLASS"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.address_1"
+                    :schema="schema.address_1"
+                    :cols="12"
+                    @update="handleUpdate('address_1', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.address_2"
+                    :schema="schema.address_2"
+                    :cols="12"
+                    @update="handleUpdate('address_2', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.city"
+                    :schema="schema.city"
+                    :cols="12"
+                    @update="handleUpdate('city', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.state_province"
+                    :schema="schema.state_province"
+                    :cols="12"
+                    :sm="4"
+                    @update="handleUpdate('state_province', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.county"
+                    :schema="schema.county"
+                    :cols="12"
+                    :sm="8"
+                    @update="handleUpdate('county', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.postal_code"
+                    :schema="schema.postal_code"
+                    :cols="12"
+                    @update="handleUpdate('postal_code', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.phone"
+                    :schema="schema.phone"
+                    :cols="12"
+                    :sm="6"
+                    @update="handleUpdate('phone', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.cell"
+                    :schema="schema.cell"
+                    :cols="12"
+                    :sm="6"
+                    @update="handleUpdate('cell', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.email"
+                    :schema="schema.email"
+                    :cols="12"
+                    @update="handleUpdate('email', $event)"
+                  />
                 </v-row>
-              </v-container>
-            </v-list>
-          </v-row>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-row>
+                  <!-- Customization -->
+                  <header
+                    v-t="'vehicle_dashboard.customization'"
+                    :class="$config.SUBHEADER_CLASS"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.driver_use_1"
+                    :schema="schema.driver_use_1"
+                    :cols="12"
+                    @update="handleUpdate('driver_use_1', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.driver_use_2"
+                    :schema="schema.driver_use_2"
+                    :cols="12"
+                    @update="handleUpdate('driver_use_2', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.driver_use_3"
+                    :schema="schema.driver_use_3"
+                    :cols="12"
+                    @update="handleUpdate('driver_use_3', $event)"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model.sync="model.driver_use_4"
+                    :schema="schema.driver_use_4"
+                    :cols="12"
+                    @update="handleUpdate('driver_use_4', $event)"
+                  />
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card-text>
         <v-card-actions v-if="isEditing">
           <v-alert
@@ -93,14 +252,16 @@
           <v-btn
             v-t="'common.cancel'"
             type="button"
+            :ripple="false"
             color="error"
             text
-            @click.prevent="toggleEdit"
+            @click.prevent="cancelEdit"
           />
           <v-btn
             v-t="'common.save_changes'"
             type="submit"
             color="primary"
+            :ripple="false"
             dark
             outlined
           >
@@ -114,241 +275,29 @@
 </template>
 
 <script>
+import { mask } from 'vue-the-mask'
+import { email, maxLength, required } from 'vuelidate/lib/validators'
+import { isLength } from '@/util/helpers'
+
+import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
+import { FETCH_DRIVER_DETAILS } from '@/modules/vehicle/store/actions.type'
+
 export default {
   name: 'DriverDetails',
+  components: { FieldWithLoader },
+  directives: { mask },
   props: {
-    vehicle: {
-      type: String,
-      default: ''
-    }
+    vehicle: { type: String, default: '' }
   },
   data: self => ({
     errorMessage: null,
+    hasPostalCodeError: false,
     isEditing: false,
+    isInitializing: false,
     loading: false,
+    loadingPostalCode: false,
     menuOpen: false,
-    rules: {
-      required: v => !!v || 'Required.',
-      lengthNine: v => v.length == 9 || '9 characters'
-    },
-    model: {
-      // driver info
-      last_name: 'Klonowski',
-      first_name: 'James',
-      employee_id: '123456789',
-      license_state: 'IL',
-      license_number: 'ABCDEF12309876QWERTY',
-      selector_level: 'Sales',
-      // contact info
-      address_1: 'EMKAY, Inc',
-      address_2: '805 W THORNDALE AVE',
-      zip: '60143',
-      city: 'ITASCA',
-      state: 'IL',
-      county: 'DuPage',
-      email: 'jklonowski@email.com',
-      phone: '630-864-0000',
-      cell: '630-864-0999',
-      // customization
-      driver_use_1: 'Sales',
-      driver_use_2: 'Senior Sales',
-      driver_use_3: 'Bermuda Office',
-      driver_use_4: 'Parking Spot #3A'
-    },
-    schema: [
-      {
-        // Driver Information Section 
-        key: 'vehicle_dashboard.driver_information',
-        class: 'col-12 px-md-0',
-        fields: [
-          {
-            model: 'last_name',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.last_name',
-            disabled: true,
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.last_name'),
-              type: 'text',
-              readonly: true
-            }
-          },
-          {
-            model: 'first_name',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.first_name',
-            disabled: true,
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.first_name'),
-              type: 'text',
-              readonly: true
-            }
-          },
-          {
-            model: 'employee_id',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.employee_id',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.employee_id'),
-              type: 'text',
-              rules: [() => self.rules.lengthNine],
-              //rules: [v => v.length == 9 || 'Must be 9 characters'],
-              counter: 9
-            }
-          },
-          {
-            model: 'selector_level',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.selector_level',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.selector_level'),
-              type: 'text',
-              outlined: true,
-            }
-          },
-          {
-            model: 'license_number',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.license_number',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.employee_id'),
-              type: 'text',
-              outlined: true,
-              counter: 20
-            }
-          },
-          {
-            model: 'license_state',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.license_state',
-            cols: 12,
-            sm: 6,
-            md: 4,
-            props: {
-              label: () => self.$t('vehicle_dashboard.license_state'),
-              type: 'text',
-              counter: 2
-            }
-          }
-        ]
-      },
-      {
-        // Contact Information Section
-        key: 'vehicle_dashboard.contact_information',
-        class: 'col-md-6 pr-md-1',
-        fields: [
-          {
-            model: 'address_1',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.address_1',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.address_1')
-            }
-          },
-          {
-            model: 'address_2',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.address_2',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.address_2')
-            }
-          },
-          {
-            model: 'city',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.city',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.city')
-            }
-          },
-          {
-            model: 'county',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.county',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.county')
-            }
-          },
-          {
-            model: 'state',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.state',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.state')
-            }
-          },
-          {
-            model: 'zip',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.zip',
-            cols: 12,
-            sm: 6,
-            props: {
-              label: () => self.$t('vehicle_dashboard.zip')
-            }
-          }
-        ]
-      },
-      {
-        // Customization
-        key: 'vehicle_dashboard.customization',
-        class: 'col-md-6 pl-md-1',
-        fields: [
-          {
-            model: 'driver_use_1',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.driver_use_1',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.driver_use_1')
-            }
-          },
-          {
-            model: 'driver_use_2',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.driver_use_2',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.driver_use_2')
-            }
-          },
-          {
-            model: 'driver_use_3',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.driver_use_3',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.driver_use_3')
-            }
-          },
-          {
-            model: 'driver_use_4',
-            is: 'v-text-field',
-            key: 'vehicle_dashboard.driver_use_4',
-            cols: 12,
-            props: {
-              label: () => self.$t('vehicle_dashboard.driver_use_4')
-            }
-          }
-        ]
-      }
-    ],
+    // menu actions
     actions: [
       {
         key: 'vehicle_dashboard.edit_driver',
@@ -367,169 +316,424 @@ export default {
         action: () => alert('add new driver')
       }
     ],
-    driverSections: [
-      {
-        key: 'vehicle_dashboard.driver_information',
-        fields: [
-          {
-            key: 'vehicle_dashboard.last_name',
-            editable: true,
-            class: 'col-6',
-            value: 'Klonowski'
-          },
-          {
-            key: 'vehicle_dashboard.first_name',
-            editable: true,
-            class: 'col-6',
-            value: 'Jimmy'
-          },
-          {
-            key: 'vehicle_dashboard.selector_level',
-            editable: true,
-            class: 'col-6',
-            value: 'something'
-          },
-          {
-            key: 'vehicle_dashboard.employee_id',
-            editable: false,
-            class: 'col-6',
-            value: '112233'
-          }
-        ]
-      },
-      {
-        key: 'vehicle_dashboard.contact_information',
-        fields: [
-          {
-            key: 'vehicle_dashboard.address_1',
-            editable: true,
-            class: 'col-6',
-            value: 'EMKAY, Inc'
-          },
-          {
-            key: 'vehicle_dashboard.address_2',
-            editable: true,
-            class: 'col-6',
-            value: '805 W Thorndale Ave.'
-          },
-          {
-            key: 'vehicle_dashboard.city_state_zip',
-            editable: true,
-            class: 'col-6',
-            value: 'Itasca, IL 60189'
-          },
-          {
-            key: 'vehicle_dashboard.county',
-            editable: true,
-            class: 'col-6',
-            value: 'DuPage'
-          },
-          {
-            key: 'vehicle_dashboard.phone',
-            editable: true,
-            class: 'col-6',
-            value: '630-864-0999'
-          },
-          {
-            key: 'vehicle_dashboard.cell',
-            editable: true,
-            class: 'col-6',
-            value: '630-864-0000'
-          },
-          {
-            key: 'vehicle_dashboard.fax',
-            editable: true,
-            class: 'col-6',
-            value: '630-FAX-MKAY'
-          },
-          {
-            key: 'vehicle_dashboard.email',
-            editable: true,
-            class: 'col-6',
-            value: 'jklonowski@email.com'
-          }
-        ]
-      },
-      {
-        key: 'vehicle_dashboard.customization',
-        fields: [
-          {
-            key: 'vehicle_dashboard.driver_custom_1_label',
-            editable: true,
-            class: 'col-6',
-            value: 'Driver Misc 1'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_1',
-            editable: true,
-            class: 'col-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_2_label',
-            editable: true,
-            class: 'col-6',
-            value: 'Driver Misc 2'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_2',
-            editable: true,
-            class: 'col-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_3_label',
-            editable: true,
-            class: 'col-6',
-            value: 'Driver Misc 3'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_3',
-            editable: true,
-            class: 'col-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_4_label',
-            editable: true,
-            class: 'col-6',
-            value: 'Driver Misc 4'
-          },
-          {
-            key: 'vehicle_dashboard.driver_custom_4',
-            editable: true,
-            class: 'col-6',
-            value: 'asdf'
-          }
-        ]
-      }
-    ]
+
+    // Model
+    model: {
+      // Driver Information
+      last_name: '',
+      first_name: '',
+      employee_id: '',
+      license_state: '',
+      license_number: '',
+      selector_level: '',
+      // Contact Information
+      address_1: '',
+      address_2: '',
+      postal_code: '',
+      city: '',
+      state_province: '',
+      county: '',
+      email: '',
+      phone: '',
+      cell: '',
+      // Customization
+      driver_use_1: '',
+      driver_use_2: '',
+      driver_use_3: '',
+      driver_use_4: ''
+    }
   }),
+  computed: {
+    // need to use computed property to store schema because i18n translations need to be computed
+    schema() {
+      return {
+        // Driver Information
+        last_name: {
+          label: this.$t('vehicle_dashboard.last_name'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        first_name: {
+          label: this.$t('vehicle_dashboard.first_name'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        employee_id: {
+          label: this.$t('vehicle_dashboard.employee_id'),
+          type: 'text',
+          counter: 9,
+          //['error-messages']: this.employeeIdErrors(), // okay syntax!
+          errorMessages: this.employeeIdErrors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        selector_level: {
+          label: this.$t('vehicle_dashboard.selector_level'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        license_number: {
+          label: this.$t('vehicle_dashboard.license_number'),
+          type: 'text',
+          counter: 20,
+          errorMessages: this.licenseNumberErrors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        license_state: {
+          label: this.$t('vehicle_dashboard.license_state'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        // Contact Information
+        address_1: {
+          label: this.$t('vehicle_dashboard.address_1'),
+          type: 'text',
+          errorMessages: this.address1Errors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        address_2: {
+          label: this.$t('vehicle_dashboard.address_2'),
+          type: 'text',
+          errorMessages: this.address2Errors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        city: {
+          label: this.$t('vehicle_dashboard.city'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        state_province: {
+          label: this.$t('vehicle_dashboard.state_province'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        county: {
+          label: this.$t('vehicle_dashboard.county'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        postal_code: {
+          label: this.$t('vehicle_dashboard.postal_code'),
+          type: 'text',
+          clearable: true,
+          error: this.hasPostalCodeError,
+          loading: this.loadingPostalCode,
+          errorMessages: this.postalCodeErrors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        email: {
+          label: this.$t('vehicle_dashboard.email'),
+          type: 'email',
+          errorMessages: this.emailErrors(),
+          errorCount: 1,
+          outlined: true,
+          dense: true
+        },
+        phone: {
+          label: this.$t('vehicle_dashboard.phone'),
+          type: 'tel',
+          errorMessages: this.phoneErrors(),
+          mask: '(###) ###-####',
+          outlined: true,
+          dense: true
+        },
+        cell: {
+          label: this.$t('vehicle_dashboard.cell'),
+          type: 'tel',
+          mask: '(###) ###-####',
+          errorMessages: this.cellErrors(),
+          outlined: true,
+          dense: true
+        },
+        // Customization
+        driver_use_1: {
+          label: this.$t('vehicle_dashboard.driver_use_1'),
+          type: 'text',
+          counter: 40,
+          errorMessages: this.driverUse1Errors(),
+          outlined: true,
+          dense: true
+        },
+        driver_use_2: {
+          label: this.$t('vehicle_dashboard.driver_use_2'),
+          type: 'text',
+          counter: 40,
+          errorMessages: this.driverUse2Errors(),
+          outlined: true,
+          dense: true
+        },
+        driver_use_3: {
+          label: this.$t('vehicle_dashboard.driver_use_3'),
+          type: 'text',
+          counter: 40,
+          errorMessages: this.driverUse3Errors(),
+          outlined: true,
+          dense: true
+        },
+        driver_use_4: {
+          label: this.$t('vehicle_dashboard.driver_use_4'),
+          type: 'text',
+          counter: 40,
+          errorMessages: this.driverUse4Errors(),
+          outlined: true,
+          dense: true
+        }
+      }
+    }
+  },
+  watch: {
+    // set up watcher to monitor ZIP code field, and request city/state/county from DBC on change
+    'model.postal_code': function(newValue, oldValue) {
+      if (this.isInitializing) return // not initialized, ignore change
+      else if (oldValue === newValue) return // no change, but update somehow triggered
+      else if (!newValue) {
+        // newValue is empty, so also clear the city/state/county
+        this.model.city = ''
+        this.model.state_province = ''
+        this.model.county = ''
+        return
+      }
+      else {
+        //import ApiService instead of using axios directly and call ApiService.get(url, newValue)
+        let url = `/postalcode/${newValue}`
+        
+        if (newValue.length >= 5) {
+          //debugger
+          this.loadingPostalCode = true
+          this.$http
+            .get(url)
+            .then(response => {
+              this.model = { ...this.model, ...response.data }
+              this.hasPostalCodeError = false
+            })
+            .catch(err => {
+              this.hasPostalCodeError = true
+              this.errorMessage = err.message
+            })
+            .finally(() => {
+              this.loadingPostalCode = false
+            })
+          console.log('POSTAL CODE CHANGED!')
+        }
+      }
+    }
+  },
+  async created() {
+    // Populate the panel
+    this.isInitializing = true
+    this.loading = true
+    this.$store
+      .dispatch(FETCH_DRIVER_DETAILS, this.vehicle)
+      .then(response => {
+        // Populate model
+        this.model = response.data
+        // Save off original model in case we are unhappy with our edits and want to cancel
+        this.originalModel = { ...this.model }
+      })
+      .catch(error => {
+        debugger
+        this.errorMessage = error.message
+      })
+      .finally(() => {
+        this.isInitializing = false
+        this.loading = false
+      })
+  },
+  validations: {
+    model: {
+      // Driver Information
+      last_name: { required },
+      first_name: { required },
+      employee_id: { required, isLength: isLength(9) },
+      selector_level: { required },
+      license_number: { required, isLength: isLength(20) },
+      license_state: { required },
+      // Contact Information
+      address_1: { required, maxLength: maxLength(30) },
+      address_2: { maxLength: maxLength(30) },
+      city: {},
+      county: {},
+      state_province: {},
+      postal_code: { required /*,maxLength: maxLength(10)*/ },
+      email: { required, email },
+      phone: {},
+      cell: {},
+      // Customization
+      driver_use_1: { maxLength: maxLength(40) },
+      driver_use_2: { maxLength: maxLength(40) },
+      driver_use_3: { maxLength: maxLength(40) },
+      driver_use_4: { maxLength: maxLength(40) }
+    }
+  },
   methods: {
+    handleUpdate(field, val) {
+      //@update="model.employee_id = $event;$v.model.employee_id.$touch()"
+      this.model[field] = val
+      this.$v.model[field].$touch()
+    },
+    //tedious validators
+    employeeIdErrors() {
+      const errors = []
+      if (!this.$v.model.employee_id.$dirty) return errors
+      !this.$v.model.employee_id.required &&
+        errors.push(this.translateError('validation.required', 'vehicle_dashboard.employee_id'))
+      !this.$v.model.employee_id.isLength &&
+        errors.push(this.translateError('validation.length', 9))
+      return errors
+    },
+    licenseNumberErrors() {
+      const errors = []
+      if (!this.$v.model.license_number.$dirty) return errors
+      !this.$v.model.license_number.required &&
+        errors.push(this.translateError('validation.required','vehicle_dashboard.license_number'))
+      !this.$v.model.license_number.isLength &&
+        errors.push(this.translateError('validation.length', 20))
+      return errors
+    },
+    address1Errors() {
+      const errors = []
+      if (!this.$v.model.address_1.$dirty) return errors
+      !this.$v.model.address_1.required &&
+        errors.push(this.translateError('validation.required', 'vehicle_dashboard.address_1'))
+      !this.$v.model.address_1.maxLength &&
+        errors.push(this.translateError('validation.max_length', 30))
+      return errors
+    },
+    address2Errors() {
+      const errors = []
+      if (!this.$v.model.address_2.$dirty) return errors
+      !this.$v.model.address_2.maxLength &&
+        errors.push(this.translateError('validation.max_length', 30))
+      return errors
+    },
+    cityErrors() {
+      const errors = []
+      return errors
+    },
+    stateProvinceErrors() {
+      const errors = []
+      return errors
+    },
+    countyErrors() {
+      const errors = []
+      return errors
+    },
+    postalCodeErrors() {
+      const errors = []
+      if (!this.$v.model.postal_code.$dirty) return errors
+      !this.$v.model.postal_code.required &&
+        errors.push(this.translateError('validation.required','vehicle_dashboard.postal_code'))
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.model.email.$dirty) return errors
+      !this.$v.model.email.email &&
+        errors.push(this.translateError('validation.invalid', 'vehicle_dashboard.email'))
+      !this.$v.model.email.required &&
+        errors.push(this.translateError('validation.required', 'vehicle_dashboard.email'))
+      return errors
+    },
+    phoneErrors() {
+      const errors = []
+      return errors
+    },
+    cellErrors() {
+      const errors = []
+      return errors
+    },
+    driverUse1Errors() {
+      const errors = []
+      if (!this.$v.model.driver_use_1.$dirty) return errors
+      !this.$v.model.driver_use_1.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    driverUse2Errors() {
+      const errors = []
+      if (!this.$v.model.driver_use_2.$dirty) return errors
+      !this.$v.model.driver_use_2.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    driverUse3Errors() {
+      const errors = []
+      if (!this.$v.model.driver_use_3.$dirty) return errors
+      !this.$v.model.driver_use_3.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    driverUse4Errors() {
+      const errors = []
+      if (!this.$v.model.driver_use_4.$dirty) return errors
+      !this.$v.model.driver_use_4.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    translateError(msgKey, fieldKey) {
+      let attribute =
+        typeof fieldKey === 'string' ? this.$t(fieldKey) : fieldKey
+      return this.$t(msgKey, { attribute })
+    },
     toggleEdit() {
       this.isEditing = !this.isEditing
       this.menuOpen = false
       this.errorMessage = null
     },
+    clearCityStateCounty() {
+      this.model.city = ''
+      this.model.state_province = ''
+      this.model.county = ''
+    },
+    cancelEdit() {
+      this.isEditing = !this.isEditing
+      this.errorMessage = null
+      // restore the original model if we want to cancel the edit
+      Object.assign(this.model, this.originalModel)
+    },
     onSubmit() {
       this.errorMessage = null
       this.loading = true
 
-      const url = '/test/error'
-      if (!this.$refs.form.validate()) {
-        this.errorMessage = 'Fix validation errors'
+      const url = '/test/post'
+
+      // trigger validations
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.errorMessage = 'Fix Validation Errors, dude!'
         this.loading = false
         return false
       }
 
       this.$http
-        .post(url)
+        .post(url, this.model)
         .then(result => {
           console.log(`Successful result: ${result}`)
           this.errorMessage = null
+          this.originalModel = this.model
         })
-        .catch(err => {
-          this.errorMessage = err.message
+        .catch(error => {
+          console.log(error.response)
+          this.errorMessage = error.response.data.message
         })
         .finally(() => {
           this.loading = false

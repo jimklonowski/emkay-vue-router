@@ -2,7 +2,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 // delay all requests by 2sec
-let mock = new MockAdapter(axios, { delayResponse: 2500 })
+let mock = new MockAdapter(axios, { delayResponse: 500 })
 
 const MockService = {
   init() {
@@ -708,84 +708,70 @@ const MockService = {
           id: '006'
         }
       ])
+      // mock driver details
+      .onGet('/vehicle/driver-details/123456')
+      .reply(200, {
+        // Model - driver info
+        last_name: 'KLONOWSKI',
+        first_name: 'JAMES',
+        employee_id: '123456789',
+        license_state: 'IL',
+        license_number: 'ABCDEF12309876QWERTY',
+        selector_level: 'I.T.',
+        // Model - contact info
+        address_1: 'EMKAY, Inc',
+        address_2: '805 W THORNDALE AVE',
+        postal_code: '60143',
+        city: 'ITASCA',
+        state_province: 'IL',
+        county: 'DUPAGE',
+        email: 'JKLONOWSKI@email.com',
+        phone: '630-864-0000',
+        cell: '630-864-0999',
+        // Model - customization
+        driver_use_1: 'Sales',
+        driver_use_2: 'Senior Sales',
+        driver_use_3: 'Bermuda Office',
+        driver_use_4: 'Parking Spot #3A'
+      })
+      // mock zip code requests
+      .onGet('/postalcode/60143')
+      .reply(200, {
+        county: 'DuPage',
+        city: 'Itasca',
+        state_province: 'IL'
+      })
+      // mock vehicle details
+      .onGet('/vehicle/vehicle-details/123456')
+      .reply(200, {
+        // Account Information
+        account: 'EM102',
+        billing_sort: 'JCKBILLING',
+        center: '0x1',
+        center_description: 'Information Technology',
+        // Vehicle Information
+        year: '2020',
+        make: 'TESLA',
+        model: 'Model X P100D',
+        vin: 'K45286378154321EL',
+        vehicle_number: '123456',
+        client_vehicle_number: 'D34DB33F',
+        // Customization
+        client_use_1: 'Custom 1',
+        client_use_label_1: 'Custom 1 Label',
+        client_use_2: 'Custom 2',
+        client_use_label_2: 'Custom 2 Label',
+        client_use_3: 'Custom 3',
+        client_use_label_3: 'Custom 3 Label',
+        client_use_4: 'Custom 4',
+        client_use_label_4: 'Custom 4 Label',
+        client_use_5: 'Custom 5',
+        client_use_label_5: 'Custom 5 Label'
+      })
+      .onPost('/test/post')
+      .reply(400, { message: 'an error occurred, dude!' })
       .onAny()
       .passThrough()
-
-    // mock
-    //   .onPost('/auth/login', { account: 'EM102', username: 'JCK', password: '123' })
-    //   .reply(200, {
-    //     user: {
-    //       account: 'EM102',
-    //       username: 'JCK',
-    //       isAdmin: false,
-    //       token: 'JCK12345'
-    //     }
-    //   })
-    //   .onAny()
-    //   .passThrough()
-
-    // // // EM102,JCK,123: Login Success, isAdmin=false
-    // mock
-    //   .onPost('/users/login', {
-    //     user: { account: 'EM102', username: 'JCK', password: '123' }
-    //   })
-    //   .reply(200, {
-    //     user: {
-    //       account: 'EM102',
-    //       username: 'JCK',
-    //       isAdmin: false,
-    //       token: 'JCK12345'
-    //     }
-    //   })
-
-    // // EM102,admin,admin: Login Success, isAdmin=true
-    // mock
-    //   .onPost('/users/login', {
-    //     user: { account: 'EM102', username: 'admin', password: 'admin' }
-    //   })
-    //   .reply(200, {
-    //     user: {
-    //       account: 'EM102',
-    //       username: 'admin',
-    //       isAdmin: true,
-    //       token: 'ADMIN12345'
-    //     }
-    //   })
-
-    // // EM102,jklonowski@emkay.com: return user
-    // mock
-    //   .onPost('/users/login-help', {
-    //     user: { account: 'EM102', email: 'jklonowski@emkay.com' }
-    //   })
-    //   .reply(200, {
-    //     user: {
-    //       account: 'EM102',
-    //       username: 'JCK',
-    //       password: '123',
-    //       isAdmin: false,
-    //       token: 'JCK12345'
-    //     }
-    //   })
-
-    // // EM102,bad,bad: LoginFailure
-    // mock
-    //   .onPost('/users/login', {
-    //     user: { account: 'EM102', username: 'bad', password: 'bad' }
-    //   })
-    //   .reply(500, {
-    //     user: { isAdmin: false },
-    //     errors: ['Invalid Credentials!'],
-    //     success: false
-    //   })
-
-    // mock.onPost('/test/error').reply(400, { success: false })
-    // mock.onPost('/test/ok').reply(200, { success: true })
-    // mock.onPost('/test/unauthorized').reply(401, { success: false })
-    // //mock.onGet('/user/').reply(200, { user: { account: 'EM102', username: 'JCK', token: '1234567890' } })
-
-    // mock.onPost('/services', { command: 'VueAuth' }).passThrough()
-    // // Pass through all get requests to server
-    // mock.onGet().passThrough()
   }
 }
 

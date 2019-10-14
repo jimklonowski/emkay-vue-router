@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from '@/App.vue'
 import '@babel/polyfill'
-//import router from '@/router.js'
 import router from '@/router'
 import store from '@/store'
 import axios from 'axios'
@@ -12,7 +11,14 @@ import nprogress from '@/plugins/nprogress'
 import kendoComponents from '@/plugins/kendo'
 import i18n from '@/plugins/i18n'
 
-// excel export component
+// validation
+import Vuelidate from 'vuelidate'
+import VuelidateErrorExtractor, { templates } from 'vuelidate-error-extractor'
+Vue.use(Vuelidate)
+Vue.use(VuelidateErrorExtractor, {
+  template: templates.singleErrorExtractor.foundation6,
+  i18n: 'validation'
+})
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

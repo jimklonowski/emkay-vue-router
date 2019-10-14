@@ -1,4 +1,5 @@
 import i18n from '@/plugins/i18n'
+import { helpers } from 'vuelidate/lib/validators'
 // Must be called in Vue context
 export function goTo(id) {
   this.$vuetify.goTo(id).then(() => {
@@ -13,6 +14,11 @@ export function goTo(id) {
   })
 }
 
+/**
+ * Generate .xls filename with timestamp for export
+ * @param {*} name 
+ * @param {*} format 
+ */
 export const nameForExport = (name, format) => {
   let today = new Date().toLocaleDateString()
   return `${name}_${today}.${format}`
@@ -30,3 +36,9 @@ export const headersForExport = headers => {
   // return a single object with all exported columns as fields
   return Object.assign({}, ...headerColumns)
 }
+
+
+/**
+ * isLength(n) validator for vuelidate
+ *  */
+export const isLength = length => value => helpers.len(value) === length

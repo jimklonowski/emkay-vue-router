@@ -59,6 +59,19 @@ export default {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+.details-label {
+  height: 16px !important;
+  line-height: 16px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+.text-label {
+  height: 20px !important;
+  line-height: 20px !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
 input:-webkit-autofill {
   &,
   &:hover,

@@ -31,7 +31,7 @@
                   <v-list-item-content>
                     <v-list-item-title v-if="item.component">
                       <component
-                        :is="item.component.is"
+                        :is="item.component"
                         :key="item.key"
                         :vehicle="vehicle"
                       />
@@ -46,143 +46,265 @@
                   class="mb-1"
                 />
               </template>
-              <!-- Additional Actions
-              <order-status /> -->
             </v-list>
           </v-menu>
         </v-toolbar>
         <v-divider />
         <v-card-text class="pa-0">
-          <v-list
-            v-for="(section, i) in vehicleSections"
-            :key="i"
-            class="pa-0"
-            subheader
-            dense
-          >
-            <v-subheader v-t="section.key" :class="$config.SUBHEADER_CLASS" />
-            <div class="px-3">
-              <v-row dense>
-                <v-list-item
-                  v-for="(field, j) in section.fields"
-                  :key="j"
-                  :class="field.class"
-                  style="user-select:text !important;"
-                >
-                  <v-list-item-content
-                    v-if="isEditing"
-                    :class="{ 'pt-4': field.component ? false : true }"
-                    :style="{ height: field.component ? 'auto' : '72px' }"
-                  >
-                    <v-list-item-subtitle
-                      :class="$config.LABEL_CLASS"
-                      v-text="$t(field.key)"
-                      v-if="field.component"
-                    />
-                    <component
-                      :is="field.component || 'v-text-field'"
-                      :v-model="field"
-                      :value="field.value"
-                      :label="$t(field.key)"
-                      :rules="rules.required"
-                      :disabled="!field.editable"
-                      outlined
-                      dense
-                    />
-                    <!-- <v-text-field
-                      :v-model="field"
-                      :value="field.value"
-                      :label="$t(field.key)"
-                      :rules="rules.required"
-                      :disabled="!field.editable"
-                      outlined
-                      dense
-                    /> -->
-                  </v-list-item-content>
-                  <v-list-item-content
-                    v-else
-                    class="pt-1 pb-6"
-                    style="height:72px"
-                  >
-                    <v-list-item-subtitle
-                      :class="$config.LABEL_CLASS"
-                      v-text="$t(field.key)"
-                    />
-                    <v-list-item-title
-                      :class="$config.FIELD_CLASS"
-                      v-text="field.value"
-                    />
-                  </v-list-item-content>
-                </v-list-item>
-              </v-row>
-            </div>
-          </v-list>
+          <v-container class="py-0">
+            <v-row>
+              <!-- Account Information -->
+              <header
+                v-t="'vehicle_dashboard.account_information'"
+                :class="$config.SUBHEADER_CLASS"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.account"
+                :schema="schema.account"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.center_description"
+                :schema="schema.center_description"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.billing_sort"
+                :schema="schema.billing_sort"
+                :cols="12"
+                :sm="6"
+              />
+              <field-with-loader
+                :is-initializing="isInitializing"
+                :is-editing="isEditing"
+                :model="model.center"
+                :schema="schema.center"
+                :cols="12"
+                :sm="6"
+              />
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-row>
+                  <!-- Vehicle Information -->
+                  <header
+                    v-t="'vehicle_dashboard.vehicle_information'"
+                    :class="$config.SUBHEADER_CLASS"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.year"
+                    :schema="schema.year"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.make"
+                    :schema="schema.make"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.model"
+                    :schema="schema.model"
+                    :cols="12"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.vin"
+                    :schema="schema.vin"
+                    :cols="12"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.vehicle_number"
+                    :schema="schema.vehicle_number"
+                    :cols="12"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_vehicle_number"
+                    :schema="schema.client_vehicle_number"
+                    :cols="12"
+                  />
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-row>
+                  <!-- Customization -->
+                  <header
+                    v-t="'vehicle_dashboard.customization'"
+                    :class="$config.SUBHEADER_CLASS"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_label_1"
+                    :schema="schema.client_use_label_1"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_1"
+                    :schema="schema.client_use_1"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_label_2"
+                    :schema="schema.client_use_label_2"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_2"
+                    :schema="schema.client_use_2"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_label_3"
+                    :schema="schema.client_use_label_3"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_3"
+                    :schema="schema.client_use_3"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_label_4"
+                    :schema="schema.client_use_label_4"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_4"
+                    :schema="schema.client_use_4"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_label_5"
+                    :schema="schema.client_use_label_5"
+                    :cols="12"
+                    :sm="6"
+                  />
+                  <field-with-loader
+                    :is-initializing="isInitializing"
+                    :is-editing="isEditing"
+                    :model="model.client_use_5"
+                    :schema="schema.client_use_5"
+                    :cols="12"
+                    :sm="6"
+                  />
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card-text>
-
-        <template v-if="isEditing">
-          <v-divider />
-          <v-card-actions>
-            <v-alert
-              v-if="errorMessage"
-              outlined
-              dense
-              class="mb-0"
-              type="error"
-              v-text="errorMessage"
-            />
-            <v-spacer />
-            <v-btn
-              v-t="'common.cancel'"
-              type="button"
-              color="error"
-              text
-              @click.prevent="toggleEdit"
-            />
-            <v-btn type="submit" dark outlined color="primary">
-              <v-icon dark v-text="'save'" />
-              {{ $t('common.save_changes') }}
-            </v-btn>
-          </v-card-actions>
-          <v-progress-linear
-            slot="progress"
-            absolute
-            bottom
-            color="primary"
-            :height="4"
-            indeterminate
+        <v-card-actions v-if="isEditing">
+          <v-alert
+            v-if="errorMessage"
+            outlined
+            dense
+            class="mb-0"
+            type="error"
+            v-text="errorMessage"
           />
-        </template>
+          <v-spacer />
+          <v-btn
+            v-t="'common.cancel'"
+            type="button"
+            color="error"
+            text
+            @click.prevent="cancelEdit"
+          />
+          <v-btn
+            v-t="'common.save_changes'"
+            type="submit"
+            color="primary"
+            :ripple="false"
+            dark
+            outlined
+          >
+            <v-icon dark v-text="'save'" />
+            {{ $t('common.save_changes') }}
+          </v-btn>
+        </v-card-actions>
+        <v-progress-linear
+          slot="progress"
+          absolute
+          bottom
+          color="primary"
+          :height="4"
+          indeterminate
+        />
       </v-card>
     </v-form>
   </article>
 </template>
 
 <script>
-import { VTextField } from 'vuetify/lib'
+import { maxLength, required } from 'vuelidate/lib/validators'
+import { isLength } from '@/util/helpers'
+import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
 import CenterPicker from '@/modules/core/components/CenterPicker'
 import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
+
+import { FETCH_VEHICLE_DETAILS } from '@/modules/vehicle/store/actions.type'
 
 export default {
   name: 'VehicleDetails',
   components: {
-    VTextField,
-    OrderStatus,
-    CenterPicker
+    FieldWithLoader,
+    CenterPicker,
+    OrderStatus
   },
   props: {
-    vehicle: {
-      type: String,
-      default: ''
-    }
+    vehicle: { type: String, default: '' }
   },
   data: self => ({
     errorMessage: null,
     isEditing: false,
+    isInitializing: false,
     loading: false,
     menuOpen: false,
-    rules: {
-      required: [v => !!v || 'Field is required']
-    },
+    // menu actions
     actions: [
       {
         key: 'vehicle_dashboard.edit_vehicle',
@@ -194,9 +316,7 @@ export default {
         key: 'vehicle_dashboard.order_status',
         icon: 'av_timer',
         action: () => {},
-        component: {
-          is: OrderStatus
-        }
+        component: OrderStatus
       },
       {
         key: 'vehicle_dashboard.schedule_ac',
@@ -219,163 +339,257 @@ export default {
         action: () => alert('Terminate Vehicle')
       }
     ],
-    vehicleSections: [
-      {
-        key: 'vehicle_dashboard.account_information',
-        fields: [
-          {
-            key: 'vehicle_dashboard.account',
-            label: 'Account',
-            editable: false,
-            class: 'col-md-6',
-            value: 'EM102'
-          },
-          {
-            key: 'vehicle_dashboard.billing_sort',
-            label: 'Billing Sort',
-            editable: false,
-            class: 'col-md-6',
-            value: '987654321OMG'
-          },
-          {
-            key: 'vehicle_dashboard.center',
-            label: 'Center',
-            editable: true,
-            class: 'col-12',
-            component: CenterPicker,
-            value: '001'
-          }
-        ]
-      },
-      {
-        key: 'vehicle_dashboard.vehicle_information',
-        fields: [
-          {
-            key: 'vehicle_dashboard.vin',
-            label: 'VIN',
-            editable: false,
-            class: 'col-md-6',
-            value: '987654321QWERTY'
-          },
-          {
-            key: 'vehicle_dashboard.vehicle_number',
-            label: 'Vehicle Number',
-            editable: false,
-            class: 'col-md-6',
-            value: 'E69420'
-          },
-          {
-            key: 'vehicle_dashboard.client_vehicle_number',
-            label: 'Client Vehicle Number',
-            editable: true,
-            class: 'col-md-6',
-            value: 'AAABBB'
-          }
-        ]
-      },
-      {
-        key: 'vehicle_dashboard.customization',
-        fields: [
-          {
-            key: 'vehicle_dashboard.custom_label_1',
-            label: 'Client Use 1 Label',
-            editable: true,
-            class: 'col-md-6',
-            value: 'Client Use 1'
-          },
-          {
-            key: 'vehicle_dashboard.custom_1',
-            label: 'Client Use 1',
-            editable: true,
-            class: 'col-md-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.custom_label_2',
-            label: 'Client Use 2 Label',
-            editable: true,
-            class: 'col-md-6',
-            value: 'Client Use 2'
-          },
-          {
-            key: 'vehicle_dashboard.custom_2',
-            label: 'Client Use 2',
-            editable: true,
-            class: 'col-md-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.custom_label_3',
-            label: 'Client Use 3 Label',
-            editable: true,
-            class: 'col-md-6',
-            value: 'Client Use 3'
-          },
-          {
-            key: 'vehicle_dashboard.custom_3',
-            label: 'Client Use 3',
-            editable: true,
-            class: 'col-md-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.custom_label_4',
-            label: 'Client Use 4 Label',
-            editable: true,
-            class: 'col-md-6',
-            value: 'Client Use 4'
-          },
-          {
-            key: 'vehicle_dashboard.custom_4',
-            label: 'Client Use 4',
-            editable: true,
-            class: 'col-md-6',
-            value: 'asdf'
-          },
-          {
-            key: 'vehicle_dashboard.custom_label_5',
-            label: 'Client Use 5 Label',
-            editable: true,
-            class: 'col-md-6',
-            value: 'Client Use 5'
-          },
-          {
-            key: 'vehicle_dashboard.custom_5',
-            label: 'Client Use 5',
-            editable: true,
-            class: 'col-md-6',
-            value: 'asdf'
-          }
-        ]
-      }
-    ]
+    // Model
+    model: {
+      // Account Information
+      account: '',
+      billing_sort: '',
+      center: '',
+      center_description: '',
+      // Vehicle Information
+      year: '',
+      make: '',
+      model: '',
+      vin: '',
+      vehicle_number: '',
+      client_vehicle_number: '',
+      // Customization
+      client_use_1: '',
+      client_use_label_1: '',
+      client_use_2: '',
+      client_use_label_2: '',
+      client_use_3: '',
+      client_use_label_3: '',
+      client_use_4: '',
+      client_use_label_4: '',
+      client_use_5: '',
+      client_use_label_5: ''
+    }
   }),
+  computed: {
+    schema() {
+      return {
+        // Account Information
+        account: {
+          label: this.$t('vehicle_dashboard.account'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        billing_sort: {
+          label: this.$t('vehicle_dashboard.billing_sort'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        center: {
+          label: this.$t('vehicle_dashboard.center'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        center_description: {
+          label: this.$t('vehicle_dashboard.center_description'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        // Vehicle Information
+        year: {
+          label: this.$t('vehicle_dashboard.year'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        make: {
+          label: this.$t('vehicle_dashboard.make'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        model: {
+          label: this.$t('vehicle_dashboard.model'),
+          type: 'text',
+          disabled: true,
+          outlined: true,
+          dense: true
+        },
+        vin: {
+          label: this.$t('vehicle_dashboard.vin'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        vehicle_number: {
+          label: this.$t('vehicle_dashboard.vehicle_number'),
+          type: 'text',
+          outlined: true,
+          disabled: true,
+          dense: true
+        },
+        client_vehicle_number: {
+          label: this.$t('vehicle_dashboard.client_vehicle_number'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        // Customization
+        client_use_1: {
+          label: this.$t('vehicle_dashboard.client_use_1'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_label_1: {
+          label: this.$t('vehicle_dashboard.client_use_label_1'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_2: {
+          label: this.$t('vehicle_dashboard.client_use_2'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_label_2: {
+          label: this.$t('vehicle_dashboard.client_use_label_2'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_3: {
+          label: this.$t('vehicle_dashboard.client_use_3'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_label_3: {
+          label: this.$t('vehicle_dashboard.client_use_label_3'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_4: {
+          label: this.$t('vehicle_dashboard.client_use_4'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_label_4: {
+          label: this.$t('vehicle_dashboard.client_use_label_4'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_5: {
+          label: this.$t('vehicle_dashboard.client_use_5'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+        client_use_label_5: {
+          label: this.$t('vehicle_dashboard.client_use_label_5'),
+          type: 'text',
+          outlined: true,
+          dense: true
+        },
+      }
+    }
+  },
+  async created() {
+    // Populate the panel
+    this.isInitializing = true
+    this.loading = true
+    this.$store
+      .dispatch(FETCH_VEHICLE_DETAILS, this.vehicle)
+      .then(response => {
+        // populate the model
+        this.model = response.data
+        // save off original model in case we are unhappy with our edits and want to cancel
+        this.originalModel = { ...this.model }
+      })
+      .catch(error => {
+        debugger
+        this.errorMessage = error.message
+      })
+      .finally(() => {
+        this.isInitializing = false
+        this.loading = false
+      })
+  },
+  validations: {
+    model: {
+      // Account Information
+      account: { required },
+      billing_sort: { required },
+      center: { required },
+      center_description: {},
+      // Vehicle Information
+      year: { required },
+      make: { required },
+      model: { required },
+      vin: { required },
+      vehicle_number: { required, isLength: isLength(6) },
+      client_vehicle_number: { maxLength: maxLength(8) },
+      // Customization
+      client_use_1: { maxLength: maxLength(40) },
+      client_use_label_1: { maxLength: maxLength(40) },
+      client_use_2: { maxLength: maxLength(40) },
+      client_use_label_2: { maxLength: maxLength(40) },
+      client_use_3: { maxLength: maxLength(40) },
+      client_use_label_3: { maxLength: maxLength(40) },
+      client_use_4: { maxLength: maxLength(40) },
+      client_use_label_4: { maxLength: maxLength(40) },
+      client_use_5: { maxLength: maxLength(40) },
+      client_use_label_5: { maxLength: maxLength(40) }
+    }
+  },
   methods: {
+    handleUpdate(field, val) {
+      // child component emitted a custom event and we should update the parent's (this component) model
+      this.model[field] = val
+      this.$v.model[field].$touch()
+    },
+    // tedious validators,
     toggleEdit() {
       this.isEditing = !this.isEditing
       this.menuOpen = false
       this.errorMessage = null
     },
+    cancelEdit() {
+      this.isEditing = !this.isEditing
+      this.errorMessage = null
+      // Restore original model if we cancel the edit, since the model may be dirty
+      Object.assign(this.model, this.originalModel)
+    },
     onSubmit() {
       this.errorMessage = null
       this.loading = true
 
-      // updateVehicle endpoint
-      const url = '/test/error'
-      if (!this.$refs.form.validate()) {
-        this.errorMessage = 'Fix validation errors'
+      const url = '/test/post'
+
+      // trigger validations
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.errorMessage = 'Fix Validation Errors, dude!'
         this.loading = false
         return false
       }
 
       this.$http
-        .post(url)
-        .then(() => {
-          //console.log(`Successful result: ${result}`)
+        .post(url, this.model)
+        .then(result => {
+          console.log(`Successful result: ${result}`)
           this.errorMessage = null
+          this.originalModel = this.model
         })
-        .catch(err => {
-          this.errorMessage = err.message
+        .catch(error => {
+          this.errorMessage = error.message
         })
         .finally(() => {
           this.loading = false
@@ -384,27 +598,3 @@ export default {
   }
 }
 </script>
-<style>
-.details-label {
-  height: 16px !important;
-  line-height: 16px !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-}
-.text-label {
-  height: 20px !important;
-  line-height: 20px !important;
-  font-size: 1rem !important;
-  font-weight: 400 !important;
-}
-.rotate-enter {
-  transform: perspective(500px) rotate3d(0, 1, 0, 90deg);
-}
-.rotate-enter-active,
-.rotate-leave-active {
-  transition: 0.5s;
-}
-.rotate-leave-to {
-  transform: perspective(500px) rotate3d(0, 1, 0, -90deg);
-}
-</style>
