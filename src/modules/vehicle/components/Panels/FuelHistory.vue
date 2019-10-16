@@ -1,7 +1,7 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="$config.TOOLBAR_CLASS">
+      <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
         <v-toolbar-title class="text-uppercase font-weight-black">
           <span v-t="'vehicle_dashboard.fuel'" />
           <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
@@ -72,6 +72,9 @@
           :loading="loading"
           dense
         >
+          <template #loading>
+            <v-skeleton-loader type="table-tbody" tile />
+          </template>
           <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
             https://github.com/vuetifyjs/vuetify/issues/8571#issuecomment-524846520
           -->

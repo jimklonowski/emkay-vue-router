@@ -4,20 +4,15 @@
     tile
     dense
     absolute
+    elevation="2"
     style="position:sticky;top:100px;z-index:4;"
     tag="nav"
   >
-    <v-tabs
-      color="blue-grey lighten-2"
-      background-color="white"
-      show-arrows
-      light
-    >
-      <v-tabs-slider color="blue-grey lighten-2" />
+    <v-tabs color="primary lighten-3">
+      <v-tabs-slider color="primary--text text--lighten-2" />
       <v-tab
         v-for="item in items"
         :key="item.text"
-        color="blue-grey lighten-2"
         :to="item.to"
         :vehicle="vehicle"
       >

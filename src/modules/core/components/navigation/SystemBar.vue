@@ -2,31 +2,31 @@
   <v-system-bar
     :class="this.$config.SYSTEM_BAR_CLASS"
     app
-    dark
     :height="height"
     style="z-index:5"
+    dark
   >
-    <v-btn
-      v-for="button in buttons"
-      v-if="authed"
-      :key="button.text"
-      :to="button.to"
-      small
-      text
-      tile
-      dark
-    >
-      <v-icon>{{ button.icon }}</v-icon>
-      <span class="system-bar-text">
-        {{ $tc(button.key, button.count) }}
-      </span>
-    </v-btn>
+    <template v-for="button in buttons">
+      <v-btn
+        v-if="authed"
+        :key="button.text"
+        :to="button.to"
+        small
+        text
+        tile
+      >
+        <v-icon>{{ button.icon }}</v-icon>
+        <span class="system-bar-text">
+          {{ $tc(button.key, button.count) }}
+        </span>
+      </v-btn>
+    </template>
     <div class="flex-grow-1" />
-    <v-btn v-if="authed" to="/fleet-navigator" small text tile dark>
+    <v-btn v-if="authed" to="/fleet-navigator" small text tile>
       <v-icon>widgets</v-icon>
       <span class="system-bar-text">{{ $t('features.fleet_navigator') }}</span>
     </v-btn>
-    <locale-switch />
+    <omni-switch />
     <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <span v-on="on" v-text="formatTime(now)" />
@@ -38,12 +38,14 @@
 
 <script>
 import moment from 'moment'
-import LocaleSwitch from '@/modules/core/components/navigation/LocaleSwitch'
+//import LocaleSwitch from '@/modules/core/components/navigation/LocaleSwitch'
+import OmniSwitch from '@/modules/core/components/navigation/OmniSwitch'
 
 export default {
   name: 'SystemBar',
   components: {
-    LocaleSwitch
+    OmniSwitch
+    //LocaleSwitch
   },
   props: {
     height: {

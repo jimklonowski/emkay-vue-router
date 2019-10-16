@@ -28,7 +28,11 @@ export default {
   computed: {
     authed() {
       return this.$store.getters.isAuthenticated
-    }
+    },
+  },
+  created() {
+    this.$vuetify.theme.dark = this.$store.getters.isDark
+    this.$i18n.locale = this.$store.getters.currentLocale
   },
   mounted() {},
   methods: {}

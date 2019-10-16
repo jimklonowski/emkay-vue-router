@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" scrollable max-width="1000">
+  <v-dialog v-model="dialog" max-width="1000">
     <template #activator="{ on }">
       <div v-t="key" v-on="on" @click.stop.prevent />
     </template>
 
     <v-card :loading="loading">
-      <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+      <v-toolbar :class="$config.TOOLBAR_CLASS">
         <v-toolbar-title class="text-uppercase font-weight-black">
           <span v-t="'vehicle_dashboard.order'" />
           <span v-t="'vehicle_dashboard.status'" class="font-weight-thin" />
@@ -17,28 +17,24 @@
         </v-btn>
       </v-toolbar>
       <v-divider />
-      <v-card-text style="max-height:600px;" class="py-0">
-        <v-timeline align-top>
-          <v-timeline-item
-            v-for="(date, key, index) in model.timeline"
-            :key="key"
-            small
-          >
-            <v-card dark>
-              <v-card-title v-t="`vehicle_dashboard.${key}`" />
-              <v-card-text v-text="date" />
-            </v-card>
-
-            <!-- <v-row :class="{ 'text-right': index % 2 !== 0 }">
-              <v-col cols="6" :order="[index % 2 === 0 ? 'first' : 'last']">
-                <span v-text="date" class="font-weight-bold" />
-              </v-col>
-              <v-col>
-                <span v-t="`vehicle_dashboard.${key}`" />
-              </v-col>
-            </v-row> -->
-          </v-timeline-item>
-        </v-timeline>
+      <v-card-text class="py-0">
+        <v-list dense>
+          <v-row dense>
+            <v-list-item
+              v-for="(field, index) in fields"
+              :key="index"
+              class="col-md-6"
+            >
+              <v-list-item-content>
+                <v-list-item-subtitle v-t="field.key" class="details-label" />
+                <v-list-item-title
+                  class="text-label blue-grey--text text--darken-2"
+                  v-text="field.value"
+                />
+              </v-list-item-content>
+            </v-list-item>
+          </v-row>
+        </v-list>
       </v-card-text>
       <v-card-actions />
     </v-card>
@@ -46,12 +42,13 @@
 </template>
 
 <script>
-import { isPastDate } from '@/util/helpers'
-
 export default {
   name: 'OrderStatus',
   props: {
-    vehicle: { type: String, default: '' }
+    vehicle: {
+      type: String,
+      default: ''
+    }
   },
   data: () => ({
     dialog: false,
@@ -59,37 +56,6 @@ export default {
     loading: false,
     icon: 'av_timer',
     key: 'vehicle_dashboard.order_status',
-
-    model: {
-      driver: '',
-      vehicle_number: '',
-      vehicle_description: '',
-      factory_order_number: '',
-      serial_number: '',
-      ship_to_dealer_info: '',
-      priority_code: '',
-      comments: '',
-      timeline: {
-        emkay_ordered_date: '',
-        emkay_received_date: '',
-        zone_received_date: '',
-        dealer_ordered_date: '',
-        sent_to_plant: '',
-        ship_to_dealer: '',
-        production_scheduled: '',
-        build_date: '',
-        shipped_to_body_co: '',
-        at_body_co: '',
-        shipped_from_body_co: '',
-        back_at_manufacturer: '',
-        shipped_to_dealer: '',
-        release_to_convoy: '',
-        delivery_to_dealer: '',
-        delivery_date: ''
-      }
-    },
-
-
     fields: [
       {
         name: 'driver',
@@ -132,8 +98,8 @@ export default {
         value: '112'
       },
       {
-        name: 'dealer_ordered_date',
-        key: 'vehicle_dashboard.dealer_ordered_date',
+        name: 'ordered_dealer',
+        key: 'vehicle_dashboard.ordered_dealer',
         value: '09-04-2019'
       },
       {
@@ -212,32 +178,7 @@ export default {
         value: 'this is for comments'
       }
     ]
-  }),
-  computed: {
-    past(date) {
-     return this.isPastDate(date)
-    }
-  },
-  async created() {
-    const url = '/order-status'
-    // fetch the data
-    this.loading = true
-    this.$http
-      .get(url, this.vehicle)
-      .then(response => {
-        this.model = { ...this.model, ...response.data }
-        this.errorMessage = null
-      })
-      .catch(error => {
-        this.errorMessage = error.message
-      })
-      .finally(() => {
-        this.loading = false
-      })
-  },
-  methods: {
-    isPastDate
-  }
+  })
 }
 </script>
 

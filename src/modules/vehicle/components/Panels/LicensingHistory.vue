@@ -1,7 +1,7 @@
 <template>
   <article>
     <v-card>
-      <v-toolbar :class="$config.TOOLBAR_CLASS">
+      <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
         <v-toolbar-title class="text-uppercase font-weight-black">
           <span v-t="'vehicle_dashboard.licensing'" />
           <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
@@ -72,6 +72,9 @@
           :loading="loading"
           dense
         >
+          <template #loading>
+            <v-skeleton-loader type="table-tbody" tile />
+          </template>
           <template
             v-for="header in headers"
             v-slot:[`header.${header.value}`]="{ header }"

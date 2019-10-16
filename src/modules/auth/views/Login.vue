@@ -64,13 +64,18 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text to="/login-help" tabindex="-1" v-t="'auth.forgot_password'" />
             <v-btn
+              v-t="'auth.forgot_password'"
+              to="/login-help"
+              tabindex="-1"
+              text
+            />
+            <v-btn
+              v-t="'auth.login'"
               type="submit"
               color="primary"
               class="mr-4"
               :disabled="!valid"
-              v-t="'auth.login'"
             />
           </v-card-actions>
         </v-form>

@@ -2,16 +2,11 @@
   <div v-scroll="onScroll" class="mb-12" v-on="$listeners">
     <slot name="top" />
     <ul class="toc my-5">
-      <li class="grey--text text--darken-3 pl-4 mb-2 body-1">
-        {{ $t('common.contents') }}
-      </li>
+      <li v-t="'common.contents'" class="pl-4 mb-2 body-1" />
       <li v-for="(item, index) in toc" :key="index" class="mb-2">
         <a
           :href="item.target"
-          :class="{
-            'primary--text': activeIndex === index,
-            'grey--text': activeIndex !== index
-          }"
+          :class="{ 'grey--text': activeIndex !== index }"
           :style="{ borderColor: activeIndex === index ? 'inherit' : null }"
           class="body-2 d-block"
           @click.stop.prevent="goTo(`#${item.id}`, options)"

@@ -2,9 +2,9 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="$config.TOOLBAR_CLASS">
-          <v-toolbar-title class="text-uppercase">
-            <span v-t="'vehicle_dashboard.vehicle'" class="font-weight-black" />
+        <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+          <v-toolbar-title class="text-uppercase font-weight-black">
+            <span v-t="'vehicle_dashboard.vehicle'" />
             <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
             <v-subheader class="d-inline" dark v-text="vehicle" />
           </v-toolbar-title>
@@ -54,7 +54,7 @@
           <v-container class="py-0">
             <v-row>
               <!-- Account Information -->
-              <header
+              <v-subheader
                 v-t="'vehicle_dashboard.account_information'"
                 :class="$config.SUBHEADER_CLASS"
               />
@@ -95,7 +95,7 @@
               <v-col cols="12" sm="6">
                 <v-row>
                   <!-- Vehicle Information -->
-                  <header
+                  <v-subheader
                     v-t="'vehicle_dashboard.vehicle_information'"
                     :class="$config.SUBHEADER_CLASS"
                   />
@@ -148,89 +148,89 @@
               <v-col cols="12" sm="6">
                 <v-row>
                   <!-- Customization -->
-                  <header
+                  <v-subheader
                     v-t="'vehicle_dashboard.customization'"
                     :class="$config.SUBHEADER_CLASS"
                   />
-                  <field-with-loader
+                  <!-- <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_label_1"
                     :schema="schema.client_use_label_1"
                     :cols="12"
                     :sm="6"
-                  />
+                  /> -->
                   <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_1"
                     :schema="schema.client_use_1"
                     :cols="12"
-                    :sm="6"
+                    @update="handleUpdate('client_use_1', $event)"
                   />
-                  <field-with-loader
+                  <!-- <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_label_2"
                     :schema="schema.client_use_label_2"
                     :cols="12"
                     :sm="6"
-                  />
+                  /> -->
                   <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_2"
                     :schema="schema.client_use_2"
                     :cols="12"
-                    :sm="6"
+                    @update="handleUpdate('client_use_2', $event)"
                   />
-                  <field-with-loader
+                  <!-- <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_label_3"
                     :schema="schema.client_use_label_3"
                     :cols="12"
                     :sm="6"
-                  />
+                  /> -->
                   <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_3"
                     :schema="schema.client_use_3"
                     :cols="12"
-                    :sm="6"
+                    @update="handleUpdate('client_use_3', $event)"
                   />
-                  <field-with-loader
+                  <!-- <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_label_4"
                     :schema="schema.client_use_label_4"
                     :cols="12"
                     :sm="6"
-                  />
+                  /> -->
                   <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_4"
                     :schema="schema.client_use_4"
                     :cols="12"
-                    :sm="6"
+                    @update="handleUpdate('client_use_4', $event)"
                   />
-                  <field-with-loader
+                  <!-- <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_label_5"
                     :schema="schema.client_use_label_5"
                     :cols="12"
                     :sm="6"
-                  />
+                  /> -->
                   <field-with-loader
                     :is-initializing="isInitializing"
                     :is-editing="isEditing"
                     :model="model.client_use_5"
                     :schema="schema.client_use_5"
                     :cols="12"
-                    :sm="6"
+                    @update="handleUpdate('client_use_5', $event)"
                   />
                 </v-row>
               </v-col>
@@ -251,6 +251,7 @@
             v-t="'common.cancel'"
             type="button"
             color="error"
+            :ripple="false"
             text
             @click.prevent="cancelEdit"
           />
@@ -259,21 +260,21 @@
             type="submit"
             color="primary"
             :ripple="false"
-            dark
-            outlined
+            depressed
+            tile
           >
             <v-icon dark v-text="'save'" />
             {{ $t('common.save_changes') }}
           </v-btn>
         </v-card-actions>
-        <v-progress-linear
+        <!-- <v-progress-linear
           slot="progress"
           absolute
           bottom
           color="primary"
           :height="4"
           indeterminate
-        />
+        /> -->
       </v-card>
     </v-form>
   </article>
@@ -281,9 +282,11 @@
 
 <script>
 import { maxLength, required } from 'vuelidate/lib/validators'
-import { isLength } from '@/util/helpers'
+import { isLength, translateError } from '@/util/helpers'
 import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
 import CenterPicker from '@/modules/core/components/CenterPicker'
+
+import EditCustomLabels from '@/modules/vehicle/components/Forms/EditCustomLabels'
 import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
 
 import { FETCH_VEHICLE_DETAILS } from '@/modules/vehicle/store/actions.type'
@@ -293,7 +296,8 @@ export default {
   components: {
     FieldWithLoader,
     CenterPicker,
-    OrderStatus
+    OrderStatus,
+    EditCustomLabels
   },
   props: {
     vehicle: { type: String, default: '' }
@@ -317,6 +321,12 @@ export default {
         icon: 'av_timer',
         action: () => {},
         component: OrderStatus
+      },
+      {
+        key: 'vehicle_dashboard.edit_custom_labels',
+        icon: 'label_important',
+        action: () => {},
+        component: EditCustomLabels
       },
       {
         key: 'vehicle_dashboard.schedule_ac',
@@ -354,16 +364,16 @@ export default {
       vehicle_number: '',
       client_vehicle_number: '',
       // Customization
-      client_use_1: '',
       client_use_label_1: '',
-      client_use_2: '',
+      client_use_1: '',
       client_use_label_2: '',
-      client_use_3: '',
+      client_use_2: '',
       client_use_label_3: '',
-      client_use_4: '',
+      client_use_3: '',
       client_use_label_4: '',
-      client_use_5: '',
-      client_use_label_5: ''
+      client_use_4: '',
+      client_use_label_5: '',
+      client_use_5: ''
     }
   }),
   computed: {
@@ -439,65 +449,80 @@ export default {
         },
         // Customization
         client_use_1: {
-          label: this.$t('vehicle_dashboard.client_use_1'),
+          //label: this.$t('vehicle_dashboard.client_use_1'),
+          label: this.getLabel('client_use_label_1'),
           type: 'text',
+          counter: 40,
+          errorMessages: this.clientUse1Errors(),
           outlined: true,
           dense: true
         },
-        client_use_label_1: {
-          label: this.$t('vehicle_dashboard.client_use_label_1'),
-          type: 'text',
-          outlined: true,
-          dense: true
-        },
+        // client_use_label_1: {
+        //   label: this.$t('vehicle_dashboard.client_use_label_1'),
+        //   type: 'text',
+        //   outlined: true,
+        //   dense: true
+        // },
         client_use_2: {
-          label: this.$t('vehicle_dashboard.client_use_2'),
+          //label: this.$t('vehicle_dashboard.client_use_2'),
+          label: this.getLabel('client_use_label_2'),
           type: 'text',
+          counter: 40,
+          errorMessages: this.clientUse2Errors(),
           outlined: true,
           dense: true
         },
-        client_use_label_2: {
-          label: this.$t('vehicle_dashboard.client_use_label_2'),
-          type: 'text',
-          outlined: true,
-          dense: true
-        },
+        // client_use_label_2: {
+        //   label: this.$t('vehicle_dashboard.client_use_label_2'),
+        //   type: 'text',
+        //   outlined: true,
+        //   dense: true
+        // },
         client_use_3: {
-          label: this.$t('vehicle_dashboard.client_use_3'),
+          //label: this.$t('vehicle_dashboard.client_use_3'),
+          label: this.getLabel('client_use_label_3'),
           type: 'text',
+          counter: 40,
+          errorMessages: this.clientUse3Errors(),
           outlined: true,
           dense: true
         },
-        client_use_label_3: {
-          label: this.$t('vehicle_dashboard.client_use_label_3'),
-          type: 'text',
-          outlined: true,
-          dense: true
-        },
+        // client_use_label_3: {
+        //   label: this.$t('vehicle_dashboard.client_use_label_3'),
+        //   type: 'text',
+        //   outlined: true,
+        //   dense: true
+        // },
         client_use_4: {
-          label: this.$t('vehicle_dashboard.client_use_4'),
+          //label: this.$t('vehicle_dashboard.client_use_4'),
+          label: this.getLabel('client_use_label_4'),
           type: 'text',
+          counter: 40,
+          errorMessages: this.clientUse4Errors(),
           outlined: true,
           dense: true
         },
-        client_use_label_4: {
-          label: this.$t('vehicle_dashboard.client_use_label_4'),
-          type: 'text',
-          outlined: true,
-          dense: true
-        },
+        // client_use_label_4: {
+        //   label: this.$t('vehicle_dashboard.client_use_label_4'),
+        //   type: 'text',
+        //   outlined: true,
+        //   dense: true
+        // },
         client_use_5: {
-          label: this.$t('vehicle_dashboard.client_use_5'),
+          //label: this.$t('vehicle_dashboard.client_use_5'),
+          label: this.getLabel('client_use_label_5'),
           type: 'text',
+          counter: 40,
+          errorMessages: this.clientUse5Errors(),
           outlined: true,
           dense: true
         },
-        client_use_label_5: {
-          label: this.$t('vehicle_dashboard.client_use_label_5'),
-          type: 'text',
-          outlined: true,
-          dense: true
-        },
+        // client_use_label_5: {
+        //   label: this.$t('vehicle_dashboard.client_use_label_5'),
+        //   type: 'text',
+        //   outlined: true,
+        //   dense: true
+        // }
       }
     }
   },
@@ -538,24 +563,67 @@ export default {
       client_vehicle_number: { maxLength: maxLength(8) },
       // Customization
       client_use_1: { maxLength: maxLength(40) },
-      client_use_label_1: { maxLength: maxLength(40) },
+      //client_use_label_1: { maxLength: maxLength(40) },
       client_use_2: { maxLength: maxLength(40) },
-      client_use_label_2: { maxLength: maxLength(40) },
+      //client_use_label_2: { maxLength: maxLength(40) },
       client_use_3: { maxLength: maxLength(40) },
-      client_use_label_3: { maxLength: maxLength(40) },
+      //client_use_label_3: { maxLength: maxLength(40) },
       client_use_4: { maxLength: maxLength(40) },
-      client_use_label_4: { maxLength: maxLength(40) },
+      //client_use_label_4: { maxLength: maxLength(40) },
       client_use_5: { maxLength: maxLength(40) },
-      client_use_label_5: { maxLength: maxLength(40) }
+      //client_use_label_5: { maxLength: maxLength(40) }
     }
   },
   methods: {
+    translateError,
     handleUpdate(field, val) {
       // child component emitted a custom event and we should update the parent's (this component) model
       this.model[field] = val
       this.$v.model[field].$touch()
     },
+    getLabel(key) {
+      // if there's a custom label already set, fetch it from the model and display it.
+      if (Object.prototype.hasOwnProperty.call(this.model, key) && !!this.model[key]) return this.model[key]
+      // otherwise, return the default i18n translation of 'vehicle_dashboard.custom_use_N_label'
+      return this.$t(`vehicle_dashboard.${key}`)
+    },
     // tedious validators,
+    clientUse1Errors() {
+      const errors = []
+      if (!this.$v.model.client_use_1.$dirty) return errors
+      !this.$v.model.client_use_1.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    clientUse2Errors() {
+      const errors = []
+      if (!this.$v.model.client_use_2.$dirty) return errors
+      !this.$v.model.client_use_2.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    clientUse3Errors() {
+      const errors = []
+      if (!this.$v.model.client_use_3.$dirty) return errors
+      !this.$v.model.client_use_3.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    clientUse4Errors() {
+      const errors = []
+      if (!this.$v.model.client_use_4.$dirty) return errors
+      !this.$v.model.client_use_4.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+    clientUse5Errors() {
+      const errors = []
+      if (!this.$v.model.client_use_5.$dirty) return errors
+      !this.$v.model.client_use_5.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
+      return errors
+    },
+
     toggleEdit() {
       this.isEditing = !this.isEditing
       this.menuOpen = false

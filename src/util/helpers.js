@@ -16,8 +16,8 @@ export function goTo(id) {
 
 /**
  * Generate .xls filename with timestamp for export
- * @param {*} name 
- * @param {*} format 
+ * @param {*} name
+ * @param {*} format
  */
 export const nameForExport = (name, format) => {
   let today = new Date().toLocaleDateString()
@@ -37,8 +37,22 @@ export const headersForExport = headers => {
   return Object.assign({}, ...headerColumns)
 }
 
-
 /**
  * isLength(n) validator for vuelidate
  *  */
 export const isLength = length => value => helpers.len(value) === length
+
+/**
+ * Translate Error
+ * @param {String} msgKey message translation key
+ * @param {String} fieldKey field name translation key
+ */
+export function translateError(msgKey, fieldKey) {
+  let attribute = typeof fieldKey === 'string' ? this.$t(fieldKey) : fieldKey
+  return this.$t(msgKey, { attribute })
+}
+
+export const isPastDate = date => {
+  const today = new Date()
+  return date <= today
+}

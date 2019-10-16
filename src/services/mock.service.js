@@ -1,7 +1,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-// delay all requests by 2sec
+// delay all requests by .5sec
 let mock = new MockAdapter(axios, { delayResponse: 500 })
 
 const MockService = {
@@ -16,7 +16,8 @@ const MockService = {
           account: 'EM102',
           username: 'JCK',
           isAdmin: false,
-          language: 'en',
+          isDark: false,
+          locale: 'en',
           access_token: 'ACCESS_TOKEN',
           refresh_token: 'REFRESH_TOKEN'
         }
@@ -28,7 +29,8 @@ const MockService = {
           account: 'EM102',
           username: 'JCK',
           isAdmin: false,
-          language: 'en',
+          isDark: false,
+          locale: 'en',
           access_token: 'ACCESS_TOKEN2',
           refresh_token: 'REFRESH_TOKEN2'
         }
@@ -729,9 +731,13 @@ const MockService = {
         phone: '630-864-0000',
         cell: '630-864-0999',
         // Model - customization
+        driver_use_label_1: 'Department',
         driver_use_1: 'Sales',
+        driver_use_label_2: 'Team',
         driver_use_2: 'Senior Sales',
+        driver_use_label_3: 'Office',
         driver_use_3: 'Bermuda Office',
+        driver_use_label_4: 'Parking',
         driver_use_4: 'Parking Spot #3A'
       })
       // mock zip code requests
@@ -757,19 +763,62 @@ const MockService = {
         vehicle_number: '123456',
         client_vehicle_number: 'D34DB33F',
         // Customization
-        client_use_1: 'Custom 1',
-        client_use_label_1: 'Custom 1 Label',
-        client_use_2: 'Custom 2',
-        client_use_label_2: 'Custom 2 Label',
-        client_use_3: 'Custom 3',
-        client_use_label_3: 'Custom 3 Label',
-        client_use_4: 'Custom 4',
-        client_use_label_4: 'Custom 4 Label',
-        client_use_5: 'Custom 5',
-        client_use_label_5: 'Custom 5 Label'
+        client_use_label_1: 'Department',
+        client_use_1: 'I.T.',
+        client_use_label_2: 'Project',
+        client_use_2: 'Web Rewrite',
+        client_use_label_3: 'Division',
+        client_use_3: 'JavaScript',
+        client_use_label_4: 'Group',
+        client_use_4: 'Lead',
+        client_use_label_5: 'Client Use Label 5',
+        client_use_5: 'Custom 5'
+      })
+      // mock custom labels populate
+      .onGet('/custom-labels')
+      .reply(200, {
+        client_use_label_1: 'Department',
+        client_use_label_2: 'Project',
+        client_use_label_3: 'Division',
+        client_use_label_4: 'Group',
+        client_use_label_5: 'Client Use Label 5',
+        driver_use_label_1: 'Department',
+        driver_use_label_2: 'Team',
+        driver_use_label_3: 'Office',
+        driver_use_label_4: 'Parking'
+      })
+      // mock order status
+      .onGet('/order-status')
+      .reply(200, {
+        driver: 'Klonowski, James',
+        vehicle_number: '123456',
+        vehicle_description: '2020 Tesla Model X',
+        factory_order_number: 'FO123',
+        serial_number: 'S123',
+        ship_to_dealer_info: 'This will be shipped to some dealer at some time...',
+        priority_code: 'PRIOX',
+        comments: 'asdf',
+        timeline: {
+          emkay_ordered_date: '2019-01-01',
+          emkay_received_date: '2019-01-02',
+          zone_received_date: '2019-01-03',
+          dealer_ordered_date: '2019-01-04',
+          sent_to_plant: '2019-01-05',
+          ship_to_dealer: '2019-01-06',
+          production_scheduled: '2019-01-07',
+          build_date: '2019-01-08',
+          shipped_to_body_co: '2019-01-09',
+          at_body_co: '2019-01-10',
+          shipped_from_body_co: '2019-01-11',
+          back_at_manufacturer: '2019-01-12',
+          shipped_to_dealer: '2019-01-13',
+          release_to_convoy: '2019-01-14',
+          delivery_to_dealer: '2019-01-15',
+          delivery_date: '2019-01-16',
+        }
       })
       .onPost('/test/post')
-      .reply(400, { message: 'an error occurred, dude!' })
+      .reply(400, { message: 'an error occurred, dude! (mock response)' })
       .onAny()
       .passThrough()
   }

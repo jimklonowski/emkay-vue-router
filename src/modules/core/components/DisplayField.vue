@@ -8,6 +8,15 @@
 <script>
 export default {
   name: 'DisplayField',
-  props: ['label','value']
+  props: {
+    label: {
+      type: String,
+      default: 'Label'
+    },
+    value: {
+      type: [String, Number],
+      default: ''
+    }
+  }
 }
 </script>

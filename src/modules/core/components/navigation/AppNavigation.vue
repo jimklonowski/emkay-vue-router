@@ -95,7 +95,7 @@ export default {
             ]
           },
           {
-            key: 'navigation.custom',
+            key: 'vehicle_dashboard.custom',
             items: [
               { key: 'navigation.vehicle_and_driver', to: '/todo' },
               { key: 'navigation.maintenance', to: '/todo' },
@@ -158,7 +158,7 @@ export default {
           {
             key: 'navigation.category',
             items: [
-              { 
+              {
                 key: 'navigation.approve_your_maintenance_repairs',
                 to: '/todo'
               },

@@ -3,5 +3,7 @@
 // https://vuex.vuejs.org/guide/mutations.html#mutations-must-be-synchronous
 export const PURGE_AUTH = 'logOut'
 export const SET_AUTH = 'setUser'
+export const SET_LOCALE = 'setLocale'
+export const SET_DARK = 'setDark'
 export const SET_ERROR = 'setError'
 //export const RESET_STATE = 'resetModuleState'

@@ -75,9 +75,9 @@
                     :style="{ height: field.component ? 'auto' : '72px' }"
                   >
                     <v-list-item-subtitle
+                      v-if="field.component"
                       :class="$config.LABEL_CLASS"
                       v-text="$t(field.key)"
-                      v-if="field.component"
                     />
                     <component
                       :is="field.component || 'v-text-field'"

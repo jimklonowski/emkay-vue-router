@@ -2,9 +2,9 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="$config.TOOLBAR_CLASS">
-          <v-toolbar-title class="text-uppercase">
-            <span v-t="'vehicle_dashboard.driver'" class="font-weight-black" />
+        <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+          <v-toolbar-title class="text-uppercase font-weight-black">
+            <span v-t="'vehicle_dashboard.driver'" />
             <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
             <v-subheader class="d-inline" dark v-text="vehicle" />
           </v-toolbar-title>
@@ -31,7 +31,7 @@
                   <v-list-item-content>
                     <v-list-item-title v-if="item.component">
                       <component
-                        :is="item.component.is"
+                        :is="item.component"
                         :key="item.key"
                         :vehicle="vehicle"
                       />
@@ -252,8 +252,8 @@
           <v-btn
             v-t="'common.cancel'"
             type="button"
-            :ripple="false"
             color="error"
+            :ripple="false"
             text
             @click.prevent="cancelEdit"
           />
@@ -262,8 +262,8 @@
             type="submit"
             color="primary"
             :ripple="false"
-            dark
-            outlined
+            depressed
+            tile
           >
             <v-icon dark v-text="'save'" />
             {{ $t('common.save_changes') }}
@@ -277,14 +277,20 @@
 <script>
 import { mask } from 'vue-the-mask'
 import { email, maxLength, required } from 'vuelidate/lib/validators'
-import { isLength } from '@/util/helpers'
+import { isLength, translateError } from '@/util/helpers'
 
+import AddDriver from '@/modules/vehicle/components/Forms/AddDriver'
+import EditCustomLabels from '@/modules/vehicle/components/Forms/EditCustomLabels'
 import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
 import { FETCH_DRIVER_DETAILS } from '@/modules/vehicle/store/actions.type'
 
 export default {
   name: 'DriverDetails',
-  components: { FieldWithLoader },
+  components: { 
+    AddDriver,
+    EditCustomLabels,
+    FieldWithLoader
+  },
   directives: { mask },
   props: {
     vehicle: { type: String, default: '' }
@@ -306,6 +312,12 @@ export default {
         divider: true
       },
       {
+        key: 'vehicle_dashboard.edit_custom_labels',
+        icon: 'label_important',
+        action: () => {},
+        component: EditCustomLabels
+      },
+      {
         key: 'vehicle_dashboard.reassign_driver',
         icon: 'assignment_ind',
         action: () => alert('reassign driver')
@@ -313,7 +325,8 @@ export default {
       {
         key: 'vehicle_dashboard.add_new_driver',
         icon: 'person_add',
-        action: () => alert('add new driver')
+        action: () => {},
+        component: AddDriver
       }
     ],
 
@@ -337,9 +350,13 @@ export default {
       phone: '',
       cell: '',
       // Customization
+      driver_use_label_1: '',
       driver_use_1: '',
+      driver_use_label_2: '',
       driver_use_2: '',
+      driver_use_label_3: '',
       driver_use_3: '',
+      driver_use_label_4: '',
       driver_use_4: ''
     }
   }),
@@ -470,7 +487,8 @@ export default {
         },
         // Customization
         driver_use_1: {
-          label: this.$t('vehicle_dashboard.driver_use_1'),
+          //label: this.$t('vehicle_dashboard.driver_use_1'),
+          label: this.getLabel('driver_use_label_1'),
           type: 'text',
           counter: 40,
           errorMessages: this.driverUse1Errors(),
@@ -478,7 +496,8 @@ export default {
           dense: true
         },
         driver_use_2: {
-          label: this.$t('vehicle_dashboard.driver_use_2'),
+          //label: this.$t('vehicle_dashboard.driver_use_2'),
+          label: this.getLabel('driver_use_label_2'),
           type: 'text',
           counter: 40,
           errorMessages: this.driverUse2Errors(),
@@ -486,7 +505,8 @@ export default {
           dense: true
         },
         driver_use_3: {
-          label: this.$t('vehicle_dashboard.driver_use_3'),
+          //label: this.$t('vehicle_dashboard.driver_use_3'),
+          label: this.getLabel('driver_use_label_3'),
           type: 'text',
           counter: 40,
           errorMessages: this.driverUse3Errors(),
@@ -494,7 +514,8 @@ export default {
           dense: true
         },
         driver_use_4: {
-          label: this.$t('vehicle_dashboard.driver_use_4'),
+          //label: this.$t('vehicle_dashboard.driver_use_4'),
+          label: this.getLabel('driver_use_label_4'),
           type: 'text',
           counter: 40,
           errorMessages: this.driverUse4Errors(),
@@ -507,19 +528,20 @@ export default {
   watch: {
     // set up watcher to monitor ZIP code field, and request city/state/county from DBC on change
     'model.postal_code': function(newValue, oldValue) {
-      if (this.isInitializing) return // not initialized, ignore change
-      else if (oldValue === newValue) return // no change, but update somehow triggered
+      if (this.isInitializing) return
+      // not initialized, ignore change
+      else if (oldValue === newValue) return
+      // no change, but update somehow triggered
       else if (!newValue) {
         // newValue is empty, so also clear the city/state/county
         this.model.city = ''
         this.model.state_province = ''
         this.model.county = ''
         return
-      }
-      else {
+      } else {
         //import ApiService instead of using axios directly and call ApiService.get(url, newValue)
         let url = `/postalcode/${newValue}`
-        
+
         if (newValue.length >= 5) {
           //debugger
           this.loadingPostalCode = true
@@ -574,9 +596,9 @@ export default {
       // Contact Information
       address_1: { required, maxLength: maxLength(30) },
       address_2: { maxLength: maxLength(30) },
-      city: {},
+      city: { required },
       county: {},
-      state_province: {},
+      state_province: { required },
       postal_code: { required /*,maxLength: maxLength(10)*/ },
       email: { required, email },
       phone: {},
@@ -589,17 +611,29 @@ export default {
     }
   },
   methods: {
+    translateError,
     handleUpdate(field, val) {
       //@update="model.employee_id = $event;$v.model.employee_id.$touch()"
       this.model[field] = val
       this.$v.model[field].$touch()
+    },
+    getLabel(key) {
+      // if there's a custom label already set, fetch it from the model and display it.
+      if (Object.prototype.hasOwnProperty.call(this.model, key) && !!this.model[key]) return this.model[key]
+      // otherwise, return the default i18n translation of 'vehicle_dashboard.custom_use_N_label'
+      return this.$t(`vehicle_dashboard.${key}`)
     },
     //tedious validators
     employeeIdErrors() {
       const errors = []
       if (!this.$v.model.employee_id.$dirty) return errors
       !this.$v.model.employee_id.required &&
-        errors.push(this.translateError('validation.required', 'vehicle_dashboard.employee_id'))
+        errors.push(
+          this.translateError(
+            'validation.required',
+            'vehicle_dashboard.employee_id'
+          )
+        )
       !this.$v.model.employee_id.isLength &&
         errors.push(this.translateError('validation.length', 9))
       return errors
@@ -608,7 +642,12 @@ export default {
       const errors = []
       if (!this.$v.model.license_number.$dirty) return errors
       !this.$v.model.license_number.required &&
-        errors.push(this.translateError('validation.required','vehicle_dashboard.license_number'))
+        errors.push(
+          this.translateError(
+            'validation.required',
+            'vehicle_dashboard.license_number'
+          )
+        )
       !this.$v.model.license_number.isLength &&
         errors.push(this.translateError('validation.length', 20))
       return errors
@@ -617,7 +656,12 @@ export default {
       const errors = []
       if (!this.$v.model.address_1.$dirty) return errors
       !this.$v.model.address_1.required &&
-        errors.push(this.translateError('validation.required', 'vehicle_dashboard.address_1'))
+        errors.push(
+          this.translateError(
+            'validation.required',
+            'vehicle_dashboard.address_1'
+          )
+        )
       !this.$v.model.address_1.maxLength &&
         errors.push(this.translateError('validation.max_length', 30))
       return errors
@@ -631,10 +675,23 @@ export default {
     },
     cityErrors() {
       const errors = []
+      if (!this.$v.model.city.$dirty) return errors
+      !this.$v.model.city.required &&
+        errors.push(
+          this.translateError('validation.required', 'vehicle_dashboard.city')
+        )
       return errors
     },
     stateProvinceErrors() {
       const errors = []
+      if (!this.$v.model.state_province.$dirty) return errors
+      !this.$v.model.state_province.required &&
+        errors.push(
+          this.translateError(
+            'validation.required',
+            'vehicle_dashboard.state_province'
+          )
+        )
       return errors
     },
     countyErrors() {
@@ -645,16 +702,25 @@ export default {
       const errors = []
       if (!this.$v.model.postal_code.$dirty) return errors
       !this.$v.model.postal_code.required &&
-        errors.push(this.translateError('validation.required','vehicle_dashboard.postal_code'))
+        errors.push(
+          this.translateError(
+            'validation.required',
+            'vehicle_dashboard.postal_code'
+          )
+        )
       return errors
     },
     emailErrors() {
       const errors = []
       if (!this.$v.model.email.$dirty) return errors
       !this.$v.model.email.email &&
-        errors.push(this.translateError('validation.invalid', 'vehicle_dashboard.email'))
+        errors.push(
+          this.translateError('validation.invalid', 'vehicle_dashboard.email')
+        )
       !this.$v.model.email.required &&
-        errors.push(this.translateError('validation.required', 'vehicle_dashboard.email'))
+        errors.push(
+          this.translateError('validation.required', 'vehicle_dashboard.email')
+        )
       return errors
     },
     phoneErrors() {
@@ -668,31 +734,30 @@ export default {
     driverUse1Errors() {
       const errors = []
       if (!this.$v.model.driver_use_1.$dirty) return errors
-      !this.$v.model.driver_use_1.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      !this.$v.model.driver_use_1.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
       return errors
     },
     driverUse2Errors() {
       const errors = []
       if (!this.$v.model.driver_use_2.$dirty) return errors
-      !this.$v.model.driver_use_2.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      !this.$v.model.driver_use_2.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
       return errors
     },
     driverUse3Errors() {
       const errors = []
       if (!this.$v.model.driver_use_3.$dirty) return errors
-      !this.$v.model.driver_use_3.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      !this.$v.model.driver_use_3.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
       return errors
     },
     driverUse4Errors() {
       const errors = []
       if (!this.$v.model.driver_use_4.$dirty) return errors
-      !this.$v.model.driver_use_4.maxLength && errors.push(this.translateError('validation.max_length', 40))
+      !this.$v.model.driver_use_4.maxLength &&
+        errors.push(this.translateError('validation.max_length', 40))
       return errors
-    },
-    translateError(msgKey, fieldKey) {
-      let attribute =
-        typeof fieldKey === 'string' ? this.$t(fieldKey) : fieldKey
-      return this.$t(msgKey, { attribute })
     },
     toggleEdit() {
       this.isEditing = !this.isEditing

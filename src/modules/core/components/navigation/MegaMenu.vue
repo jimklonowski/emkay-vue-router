@@ -42,7 +42,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'blue-grey lighten-1'
+      default: 'primary lighten-2'
     },
     categories: {
       type: Array,
