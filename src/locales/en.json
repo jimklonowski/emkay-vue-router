@@ -1,4 +1,13 @@
 {
+  "auth": {
+    "account": "Account",
+    "username": "Username",
+    "password": "Password",
+    "client": "Client",
+    "forgot_password": "Forgot Password",
+    "login": "Login",
+    "logout": "Logout"
+  },
   "common": {
     "summary": "Summary",
     "loading": "Loading",
@@ -12,15 +21,9 @@
     "export_to_csv": "Export to CSV",
     "description": "Description",
     "client": "Client",
-    "language": "Language"
-  },
-  "auth": {
-    "account": "Account",
-    "username": "Username",
-    "password": "Password",
-    "forgot_password": "Forgot Password",
-    "login": "Login",
-    "logout": "Logout"
+    "language": "Language",
+    "next": "Next",
+    "previous": "Previous"
   },
   "validation": {
     "required": "{attribute} is required.",

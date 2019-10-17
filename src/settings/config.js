@@ -11,8 +11,8 @@ const COMPONENT_HEADER_CLASS = 'primary darken-1 py-2 white--text'
 const SUBHEADER_CLASS = 'overline col-12'
 const FOOTER_CLASS = 'primary darken-2 py-2'
 //const FIELD_CLASS = 'text-label blue-grey--text text--darken-2'
-const FIELD_CLASS = 'text-label'
-const LABEL_CLASS = 'details-label'
+const FIELD_CLASS = 'display-field'
+const LABEL_CLASS = 'display-label'
 
 const config = {
   SYSTEM_BAR_CLASS,

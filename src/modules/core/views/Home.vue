@@ -1,22 +1,20 @@
 <template>
   <v-container fluid fill-height class="home">
-    <v-row dense>
-      <v-col cols="12">
-        <header class="display-4 font-weight-black">
-          {{ title }}
-        </header>
-      </v-col>
-      <v-col cols="12">
-        <v-subheader class="display-1 font-italic font-weight-thin">
-          {{ $t('navigation.tagline') }}
-        </v-subheader>
-      </v-col>
-      <v-col md="5">
-        <v-alert type="warning">
-          {{ loginDetails }}
-        </v-alert>
-      </v-col>
-    </v-row>
+    <v-card class="pa-4" elevation="0" max-width="750">
+      <v-container>
+        <v-row>
+          <header class="display-4 font-weight-black" v-text="title" />
+        </v-row>
+        <v-row>
+          <v-subheader class="display-1 font-italic font-weight-thin" v-t="'navigation.tagline'" />
+        </v-row>
+        <v-row>
+          <v-alert type="warning">
+            {{ loginDetails }}
+          </v-alert>
+        </v-row>
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 

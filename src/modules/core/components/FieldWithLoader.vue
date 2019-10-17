@@ -1,18 +1,16 @@
 <template>
   <v-col :cols="cols" :sm="sm" :md="md" :style="styleObject">
-    <transition name="rotate" mode="out-in">
+    <!-- <transition name="flip" mode="out-in"> -->
       <v-skeleton-loader v-if="isInitializing" type="list-item-two-line" tile />
-      <template v-else-if="isEditing">
-        <v-text-field
-          v-if="schema.mask"
-          v-model="modelProp"
-          v-mask="schema.mask"
-          v-bind="schema"
-        />
-        <v-text-field v-else v-model="modelProp" v-bind="schema" />
-      </template>
+      <v-text-field
+        v-else-if="isEditing && schema.mask"
+        v-model="modelProp"
+        v-mask="schema.mask"
+        v-bind="schema"
+      />
+      <v-text-field v-else-if="isEditing && !schema.mask" v-model="modelProp" v-bind="schema" />
       <display-field v-else :label="schema.label" :value="modelProp" />
-    </transition>
+    <!-- </transition> -->
   </v-col>
 </template>
 
@@ -77,14 +75,15 @@ export default {
 </script>
 
 <style>
-.rotate-enter {
-  transform: perspective(500px) rotate3d(0, 1, 0, 90deg);
+.flip-enter-active {
+  transition: all .2s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* ease-in-quadratic */
 }
-.rotate-enter-active,
-.rotate-leave-active {
-  transition: 0.5s;
+.flip-leave-active {
+  transition: all .25s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* ease-out-quadratic */
 }
-.rotate-leave-to {
-  transform: perspective(500px) rotate3d(0, 1, 0, -90deg);
+.flip-enter,
+.flip-leave-to {
+  transform: scaleY(0) translateZ(0);
+  opacity: 0;
 }
 </style>

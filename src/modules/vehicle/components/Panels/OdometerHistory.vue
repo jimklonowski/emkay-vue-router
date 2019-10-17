@@ -2,11 +2,7 @@
   <article>
     <v-card>
       <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-        <v-toolbar-title class="text-uppercase font-weight-black">
-          <span v-t="'vehicle_dashboard.odometer'" />
-          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
-          <v-subheader class="d-inline" dark v-text="vehicle" />
-        </v-toolbar-title>
+        <toolbar-title :key1="'vehicle_dashboard.odometer'" :key2="'vehicle_dashboard.history'" :subtitle="vehicle" />
         <v-spacer />
         <v-text-field
           v-model="search"
@@ -98,7 +94,8 @@ import { FETCH_ODOMETER_HISTORY } from '@/modules/vehicle/store/actions.type'
 export default {
   name: 'OdometerHistory',
   components: {
-    JsonExcel
+    JsonExcel,
+    ToolbarTitle: () => import('@/modules/core/components/ToolbarTitle')
   },
   props: {
     vehicle: {

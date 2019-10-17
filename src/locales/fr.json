@@ -1,4 +1,13 @@
 {
+  "auth": {
+    "account": "Compte",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "client": "Client",
+    "forgot_password": "Mot de passe oublié",    
+    "login": "Connectez",
+    "logout": "Déconnecter"
+  },
   "common": {
     "summary": "Sommaire",
     "loading": "Chargement",
@@ -13,14 +22,6 @@
     "description": "La description",
     "client": "Client",
     "language": "La langue"
-  },
-  "auth": {
-    "account": "Compte",
-    "username": "Nom d'utilisateur",
-    "password": "Mot de passe",
-    "forgot_password": "Mot de passe oublié",    
-    "login": "Connectez",
-    "logout": "Déconnecter"
   },
   "validation": {
     "required": "{attribute} est requis.",

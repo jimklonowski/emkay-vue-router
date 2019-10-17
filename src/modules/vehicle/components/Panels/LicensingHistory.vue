@@ -2,11 +2,7 @@
   <article>
     <v-card>
       <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-        <v-toolbar-title class="text-uppercase font-weight-black">
-          <span v-t="'vehicle_dashboard.licensing'" />
-          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
-          <v-subheader class="d-inline" dark v-text="vehicle" />
-        </v-toolbar-title>
+        <toolbar-title :key1="'vehicle_dashboard.licensing'" :key2="'vehicle_dashboard.history'" :subtitle="vehicle" />
         <v-spacer />
         <v-text-field
           v-model="search"
@@ -89,6 +85,7 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
+//import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
 import { nameForExport, headersForExport } from '@/util/helpers'
 //import { mapActions } from 'vuex'
 import { FETCH_LICENSING_HISTORY } from '@/modules/vehicle/store/actions.type'
@@ -96,7 +93,8 @@ import { FETCH_LICENSING_HISTORY } from '@/modules/vehicle/store/actions.type'
 export default {
   name: 'LicensingHistory',
   components: {
-    JsonExcel
+    JsonExcel,
+    ToolbarTitle: () => import('@/modules/core/components/ToolbarTitle')
   },
   props: {
     vehicle: {

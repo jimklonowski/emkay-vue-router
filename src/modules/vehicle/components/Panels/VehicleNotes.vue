@@ -2,11 +2,7 @@
   <article>
     <v-card>
       <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-        <v-toolbar-title class="text-uppercase font-weight-black">
-          <span v-t="'vehicle_dashboard.vehicle'" />
-          <span v-t="'vehicle_dashboard.notes'" class="font-weight-thin" />
-          <v-subheader class="d-inline" dark v-text="vehicle" />
-        </v-toolbar-title>
+        <toolbar-title :key1="'vehicle_dashboard.vehicle'" :key2="'vehicle_dashboard.notes'" :subtitle="vehicle" />
         <v-spacer />
         <v-text-field
           v-model="search"
@@ -97,6 +93,7 @@
 
 <script>
 import AddNote from '@/modules/vehicle/components/Forms/AddNote'
+//import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
 import JsonExcel from 'vue-json-excel'
 import { nameForExport, headersForExport } from '@/util/helpers'
 import { FETCH_VEHICLE_NOTES } from '@/modules/vehicle/store/actions.type'
@@ -105,7 +102,8 @@ export default {
   name: 'VehicleNotes',
   components: {
     AddNote,
-    JsonExcel
+    JsonExcel,
+    ToolbarTitle: () => import('@/modules/core/components/ToolbarTitle')
   },
   props: {
     vehicle: {

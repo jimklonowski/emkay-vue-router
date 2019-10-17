@@ -2,12 +2,8 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-          <v-toolbar-title class="text-uppercase font-weight-black">
-            <span v-t="'vehicle_dashboard.driver'" />
-            <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
-            <v-subheader class="d-inline" dark v-text="vehicle" />
-          </v-toolbar-title>
+        <v-toolbar :color="errorMessage ? 'error' : 'primary'" :class="$config.TOOLBAR_CLASS" dark>
+          <toolbar-title :key1="'vehicle_dashboard.driver'" :key2="'vehicle_dashboard.details'" :subtitle="vehicle" />
           <v-spacer />
           <v-menu
             v-model="menuOpen"
@@ -17,7 +13,7 @@
             left
           >
             <template #activator="{ on }">
-              <v-btn dark icon v-on="on">
+              <v-btn color="rgba(255, 255, 255, 0.8)" dark icon v-on="on">
                 <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
@@ -49,7 +45,7 @@
             </v-list>
           </v-menu>
         </v-toolbar>
-        <v-divider />
+
         <v-card-text class="pa-0">
           <v-container class="py-0">
             <v-row>
@@ -239,15 +235,13 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions v-if="isEditing">
-          <v-alert
-            v-if="errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-            v-text="errorMessage"
-          />
+        <v-card-actions v-if="isEditing" style="height:72px;">
+          <transition name="component-fade" mode="out-in">
+            <v-alert v-if="errorMessage" color="error--text" dense>
+              <v-icon color="error" v-text="'warning'" />
+              {{ errorMessage }}
+            </v-alert>
+          </transition>
           <v-spacer />
           <v-btn
             v-t="'common.cancel'"
@@ -279,6 +273,8 @@ import { mask } from 'vue-the-mask'
 import { email, maxLength, required } from 'vuelidate/lib/validators'
 import { isLength, translateError } from '@/util/helpers'
 
+import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
+
 import AddDriver from '@/modules/vehicle/components/Forms/AddDriver'
 import EditCustomLabels from '@/modules/vehicle/components/Forms/EditCustomLabels'
 import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
@@ -289,7 +285,8 @@ export default {
   components: { 
     AddDriver,
     EditCustomLabels,
-    FieldWithLoader
+    FieldWithLoader,
+    ToolbarTitle
   },
   directives: { mask },
   props: {
@@ -576,7 +573,7 @@ export default {
         this.originalModel = { ...this.model }
       })
       .catch(error => {
-        debugger
+        //debugger
         this.errorMessage = error.message
       })
       .finally(() => {

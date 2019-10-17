@@ -2,25 +2,10 @@
   <v-container fluid fill-height class="login">
     <v-row justify="center" align="center">
       <v-card elevation="12" width="600px" :loading="loading">
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-          @submit.prevent="
-            onSubmit(
-              credentials.account,
-              credentials.username,
-              credentials.password
-            )
-          "
-        >
-          <v-card-title :class="$config.TOOLBAR_CLASS">
-            <header class="text-uppercase font-weight-black">
-              <span v-t="'auth.login'" />
-              <span v-t="'common.client'" class="font-weight-thin" />
-              <v-subheader class="d-inline" dark v-text="subtitle" />
-            </header>
-          </v-card-title>
+        <v-form ref="form" @submit.prevent="onSubmit">
+          <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+            <toolbar-title :key1="'auth.login'" :key2="'auth.client'" />
+          </v-toolbar>
           <v-divider />
           <v-card-text>
             <v-alert v-if="errorMessage" type="error">
@@ -31,36 +16,10 @@
               EM102 JCK 123
             </v-alert>
 
-            <v-text-field
-              v-model="credentials.account"
-              :label="$t('auth.account')"
-              name="account"
-              append-icon="account_balance"
-              type="text"
-              :rules="rules.account"
-              autocomplete="organization"
-              required
-            />
-            <v-text-field
-              v-model="credentials.username"
-              :label="$t('auth.username')"
-              name="username"
-              append-icon="person"
-              type="text"
-              :rules="rules.username"
-              autocomplete="username"
-              required
-            />
-            <v-text-field
-              v-model="credentials.password"
-              :label="$t('auth.password')"
-              name="password"
-              append-icon="lock"
-              type="password"
-              :rules="rules.password"
-              autocomplete="current-password"
-              required
-            />
+            <v-text-field v-model="model.account" v-bind="schema.account" />
+            <v-text-field v-model="model.username" v-bind="schema.username" />
+            <v-text-field v-model="model.password" v-bind="schema.password" />
+
           </v-card-text>
           <v-card-actions>
             <v-spacer />
@@ -75,7 +34,6 @@
               type="submit"
               color="primary"
               class="mr-4"
-              :disabled="!valid"
             />
           </v-card-actions>
         </v-form>
@@ -85,54 +43,103 @@
 </template>
 
 <script>
+import { translateError } from '@/util/helpers'
+import { required } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 import { LOGIN } from '@/modules/auth/store/actions.type'
 
+import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
+
+
 export default {
   name: 'Login',
+  components: {
+    ToolbarTitle
+  },
   data() {
     return {
       errorMessage: '',
       loading: false,
-      title1: 'Login',
-      title2: 'Client',
-      subtitle: '',
-      valid: false,
-      credentials: {
+
+      // Model
+      model: {
         account: '',
         username: '',
         password: ''
-      },
-      rules: {
-        account: [v => !!v || this.$t('validation.required')],
-        username: [v => !!v || this.$t('validation.required')],
-        password: [v => !!v || this.$t('validation.required')]
       }
     }
   },
   computed: {
     ...mapState({
       errors: state => state.auth.errors
-    })
+    }),
+    schema() {
+      return {
+        account: {
+          label: this.$t('auth.account'),
+          type: 'text',
+          errorMessages: this.accountErrors(),
+          appendIcon: 'account_balance',
+          autocomplete: 'organization'
+        },
+        username: {
+          label: this.$t('auth.username'),
+          type: 'text',
+          errorMessages: this.usernameErrors(),
+          appendIcon: 'person',
+          autocomplete: 'username'
+        },
+        password: {
+          label: this.$t('auth.password'),
+          type: 'password',
+          errorMessages: this.passwordErrors(),
+          appendIcon: 'lock',
+          autocomplete: 'current-password'
+        }
+      }
+    }
   },
   methods: {
-    onSubmit(account, username, password) {
+    translateError,
+    accountErrors() {
+      const errors = []
+      if (!this.$v.model.account.$dirty) return errors
+      !this.$v.model.account.required && errors.push(this.translateError('validation.required', 'auth.account'))
+      return errors
+    },
+    usernameErrors() {
+      const errors = []
+      if (!this.$v.model.username.$dirty) return errors
+      !this.$v.model.username.required && errors.push(this.translateError('validation.required', 'auth.username'))
+      return errors
+    },
+    passwordErrors() {
+      const errors = []
+      if (!this.$v.model.password.$dirty) return errors
+      !this.$v.model.password.required && errors.push(this.translateError('validation.required', 'auth.password'))
+      return errors
+    },
+    onSubmit() {
+      this.errorMessage = null
       this.loading = true
-
-      // all fields required
-      if (!this.$refs.form.validate()) {
+      debugger
+      // trigger validations
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.errorMessage = 'Fix Validation Errors, dude!'
         this.loading = false
         return false
       }
 
       // try to login
       this.$store
-        .dispatch(LOGIN, { account, username, password })
+        .dispatch(LOGIN, this.model)
         .then(() => {
           console.log('Login Success')
           this.$router.push({ name: 'home' })
         })
         .catch(e => {
+          debugger
           console.log('Login Failure')
           this.errorMessage = e.message
         })
@@ -140,26 +147,13 @@ export default {
           this.loading = false
         })
     }
-    // onSubmit(account, username, password) {
-    //   this.loading = true
-    //   if (!this.$refs.form.validate()) {
-    //     this.loading = false
-    //     return false
-    //   }
-    //   this.$store
-    //     .dispatch(`auth/${LOGIN}`, { account, username, password })
-    //     .then(() => {
-    //       console.log('Login success, routing to /home')
-    //       this.$router.push({ name: 'home' })
-    //     })
-    //     .catch(e => {
-    //       console.log('Login failure')
-    //       this.errorMessage = e.message //(e.response.data || {}).errors[0] || e.message
-    //     })
-    //     .finally(() => {
-    //       this.loading = false
-    //     })
-    // }
+  },
+  validations: {
+    model: {
+      account: { required },
+      username: { required },
+      password: { required }
+    }
   }
 }
 </script>

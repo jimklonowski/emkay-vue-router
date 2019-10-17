@@ -19,6 +19,7 @@ export default {
   // Login action
   async [LOGIN](context, credentials) {
     console.log('auth action')
+    //debugger
     let response = await ApiService.post('/auth/login', { user: credentials })
     if (response) {
       //debugger

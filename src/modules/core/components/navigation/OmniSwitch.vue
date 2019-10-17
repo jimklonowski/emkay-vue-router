@@ -39,7 +39,7 @@
         </v-list-item>
 
         <v-list-item class="py-2">
-          <v-select v-model="locale" :items="languages" :label="$t('common.language')" @input="setLanguage" dense />
+          <v-select v-model="locale" :items="languages" item-text="name" item-value="locale" :label="$t('common.language')" @input="setLanguage" dense />
         </v-list-item>
       </v-list>
     </v-card>
@@ -52,20 +52,25 @@ export default {
   name: 'OmniSwitch',
   data: () => ({
     menu: false,
-    dark: false,
-    locale: 'en',
+    dark: null,
+    locale: null,
     languages: [
       {
-        text: 'English',
-        value: 'en'
+        name: 'English',
+        locale: 'en',
+        country: 'us',
+        fallback: true
       },
       {
-        text: 'English (Metric)',
-        value: 'en_CA'
+        name: 'English (Metric)',
+        locale: 'en_CA',
+        country: 'ca',
+        alternate: 'en'
       },
       {
-        text: 'Français',
-        value: 'fr'
+        name: 'Français',
+        locale: 'fr',
+        country: 'fr'
       }
     ]
   }),
@@ -80,7 +85,7 @@ export default {
   computed: {
     currentLanguage() {
       const locale = this.$i18n.locale
-      return this.languages.find(l => l.value === locale)
+      return this.languages.find(l => l.locale === locale)
     }
   },
   methods: {
@@ -100,6 +105,7 @@ export default {
       //
     },
     setLanguage() {
+      //debugger
       this.$store
         .dispatch(CHANGE_LOCALE, this.locale)
         .then(() => {

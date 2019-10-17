@@ -2,12 +2,8 @@
   <article>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card :loading="loading">
-        <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-          <v-toolbar-title class="text-uppercase font-weight-black">
-            <span v-t="'vehicle_dashboard.vehicle'" />
-            <span v-t="'vehicle_dashboard.details'" class="font-weight-thin" />
-            <v-subheader class="d-inline" dark v-text="vehicle" />
-          </v-toolbar-title>
+        <v-toolbar :color="errorMessage ? 'error' : 'primary'" :class="$config.TOOLBAR_CLASS" dark>
+          <toolbar-title :key1="'vehicle_dashboard.vehicle'" :key2="'vehicle_dashboard.details'" :subtitle="vehicle" />
           <v-spacer />
           <v-menu
             v-model="menuOpen"
@@ -17,7 +13,7 @@
             left
           >
             <template #activator="{ on }">
-              <v-btn dark icon v-on="on">
+              <v-btn color="rgba(255, 255, 255, 0.8)" dark icon v-on="on">
                 <v-icon v-text="'more_vert'" />
               </v-btn>
             </template>
@@ -49,7 +45,7 @@
             </v-list>
           </v-menu>
         </v-toolbar>
-        <v-divider />
+
         <v-card-text class="pa-0">
           <v-container class="py-0">
             <v-row>
@@ -237,35 +233,35 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions v-if="isEditing">
-          <v-alert
-            v-if="errorMessage"
-            outlined
-            dense
-            class="mb-0"
-            type="error"
-            v-text="errorMessage"
-          />
+        <v-card-actions style="height:72px;">
+          <transition name="component-fade" mode="out-in">
+            <v-alert v-if="errorMessage" color="error--text" class="mb-0" dense>
+              <v-icon color="error" v-text="'warning'" />
+              {{ errorMessage }}
+            </v-alert>
+          </transition>
           <v-spacer />
-          <v-btn
-            v-t="'common.cancel'"
-            type="button"
-            color="error"
-            :ripple="false"
-            text
-            @click.prevent="cancelEdit"
-          />
-          <v-btn
-            v-t="'common.save_changes'"
-            type="submit"
-            color="primary"
-            :ripple="false"
-            depressed
-            tile
-          >
-            <v-icon dark v-text="'save'" />
-            {{ $t('common.save_changes') }}
-          </v-btn>
+          <template v-if="isEditing">
+            <v-btn
+              v-t="'common.cancel'"
+              type="button"
+              color="error"
+              :ripple="false"
+              text
+              @click.prevent="cancelEdit"
+            />
+            <v-btn
+              v-t="'common.save_changes'"
+              type="submit"
+              color="primary"
+              :ripple="false"
+              depressed
+              tile
+            >
+              <v-icon dark v-text="'save'" />
+              {{ $t('common.save_changes') }}
+            </v-btn>
+          </template>
         </v-card-actions>
         <!-- <v-progress-linear
           slot="progress"
@@ -286,8 +282,10 @@ import { isLength, translateError } from '@/util/helpers'
 import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
 import CenterPicker from '@/modules/core/components/CenterPicker'
 
-import EditCustomLabels from '@/modules/vehicle/components/Forms/EditCustomLabels'
-import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
+//import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
+
+//import EditCustomLabels from '@/modules/vehicle/components/Forms/EditCustomLabels'
+//import OrderStatus from '@/modules/vehicle/components/Details/OrderStatus'
 
 import { FETCH_VEHICLE_DETAILS } from '@/modules/vehicle/store/actions.type'
 
@@ -296,8 +294,10 @@ export default {
   components: {
     FieldWithLoader,
     CenterPicker,
-    OrderStatus,
-    EditCustomLabels
+    //OrderStatus,
+    //EditCustomLabels: () => import('@/modules/vehicle/components/Forms/EditCustomLabels'),
+
+    ToolbarTitle: () => import('@/modules/core/components/ToolbarTitle')
   },
   props: {
     vehicle: { type: String, default: '' }
@@ -320,13 +320,13 @@ export default {
         key: 'vehicle_dashboard.order_status',
         icon: 'av_timer',
         action: () => {},
-        component: OrderStatus
+        component: () => import('@/modules/vehicle/components/Details/OrderStatus'),
       },
       {
         key: 'vehicle_dashboard.edit_custom_labels',
         icon: 'label_important',
         action: () => {},
-        component: EditCustomLabels
+        component: () => import('@/modules/vehicle/components/Forms/EditCustomLabels')
       },
       {
         key: 'vehicle_dashboard.schedule_ac',
@@ -539,7 +539,7 @@ export default {
         this.originalModel = { ...this.model }
       })
       .catch(error => {
-        debugger
+        //debugger
         this.errorMessage = error.message
       })
       .finally(() => {
@@ -666,3 +666,12 @@ export default {
   }
 }
 </script>
+<style>
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>

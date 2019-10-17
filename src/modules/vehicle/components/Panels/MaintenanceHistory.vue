@@ -2,11 +2,7 @@
   <article>
     <v-card>
       <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-        <v-toolbar-title class="text-uppercase font-weight-black">
-          <span v-t="'vehicle_dashboard.maintenance'" />
-          <span v-t="'vehicle_dashboard.history'" class="font-weight-thin" />
-          <v-subheader class="d-inline" dark v-text="vehicle" />
-        </v-toolbar-title>
+        <toolbar-title :key1="'vehicle_dashboard.maintenance'" :key2="'vehicle_dashboard.history'" :subtitle="vehicle" />
         <v-spacer />
         <v-text-field
           v-model="search"
@@ -94,13 +90,15 @@
 
 <script>
 import JsonExcel from 'vue-json-excel'
+import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
 import { nameForExport, headersForExport } from '@/util/helpers'
 import { FETCH_MAINTENANCE_HISTORY } from '@/modules/vehicle/store/actions.type'
 
 export default {
   name: 'MaintenanceHistory',
   components: {
-    JsonExcel
+    JsonExcel,
+    ToolbarTitle
   },
   props: {
     vehicle: {

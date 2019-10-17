@@ -14,12 +14,12 @@ export default [
     path: '/vehicle/:vehicle?',
     name: 'vehicle-dashboard',
     component: () =>
-      import('@/modules/vehicle/views/VehicleDashboardWrapper.vue'),
+      import(/* webpackChunkName: "vehicle" */ '@/modules/vehicle/views/VehicleDashboardWrapper.vue'),
     children: [
       {
         path: '/vehicle/:vehicle/dashboard',
         name: 'dashboard',
-        component: () => import('@/modules/vehicle/views/Dashboard.vue')
+        component: () => import(/* webpackChunkName: "vehicledashboard" */ '@/modules/vehicle/views/Dashboard.vue')
       },
       {
         path: '/vehicle/:vehicle/documents',
