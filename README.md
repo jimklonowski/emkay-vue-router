@@ -1,5 +1,8 @@
 # emkay-vue
 
+#### New Project! ####
+See [emkay-frontend](https://github.com/jimklonowski/emkay-frontend)
+
 ## Project setup
 ```
 npm install
